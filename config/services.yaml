@@ -1,0 +1,47 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+  # configuration of the locale, used for url and allowed locales
+  locale: 'nl'
+  locales:
+    - '%locale%'
+
+  # configuration of some fallback variables
+  fallbacks:
+    site_title: '%env(resolve:SITE_TITLE)%'
+
+  # Mailer configuration
+  mailer.default_sender_name: '%env(resolve:MAILER_DEFAULT_SENDER_NAME)%'
+  mailer.default_sender_email: '%env(resolve:MAILER_DEFAULT_SENDER_EMAIL)%'
+  mailer.default_to_name: '%env(resolve:MAILER_DEFAULT_TO_NAME)%'
+  mailer.default_to_email: '%env(resolve:MAILER_DEFAULT_TO_EMAIL)%'
+  mailer.default_reply_to_name: '%mailer.default_sender_name%'
+  mailer.default_reply_to_email: '%mailer.default_sender_email%'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

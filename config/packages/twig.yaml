@@ -1,0 +1,12 @@
+twig:
+    default_path: '%kernel.project_dir%/templates'
+    globals:
+        fallbacks: "@framework.fallbacks"
+        jsData: "@framework.jsdata"
+        locales: "%locales%"
+        theme: "@framework.theme"
+        breadcrumbs: '@SumoCoders\FrameworkCoreBundle\Service\BreadcrumbTrail'
+    form_themes:
+        - "bootstrap_4_layout.html.twig"
+        - "@SumoCodersFrameworkCore/Form/fields.html.twig"
+        - "blocks.html.twig"
