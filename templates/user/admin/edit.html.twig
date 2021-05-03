@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}
+    <h1>{{ 'Edit user %user%'|trans({'%user%' : user.email}) }} </h1>
+{% endblock %}
+
+{% block header_navigation %}
+    {% if not user.confirmed %}
+        <a class="btn btn-primary" href="{{ path('request_confirmation_admin', {'user' : user.id}) }}">
+            <i class="fas fa-envelope mr-2"></i>
+            {{ 'Resend confirmation mail'|trans }}
+        </a>
+    {% endif %}
+    {% if user.enabled %}
+        <a class="btn btn-danger" href="{{ path('user_disable', {'user' : user.id}) }}">
+            <i class="fas fa-lock mr-2"></i>
+            {{ 'Disable'|trans }}
+        </a>
+    {% else %}
+        <a class="btn btn-success" href="{{ path('user_enable', {'user' : user.id}) }}">
+            <i class="fas fa-unlock mr-2"></i>
+            {{ 'Enable'|trans }}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.roles) }}
+
+    <div class="btn-toolbar mt-4">
+        <button class="btn btn-primary" type="submit">
+            {{ 'Save'|trans }}
+            <i class="fas fa-save ml-2"></i>
+        </button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

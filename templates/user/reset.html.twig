@@ -1,0 +1,10 @@
+{% extends '@SumoCodersFrameworkCore/user.html.twig' %}
+
+{% block main %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.password) }}
+
+    <input type="submit" class="btn btn-secondary" value="{{ 'Confirm'|trans }}" />
+    {{ form_end(form) }}
+{% endblock %}

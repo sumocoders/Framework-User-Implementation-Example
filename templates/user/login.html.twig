@@ -1,0 +1,20 @@
+{% extends '@SumoCodersFrameworkCore/user.html.twig' %}
+
+{% block main %}
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security')|raw }}</div>
+    {% endif %}
+
+    {{ form_start(form)}}
+    {{ form_row(form.email)}}
+    <div class="form-group">
+        {{ form_label(form.password) }}
+        {{ form_widget(form.password) }}
+        <small class="form-text text-muted">
+            <a href="{{ url('forgot_password') }}">{{ 'I forgot my password'|trans }}</a>
+        </small>
+    </div>
+
+    <input class="btn btn-secondary" type="submit" value="{{ 'Sign in'|trans }}" />
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}
+    <h1>{{ 'Add a new user'|trans }} </h1>
+{% endblock %}
+
+{% block main %}
+    {{ form_start(form) }}
+    {{ form_errors(form) }}
+    {{ form_row(form.email) }}
+    {{ form_row(form.roles) }}
+
+    <div class="btn-toolbar mt-4">
+        <button class="btn btn-primary" type="submit">
+            {{ 'Add'|trans }}
+            <i class="fas fa-plus ml-2"></i>
+        </button>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends '@SumoCodersFrameworkCore/user.html.twig' %}
+
+{% block main %}
+    {% if form.vars.submitted and form.vars.valid %}
+        <p>{{ 'Check your email for a link to confirm your account. If it doesn’t appear within a few minutes, check your spam folder.'|trans }}</p>
+        <a href="{{ url('login') }}">{{ 'Return to sign in'|trans }}</a>
+    {% else %}
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.password) }}
+        {{ form_rest(form) }}
+
+        <input class="btn btn-secondary" type="submit" value="{{ 'Sign up'|trans }}" />
+
+        {{ form_end(form)}}
+    {% endif %}
+{% endblock %}

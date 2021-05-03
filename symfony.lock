@@ -124,6 +124,9 @@
     "doctrine/sql-formatter": {
         "version": "1.1.1"
     },
+    "egulias/email-validator": {
+        "version": "3.1.1"
+    },
     "friendsofphp/proxy-manager-lts": {
         "version": "v1.0.3"
     },
@@ -289,6 +292,9 @@
     "sumocoders/framework-core-bundle": {
         "version": "v3.0.1"
     },
+    "symfony/amqp-messenger": {
+        "version": "v5.2.7"
+    },
     "symfony/apache-pack": {
         "version": "1.0",
         "recipe": {
@@ -354,6 +360,9 @@
     },
     "symfony/doctrine-bridge": {
         "version": "v5.1.11"
+    },
+    "symfony/doctrine-messenger": {
+        "version": "v5.2.7"
     },
     "symfony/dom-crawler": {
         "version": "v5.2.4"
@@ -426,6 +435,33 @@
     "symfony/intl": {
         "version": "v5.2.4"
     },
+    "symfony/mailer": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "15658c2a0176cda2e7dba66276a2030b52bd81b2"
+        },
+        "files": [
+            "config/packages/mailer.yaml"
+        ]
+    },
+    "symfony/messenger": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "e9a414b113ceadbf4e52abe37bf8f1b443f06ccb"
+        },
+        "files": [
+            "config/packages/messenger.yaml"
+        ]
+    },
+    "symfony/mime": {
+        "version": "v5.2.7"
+    },
     "symfony/monolog-bridge": {
         "version": "v5.2.5"
     },
@@ -477,6 +513,9 @@
     "symfony/polyfill-intl-icu": {
         "version": "v1.22.1"
     },
+    "symfony/polyfill-intl-idn": {
+        "version": "v1.22.1"
+    },
     "symfony/polyfill-intl-normalizer": {
         "version": "v1.22.1"
     },
@@ -503,6 +542,9 @@
     },
     "symfony/property-info": {
         "version": "v5.2.4"
+    },
+    "symfony/redis-messenger": {
+        "version": "v5.2.7"
     },
     "symfony/routing": {
         "version": "5.1",
@@ -585,6 +627,19 @@
             "config/packages/test/twig.yaml",
             "config/packages/twig.yaml",
             "templates/base.html.twig"
+        ]
+    },
+    "symfony/validator": {
+        "version": "4.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "4.3",
+            "ref": "d902da3e4952f18d3bf05aab29512eb61cabd869"
+        },
+        "files": [
+            "config/packages/test/validator.yaml",
+            "config/packages/validator.yaml"
         ]
     },
     "symfony/var-dumper": {

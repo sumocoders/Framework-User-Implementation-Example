@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}
+  <h1>{{ 'Users'|trans }}</h1>
+{% endblock %}
+
+{% block header_navigation %}
+  <a class="btn btn-primary" href="{{ path('user_add') }}">
+    <i class="fas fa-plus mr-2"></i>
+    {{ 'Add a new user'|trans|capitalize }}
+  </a>
+{% endblock %}
+
+{% block main %}
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th scope="col">{{ 'Username'|trans }}</th>
+      <th scope="col">{{ 'Roles'|trans }}</th>
+      <th scope="col">{{ 'Confirmed'|trans }}</th>
+      <th scope="col">{{ 'Enabled'|trans }}</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for user in users %}
+      <tr>
+        <th scope="row">{{ user.username }}</th>
+        <td>{{ user.getDisplayRoles|join(', ') }}</td>
+        <td>
+          {% if user.confirmed %}
+            <i class="text-success fas fa-check"></i>
+          {% else %}
+            <i class="text-danger fas fa-times"></i>
+          {% endif %}
+        </td>
+        <td>
+          {% if user.enabled %}
+            <i class="text-success fas fa-check"></i>
+          {% else %}
+            <i class="text-danger fas fa-times"></i>
+          {% endif %}
+        </td>
+        <td>
+          <a class="text-nowrap" href="{{ path('user_edit', {'user': user.id }) }}">
+            <i class="fas fa-edit" title="{{ 'Edit user'|trans }}" data-toggle="tooltip" data-placement="top"></i>
+          </a>
+        </td>
+      </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

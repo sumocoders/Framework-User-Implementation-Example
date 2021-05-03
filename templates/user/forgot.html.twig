@@ -1,0 +1,17 @@
+{% extends '@SumoCodersFrameworkCore/user.html.twig' %}
+
+{% block main %}
+    {% if form.vars.submitted and form.vars.valid %}
+        <p>{{ 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.'|trans }}</p>
+        <a href="{{ url('login') }}">{{ 'Return to sign in'|trans }}</a>
+    {% else %}
+        <p>{{ 'Enter your user account\'s verified email address and we will send you a password reset link.'|trans }}</p>
+
+        {{ form_start(form) }}
+        {{ form_errors(form) }}
+        {{ form_row(form.email) }}
+
+        <input type="submit" class="btn btn-secondary" value="{{ 'Send password reset email'|trans }}" />
+        {{ form_end(form) }}
+    {% endif %}
+{% endblock %}

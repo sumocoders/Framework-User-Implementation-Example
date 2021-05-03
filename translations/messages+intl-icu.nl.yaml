@@ -1,0 +1,51 @@
+'Account has not been confirmed. <a href="%requestConfirmationUrl%">Resend confirmation mail</a>': 'Account werd nog niet bevestigd. <a href="%requestConfirmationUrl%">Verstuur nieuwe activatiemail.</a>'
+'User successfully added.': 'Gebruiker toegevoegd.'
+'Password successfully edited.': 'Wachtwoord aangepast.'
+'User successfully disabled.': 'Gebruiker gedeactiveerd'
+'User successfully edited.': 'Gebruiker aangepast.'
+'User successfully enabled.': 'Gebruiker geactiveerd.'
+'User is already confirmed.': 'Gebruiker is al bevestigd.'
+'Email confirmation mail successfully sent': '__Email confirmation mail successfully sent'
+'It looks like you clicked on an invalid account activation link. Please try again.': '__It looks like you clicked on an invalid account activation link. Please try again.'
+'Account activated successfully.': 'Account bevestigd.'
+'Invalid confirmation token.': 'Ongeldige bevestigingslink.'
+'Email confirmation mail successfully resent': '__Email confirmation mail successfully resent'
+'It looks like you clicked on an invalid password reset link. Please try again.': '__It looks like you clicked on an invalid password reset link. Please try again.'
+'New password set successfully.': '__New password set successfully.'
+account.mail.confirm.title: __account.mail.confirm.title
+account.mail.reset.title: __account.mail.reset.title
+'Create an account': 'Maak een nieuwe account'
+'Check your email for a link to confirm your account. If it doesn’t appear within a few minutes, check your spam folder.': '__Check your email for a link to confirm your account. If it doesn’t appear within a few minutes, check your spam folder.'
+'Return to sign in': 'Keer terug naar login'
+'Sign up': Registreer
+'Edit user %user%': 'Bewerk account %user%'
+'Resend confirmation mail': 'Verstuur nieuwe activatiemail.'
+Disable: Deactiveer
+Enable: Activeer
+Save: Opslaan
+Users: Gebruikers
+'Add a new user': 'Voeg gebruiker toe'
+Username: Gebruikersnaam
+Roles: Rollen
+Confirmed: Bevestigd
+Enabled: Geactiveerd
+'Edit user': 'Wijzig gebruiker'
+Add: Toevoegen
+'Reset your password': 'Nieuw wachtwoord instellen'
+'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.': '__Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.'
+'Enter your user account''s verified email address and we will send you a password reset link.': 'Geef het emailadres van uw account in en u ontvangt binnenkort een email met verdere instructies.'
+'Send password reset email': 'Verstuur email'
+account.mail.welcome: __account.mail.welcome
+account.mail.confirmAccount: __account.mail.confirmAccount
+account.mail.reset: __account.mail.reset
+account.mail.resetPassowrd: __account.mail.resetPassowrd
+'Change your password': '__Change your password'
+'Change password': '__Change password'
+'Sign in': 'Log in'
+'I forgot my password': 'Wachtwoord vergeten'
+'New to x?': 'Nieuw bij ons?'
+'Update password': 'Update wachtwoord'
+Email: Email
+Password: Wachtwoord
+'Confirm password': 'Bevestig wachtwoord'
+'Switch to user': 'Log in als deze gebruiker'
