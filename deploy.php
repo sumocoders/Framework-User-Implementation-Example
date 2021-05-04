@@ -8,21 +8,19 @@ require 'recipe/sentry.php';
 require __DIR__ . '/vendor/tijsverkoyen/deployer-sumo/sumo.php';
 
 // Define some variables
-set('client', '$client');
-set('project', '$project');
-set('repository', '$repository');
+set('client', 'sumocoders');
+set('project', 'users');
+set('repository', 'git@github.com:sumocoders/Framework-User-Implementation-Example.git');
 set('production_url', '$productionUrl');
-set('sentry_organization', '$sentryOrganization');
-set('sentry_project_slug', '$sentryProjectSlug');
-set('sentry_token', '$sentryToken');
 
 // Define staging
 host('dev02.sumocoders.eu')
     ->user('sites')
     ->stage('staging')
     ->set('deploy_path', '~/apps/{{client}}/{{project}}')
-    ->set('branch', 'staging')
+    ->set('branch', 'main')
     ->set('bin/php', 'php7.4')
+    ->set('bin/composer', 'php7.4 /usr/local/bin/composer')
     ->set('cachetool', '/var/run/php_74_fpm_sites.sock')
     ->set('document_root', '~/php74/{{client}}/{{project}}');
 
