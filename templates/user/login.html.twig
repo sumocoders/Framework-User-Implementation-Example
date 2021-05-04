@@ -15,6 +15,8 @@
         </small>
     </div>
 
-    <input class="btn btn-secondary" type="submit" value="{{ 'Sign in'|trans }}" />
+    <input class="btn btn-secondary mb-4" type="submit" value="{{ 'Sign in'|trans }}" />
     {{ form_end(form) }}
+
+    <p>{{ 'New to x?'|trans }} <a href="{{ url('register') }}">{{ 'Sign up'|trans }}</a></p>
 {% endblock %}
