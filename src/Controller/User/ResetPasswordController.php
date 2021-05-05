@@ -25,7 +25,7 @@ class ResetPasswordController extends AbstractController
         UserRepository $userRepository,
         TranslatorInterface $translator
     ): Response {
-        $user = $userRepository->findOneBy(['passwordResetToken' => $token]);
+        $user = $userRepository->checkResetToken($token);
 
         if (!$user instanceof User) {
             $session->getBag('flashes')->add(
