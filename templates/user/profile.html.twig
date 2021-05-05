@@ -1,6 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block header_title %}
+    <h1>{{ 'profile'|trans|ucfirst }} </h1>
+{% endblock %}
+
 {% block main %}
+    <p>{{ 'Change your password'|trans }}</p>
     {{ form_start(form) }}
     {{ form_errors(form) }}
     {{ form_row(form.password) }}

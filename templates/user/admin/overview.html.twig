@@ -47,11 +47,13 @@
             <i class="fas fa-edit" title="{{ 'Edit user'|trans }}" data-toggle="tooltip" data-placement="top"></i>
           </a>
         </td>
+        {% if is_granted('ROLE_ADMIN') %}
         <td>
           <a class="text-nowrap" href="{{ path('profile', {'_switch_user': user.username }) }}">
-            <i class="fas user-plus" title="{{ 'Switch to user'|trans }}" data-toggle="tooltip" data-placement="top"></i>
+            <i class="fas fa-sign-in-alt" title="{{ 'Switch to user'|trans }}" data-toggle="tooltip" data-placement="top"></i>
           </a>
         </td>
+        {% endif %}
       </tr>
     {% endfor %}
     </tbody>

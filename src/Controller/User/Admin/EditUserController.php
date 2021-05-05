@@ -6,6 +6,7 @@ use App\Entity\User\User;
 use App\Form\User\Admin\UserType;
 use App\Message\User\UpdateUser;
 use Doctrine\Common\Collections\ArrayCollection;
+use SumoCoders\FrameworkCoreBundle\Annotation\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,6 +18,8 @@ class EditUserController extends AbstractController
 {
     /**
      * @Route("/admin/users/{user}/edit", name="user_edit")
+     * @Breadcrumb("users")
+     * @Breadcrumb("edit")
      */
     public function __invoke(
         User $user,

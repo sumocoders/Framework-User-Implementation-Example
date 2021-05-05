@@ -33,7 +33,7 @@ class RequestConfirmationController extends AbstractController
 
         $session->getBag('flashes')->add(
             'success',
-            $translator->trans('Email confirmation mail successfully sent')
+            $translator->trans('Confirmation mail successfully sent')
         );
 
         return $this->redirectToRoute('user_edit', ['user' => $user->getId()]);

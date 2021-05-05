@@ -35,7 +35,7 @@ final class ResendConfirmationController extends AbstractController
 
         $this->dispatchMessage(new SendConfirmation($user));
 
-        $session->getBag('flashes')->add('success', $translator->trans('Email confirmation mail successfully resent'));
+        $session->getBag('flashes')->add('success', $translator->trans('Confirmation mail successfully resent'));
 
         return $this->redirectToRoute('login');
     }

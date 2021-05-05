@@ -1,14 +1,14 @@
-'Account has not been confirmed. <a href="%requestConfirmationUrl%">Resend confirmation mail</a>': 'Account werd nog niet bevestigd. <a href="%requestConfirmationUrl%">Verstuur nieuwe activatiemail.</a>'
+'Account has not been confirmed. <a href="%requestConfirmationUrl%">Resend confirmation mail</a>': 'Account werd nog niet bevestigd. <a href="{requestConfirmationUrl}">Verstuur nieuwe activatiemail.</a>'
 'User successfully added.': 'Gebruiker toegevoegd.'
 'Password successfully edited.': 'Wachtwoord aangepast.'
-'User successfully disabled.': 'Gebruiker gedeactiveerd'
+'User successfully disabled.': 'Gebruiker geblokkeerd'
 'User successfully edited.': 'Gebruiker aangepast.'
 'User successfully enabled.': 'Gebruiker geactiveerd.'
 'User is already confirmed.': 'Gebruiker is al bevestigd.'
 'It looks like you clicked on an invalid account activation link. Please try again.': 'Ongeldige account activatie link. Probeer opnieuw.'
-'Account activated successfully. You can now login!': 'Account succesvol geactiveerd. Je kan nu inloggen!'
 'Invalid confirmation token.': 'Ongeldige activatietoken.'
-'Email confirmation mail successfully resent': 'Bevestigingsmail verstuurd'
+'Confirmation mail successfully resent': 'Bevestigingsmail opnieuw verstuurd.'
+'Confirmation mail successfully sent': 'Bevestigingsmail verstuurd.'
 'It looks like you clicked on an invalid password reset link. Please try again.': 'Ongeldige wachtwoord reset link. Probeer opnieuw.'
 'New password set successfully.': 'Nieuw wachtwoord correct ingesteld.'
 account.mail.confirm.title: 'Foobar - Account activatie'
@@ -17,17 +17,17 @@ account.mail.reset.title: 'Foobar - Wachtwoord reset'
 'Check your email for a link to confirm your account. If it doesn’t appear within a few minutes, check your spam folder.': 'Check uw mailbox voor uw activatie email. Indien die er niet binnen een aantal minuten is, check uw spam folder.'
 'Return to sign in': 'Keer terug naar login'
 'Sign up': Registreer
-'Edit user %user%': 'Bewerk account %user%'
+'Edit user %user%': 'Bewerk {user}'
 'Resend confirmation mail': 'Verstuur nieuwe activatiemail.'
-Disable: Deactiveer
+Disable: Blokkeer
 Enable: Activeer
 Save: Opslaan
-Users: Gebruikers
+users: Gebruikers
 'Add a new user': 'Voeg gebruiker toe'
 Username: Gebruikersnaam
 Roles: Rollen
 Confirmed: Bevestigd
-Enabled: Geactiveerd
+Enabled: Actief
 'Edit user': 'Wijzig gebruiker'
 Add: Toevoegen
 'Reset your password': 'Nieuw wachtwoord instellen'
@@ -48,6 +48,9 @@ Email: Email
 Password: Wachtwoord
 'Confirm password': 'Bevestig wachtwoord'
 'Switch to user': 'Log in als deze gebruiker'
-'Email confirmation mail successfully sent': '__Email confirmation mail successfully sent'
-'Account activated successfully.': '__Account activated successfully.'
-Confirm: 'Bevestig'
+'Account activated successfully.': 'Account succesvol geactiveerd.'
+Confirm: 'bevestig'
+profile: 'profiel'
+overview: 'overzicht'
+add: 'toevoegen'
+edit: 'bewerk'

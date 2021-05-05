@@ -4,6 +4,7 @@ namespace App\Controller\User\Admin;
 
 use App\Form\User\Admin\UserType;
 use App\Message\User\CreateUser;
+use SumoCoders\FrameworkCoreBundle\Annotation\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,8 @@ class AddUserController extends AbstractController
 {
     /**
      * @Route("/admin/users/add", name="user_add")
+     * @Breadcrumb("users")
+     * @Breadcrumb("add")
      */
     public function __invoke(
         Request $request,
