@@ -1,1 +1,5 @@
 {% extends '@SumoCodersFrameworkCore/base.html.twig' %}
+
+{% if is_granted('IS_IMPERSONATOR') %}
+    <a href="{{ impersonation_exit_path(path('user_overview') ) }}">{{ 'Exit impersonation'|trans }}</a>
+{% endif %}
