@@ -16,8 +16,7 @@ class AddUserController extends AbstractController
 {
     /**
      * @Route("/admin/users/add", name="user_add")
-     * @Breadcrumb("users")
-     * @Breadcrumb("add")
+     * @Breadcrumb("add", parent="user_overview")
      */
     public function __invoke(
         Request $request,

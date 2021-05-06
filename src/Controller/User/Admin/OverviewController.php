@@ -13,7 +13,6 @@ class OverviewController extends AbstractController
     /**
      * @Route("/admin/users", name="user_overview")
      * @Breadcrumb("users")
-     * @Breadcrumb("overview")
      */
     public function __invoke(
         UserRepository $userRepository

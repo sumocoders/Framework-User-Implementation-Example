@@ -18,8 +18,7 @@ class EditUserController extends AbstractController
 {
     /**
      * @Route("/admin/users/{user}/edit", name="user_edit")
-     * @Breadcrumb("users")
-     * @Breadcrumb("edit")
+     * @Breadcrumb("edit", parent="user_overview")
      */
     public function __invoke(
         User $user,
