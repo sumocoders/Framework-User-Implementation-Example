@@ -16,7 +16,6 @@ class SendPasswordResetHandler implements MessageHandlerInterface
 {
     private MailerInterface $mailer;
     private TranslatorInterface $translator;
-    private Environment $twig;
     private RouterInterface $router;
     private Address $from;
     private UserRepository $userRepository;
@@ -24,7 +23,6 @@ class SendPasswordResetHandler implements MessageHandlerInterface
     public function __construct(
         MailerInterface $mailer,
         TranslatorInterface $translator,
-        Environment $twig,
         RouterInterface $router,
         UserRepository $userRepository,
         string $fromName,
@@ -32,7 +30,6 @@ class SendPasswordResetHandler implements MessageHandlerInterface
     ) {
         $this->mailer = $mailer;
         $this->translator = $translator;
-        $this->twig = $twig;
         $this->router = $router;
         $this->userRepository = $userRepository;
         $this->from = Address::create($fromName . '<' . $fromMail . '>');

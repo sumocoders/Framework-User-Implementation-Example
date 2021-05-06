@@ -4,6 +4,7 @@ namespace App\MessageHandler\User;
 
 use App\Message\User\ConfirmUser;
 use App\Message\User\SendConfirmation;
+use App\Repository\User\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
@@ -16,28 +17,33 @@ class SendConfirmationHandler implements MessageHandlerInterface
 {
     private MailerInterface $mailer;
     private TranslatorInterface $translator;
-    private Environment $twig;
     private RouterInterface $router;
     private Address $from;
+    private UserRepository $userRepository;
 
     public function __construct(
         MailerInterface $mailer,
         TranslatorInterface $translator,
-        Environment $twig,
         RouterInterface $router,
+        UserRepository $userRepository,
         string $fromName,
         string $fromMail
     ) {
         $this->mailer = $mailer;
         $this->translator = $translator;
-        $this->twig = $twig;
         $this->router = $router;
+        $this->userRepository = $userRepository;
         $this->from = new Address($fromMail, $fromName);
     }
 
     public function __invoke(SendConfirmation $message): void
     {
         $user = $message->getUser();
+
+        $user->requestConfirmation();
+
+        $this->userRepository->save();
+
         $email = (new TemplatedEmail())
             ->from($this->from)
             ->to(new Address($user->getEmail(), $user->getEmail()))

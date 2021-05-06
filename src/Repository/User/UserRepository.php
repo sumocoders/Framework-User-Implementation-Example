@@ -54,13 +54,13 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         die;
         try {
             dump($this->createQueryBuilder('u')
-                ->where('u.confirmationToken = :token AND u.confirmedAt >= :now')
+                ->where('u.confirmationToken = :token AND u.confirmationRequestedAt >= :now')
                 ->setParameter('token', $confirmationToken)
                 ->setParameter('now', $now)
                 ->getQuery()
                 ->getSingleResult());
             return $this->createQueryBuilder('u')
-                ->where('u.confirmationToken = :token AND u.confirmedAt >= :now')
+                ->where('u.confirmationToken = :token AND u.confirmationRequestedAt >= :now')
                 ->setParameter('token', $confirmationToken)
                 ->setParameter('now', $now)
                 ->getQuery()

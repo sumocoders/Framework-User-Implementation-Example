@@ -127,3 +127,4 @@ Error: __Error
 'Please select a valid option.': 'Kies een geldige optie.'
 'Please select a valid range.': 'Kies een geldig bereik.'
 'Please enter a valid week.': 'Vul een geldige week in.'
+'%email% is already in use.': '%email% is al in gebruik.'

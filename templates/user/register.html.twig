@@ -6,7 +6,6 @@
         <a href="{{ url('login') }}">{{ 'Return to sign in'|trans }}</a>
     {% else %}
         {{ form_start(form) }}
-        {{ form_errors(form) }}
         {{ form_row(form.email) }}
         {{ form_row(form.password) }}
         {{ form_rest(form) }}
