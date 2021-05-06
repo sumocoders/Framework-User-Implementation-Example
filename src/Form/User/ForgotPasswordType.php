@@ -14,14 +14,19 @@ use Symfony\Component\Form\FormError;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ForgotPasswordType extends AbstractType
 {
     private UserRepository $userRepository;
+    private TranslatorInterface $translator;
 
-    public function __construct(UserRepository $userRepository)
-    {
+    public function __construct(
+        UserRepository $userRepository,
+        TranslatorInterface $translator
+    ) {
         $this->userRepository = $userRepository;
+        $this->translator = $translator;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -48,7 +53,12 @@ final class ForgotPasswordType extends AbstractType
 
                 if (!$user instanceof User) {
                     $form->get('email')->addError(
-                        new FormError($data->email. ' is not a known user')
+                        new FormError(
+                            $this->translator->trans(
+                                '%user% is not a known user',
+                                [ 'user' => $data->email, ]
+                            )
+                        )
                     );
                 }
             }

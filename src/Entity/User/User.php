@@ -51,6 +51,11 @@ class User implements UserInterface
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
+    private ?DateTime $confirmationRequestedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
     private ?DateTime $confirmedAt;
 
     /**
@@ -71,7 +76,8 @@ class User implements UserInterface
         $this->password = null;
         $this->roles = $roles;
         $this->enabled = false;
-        $this->confirmationToken = $this->generateToken();
+        $this->confirmationToken = null;
+        $this->confirmationRequestedAt = null;
         $this->confirmedAt = null;
         $this->passwordResetToken = null;
         $this->passwordRequestedAt = null;
@@ -100,12 +106,12 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     public function getOriginUsername(): string
     {
-        return (string) $this->email;
+        return $this->email;
     }
 
     /**
@@ -165,9 +171,20 @@ class User implements UserInterface
         return $this->confirmationToken;
     }
 
+    public function getConfirmationRequestedAt(): ?DateTime
+    {
+        return $this->confirmationRequestedAt;
+    }
+
     public function getConfirmedAt(): ?DateTime
     {
         return $this->confirmedAt;
+    }
+
+    public function requestConfirmation(): void
+    {
+        $this->confirmationToken = $this->generateToken();
+        $this->confirmationRequestedAt = new DateTime();
     }
 
     public function isConfirmed(): bool

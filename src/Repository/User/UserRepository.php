@@ -47,10 +47,18 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function checkConfirmationToken(string $confirmationToken): ?User
     {
         $now = new DateTime();
-        $validDuration = new DateInterval('PT2D'); // 48 hours
+        dump($now);
+        $validDuration = new DateInterval('P2D'); // 48 hours
         $now->sub($validDuration);
-
+        dump($now);
+        die;
         try {
+            dump($this->createQueryBuilder('u')
+                ->where('u.confirmationToken = :token AND u.confirmedAt >= :now')
+                ->setParameter('token', $confirmationToken)
+                ->setParameter('now', $now)
+                ->getQuery()
+                ->getSingleResult());
             return $this->createQueryBuilder('u')
                 ->where('u.confirmationToken = :token AND u.confirmedAt >= :now')
                 ->setParameter('token', $confirmationToken)
