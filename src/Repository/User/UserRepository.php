@@ -46,44 +46,36 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
 
     public function checkConfirmationToken(string $confirmationToken): ?User
     {
-        $now = new DateTime();
-        dump($now);
+        $expirationCheck = new DateTime();
         $validDuration = new DateInterval('P2D'); // 48 hours
-        $now->sub($validDuration);
-        dump($now);
-        die;
+        $expirationCheck->sub($validDuration);
+
         try {
-            dump($this->createQueryBuilder('u')
-                ->where('u.confirmationToken = :token AND u.confirmationRequestedAt >= :now')
-                ->setParameter('token', $confirmationToken)
-                ->setParameter('now', $now)
-                ->getQuery()
-                ->getSingleResult());
             return $this->createQueryBuilder('u')
-                ->where('u.confirmationToken = :token AND u.confirmationRequestedAt >= :now')
+                ->where('u.confirmationToken = :token AND u.confirmationRequestedAt >= :check')
                 ->setParameter('token', $confirmationToken)
-                ->setParameter('now', $now)
+                ->setParameter('check', $expirationCheck)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException | NonUniqueResultException $e) {
+        } catch (NoResultException | NonUniqueResultException $exception) {
             return null;
         }
     }
 
     public function checkResetToken(string $resetToken): ?User
     {
-        $now = new DateTime();
+        $expirationCheck = new DateTime();
         $validDuration = new DateInterval('PT4H'); // 4 hours
-        $now->sub($validDuration);
+        $expirationCheck->sub($validDuration);
 
         try {
             return $this->createQueryBuilder('u')
-                ->where('u.passwordResetToken = :token AND u.passwordRequestedAt >= :now')
+                ->where('u.passwordResetToken = :token AND u.passwordRequestedAt >= :check')
                 ->setParameter('token', $resetToken)
-                ->setParameter('now', $now)
+                ->setParameter('check', $expirationCheck)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException | NonUniqueResultException $e) {
+        } catch (NoResultException | NonUniqueResultException $exception) {
             return null;
         }
     }

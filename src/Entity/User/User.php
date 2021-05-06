@@ -133,7 +133,7 @@ class User implements UserInterface
         return array_map(function (string $role) {
             return strtolower(substr($role, 5));
         },
-            $this->roles);
+            $this->getRoles());
     }
 
     /**
@@ -195,6 +195,7 @@ class User implements UserInterface
     public function confirm(): void
     {
         $this->confirmationToken = null;
+        $this->confirmationRequestedAt = null;
         $this->confirmedAt = new DateTime();
         $this->enabled = true;
     }
