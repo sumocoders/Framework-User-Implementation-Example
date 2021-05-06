@@ -46,7 +46,7 @@ class Role
     public static function getChoices(): array
     {
         return [
-            self::ADMIN => self::ADMIN,
+            'admin' => self::ADMIN,
         ];
     }
 }

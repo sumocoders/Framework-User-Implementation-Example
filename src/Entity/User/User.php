@@ -125,7 +125,7 @@ class User implements UserInterface
     public function getDisplayRoles(): array
     {
         return array_map(function (string $role) {
-            return ucfirst(strtolower(substr($role, 5)));
+            return strtolower(substr($role, 5));
         },
             $this->roles);
     }

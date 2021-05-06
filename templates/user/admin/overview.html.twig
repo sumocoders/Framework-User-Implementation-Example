@@ -27,7 +27,7 @@
     {% for user in users %}
       <tr>
         <th scope="row">{{ user.username }}</th>
-        <td>{{ user.getDisplayRoles|join(', ') }}</td>
+        <td>{{ user.getDisplayRoles|join(', ')|trans }}</td>
         <td>
           {% if user.confirmed %}
             <i class="text-success fas fa-check"></i>
