@@ -43,8 +43,6 @@ class UniqueEmailValidator extends ConstraintValidator
          * If we're adding a new user (either through the back-end or register page),
          * throw an error if we can find an existing user with the same email address.
          */
-        dump($formData);
-        dump($userWithThatEmail);
         if (($formData instanceof CreateUser ||
             $formData instanceof RegisterUser) &&
             $userWithThatEmail instanceof User

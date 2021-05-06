@@ -24,7 +24,7 @@ final class ResendConfirmationController extends AbstractController
     ): Response {
         $user = $userRepository->findOneBy(['confirmationToken' => $token]);
 
-        if (!$user instanceof User) {
+        if (!$user instandceof User) {
             $session->getBag('flashes')->add(
                 'error',
                 $translator->trans('Invalid confirmation token.')
