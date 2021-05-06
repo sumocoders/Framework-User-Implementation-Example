@@ -26,15 +26,20 @@
 
 {% block main %}
     {{ form_start(form) }}
-    {{ form_errors(form) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.roles) }}
 
-    <div class="btn-toolbar mt-4">
-        <button class="btn btn-primary" type="submit">
-            {{ 'Save'|trans }}
-            <i class="fas fa-save ml-2"></i>
-        </button>
+    <div class="row">
+        <div class="col-6">
+            {{ form_row(form.email) }}
+            {{ form_row(form.roles) }}
+
+            <div class="btn-toolbar mt-4">
+                <button class="btn btn-primary" type="submit">
+                    <i class="fas fa-save mr-2"></i>
+                    {{ 'Save'|trans }}
+                </button>
+            </div>
+        </div>
     </div>
+
     {{ form_end(form) }}
 {% endblock %}
