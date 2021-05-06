@@ -4125,17 +4125,17 @@
         },
         {
             "name": "sumocoders/framework-core-bundle",
-            "version": "v3.0.1",
+            "version": "v3.0.2",
             "target-dir": "SumoCoders/FrameworkCoreBundle",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sumocoders/FrameworkCoreBundle.git",
-                "reference": "8f18301ba7cf4c20c9da50762a319e7986a66e49"
+                "reference": "0005b64239abdc8f166741a215cadf1a12a87aad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sumocoders/FrameworkCoreBundle/zipball/8f18301ba7cf4c20c9da50762a319e7986a66e49",
-                "reference": "8f18301ba7cf4c20c9da50762a319e7986a66e49",
+                "url": "https://api.github.com/repos/sumocoders/FrameworkCoreBundle/zipball/0005b64239abdc8f166741a215cadf1a12a87aad",
+                "reference": "0005b64239abdc8f166741a215cadf1a12a87aad",
                 "shasum": ""
             },
             "require": {
@@ -4146,6 +4146,7 @@
                 "php": "^7.4",
                 "ramsey/uuid": "^3.7",
                 "sensio/framework-extra-bundle": "^6.1",
+                "symfony/console": "^5.2",
                 "symfony/form": "^5.2",
                 "tijsverkoyen/css-to-inline-styles": "^2.2"
             },
@@ -4182,9 +4183,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sumocoders/FrameworkCoreBundle/issues",
-                "source": "https://github.com/sumocoders/FrameworkCoreBundle/tree/v3.0.1"
+                "source": "https://github.com/sumocoders/FrameworkCoreBundle/tree/v3.0.2"
             },
-            "time": "2021-04-13T06:01:32+00:00"
+            "time": "2021-05-06T07:25:29+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -11150,5 +11151,5 @@
         "ext-iconv": "*"
     },
     "platform-dev": [],
-    "plugin-api-version": "1.1.0"
+    "plugin-api-version": "2.0.0"
 }
