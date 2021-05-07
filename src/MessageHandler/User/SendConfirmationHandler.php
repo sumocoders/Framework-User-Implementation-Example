@@ -26,14 +26,13 @@ class SendConfirmationHandler implements MessageHandlerInterface
         TranslatorInterface $translator,
         RouterInterface $router,
         UserRepository $userRepository,
-        string $fromName,
-        string $fromMail
+        string $from
     ) {
         $this->mailer = $mailer;
         $this->translator = $translator;
         $this->router = $router;
         $this->userRepository = $userRepository;
-        $this->from = new Address($fromMail, $fromName);
+        $this->from = Address::create($from);
     }
 
     public function __invoke(SendConfirmation $message): void

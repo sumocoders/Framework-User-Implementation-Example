@@ -1,0 +1,76 @@
+{% apply inline_css(source('@public/' ~ asset('build/mail.css'))) %}
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{{ fallbacks.get('site_title') }}</title>
+</head>
+<body>
+<table class="body">
+    <tr>
+        <td class="center" align="center" valign="top">
+            <center>
+                <table class="container">
+                    <tr>
+                        <td class="center logo">
+                            <center>
+                                {% block logo %}
+                                    <img alt="logo" class="center" src="{{ absolute_url(asset('build/images/logo-application.svg')) }}">
+                                {% endblock %}
+                            </center>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="container content">
+                    <tr>
+                        <td class="banner">
+                            <table class="row">
+                                <tr>
+                                    <td class="wrapper last">
+                                        <table class="twelve columns">
+                                            <tr>
+                                                <td class="text-pad">
+                                                    {% block title %}
+                                                        <h1>{{ fallbacks.get('site_title') }}</h1>
+                                                    {% endblock %}
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+
+                <table class="main container content">
+                    <tr>
+                        <td>
+                            <table class="row">
+                                <tr>
+                                    <td class="wrapper last">
+                                        <table class="twelve columns">
+                                            <tr>
+                                                <td class="text-pad">
+                                                    {% block content %}
+                                                        {{ content|raw }}
+                                                    {% endblock %}
+                                                </td>
+                                                <td class="expander"></td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </center>
+        </td>
+    </tr>
+</table>
+</body>
+</html>
+{% endapply %}

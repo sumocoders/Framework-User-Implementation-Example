@@ -10,7 +10,6 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Twig\Environment;
 
 class SendPasswordResetHandler implements MessageHandlerInterface
 {
@@ -25,14 +24,13 @@ class SendPasswordResetHandler implements MessageHandlerInterface
         TranslatorInterface $translator,
         RouterInterface $router,
         UserRepository $userRepository,
-        string $fromName,
-        string $fromMail
+        string $from
     ) {
         $this->mailer = $mailer;
         $this->translator = $translator;
         $this->router = $router;
         $this->userRepository = $userRepository;
-        $this->from = Address::create($fromName . '<' . $fromMail . '>');
+        $this->from = Address::create($from);
     }
 
     public function __invoke(SendPasswordReset $message): void
