@@ -708,6 +708,12 @@
     "tijsverkoyen/deployer-sumo": {
         "version": "v1.4.1"
     },
+    "twig/cssinliner-extra": {
+        "version": "v3.3.0"
+    },
+    "twig/extra-bundle": {
+        "version": "v3.3.0"
+    },
     "twig/twig": {
         "version": "v3.3.0"
     },
