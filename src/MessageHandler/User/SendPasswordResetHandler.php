@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler\User;
 
+use App\Entity\User\User;
 use App\Message\User\SendPasswordReset;
 use App\Repository\User\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -39,28 +40,28 @@ class SendPasswordResetHandler implements MessageHandlerInterface
             'email' => $message->email,
         ]);
 
-        $user->requestPassword();
+        if ($user instanceof User) {
+            $user->requestPassword();
 
-        $this->userRepository->save();
+            $this->userRepository->save();
 
-        $email = (new TemplatedEmail())
-            ->from($this->from)
-            ->to(new Address($user->getEmail(), $user->getEmail()))
-            ->subject($this->translator->trans('account.mail.reset.title'))
-            ->htmlTemplate('user/mails/reset.html.twig')
-            ->context([
-                'resetLink' => $this->router->generate(
-                    'reset_password',
-                    [
-                        'token' => $user->getPasswordResetToken(),
-                    ],
-                    RouterInterface::ABSOLUTE_URL
-                ),
+            $email = (new TemplatedEmail())
+                ->from($this->from)
+                ->to(new Address($user->getEmail(), $user->getEmail()))
+                ->subject($this->translator->trans('account.mail.reset.title'))
+                ->htmlTemplate('user/mails/reset.html.twig')
+                ->context([
+                    'resetLink' => $this->router->generate(
+                        'reset_password',
+                        [
+                            'token' => $user->getPasswordResetToken(),
+                        ],
+                        RouterInterface::ABSOLUTE_URL
+                    ),
 
-            ]);
+                ]);
 
-        $this->mailer->send($email);
-
-        die;
+            $this->mailer->send($email);
+        }
     }
 }
