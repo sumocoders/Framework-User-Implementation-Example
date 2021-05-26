@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block header_title %}
-  <h1>{{ 'Users'|trans }}</h1>
+  <h1>{{ 'users'|trans }}</h1>
 {% endblock %}
 
 {% block header_navigation %}
@@ -12,6 +12,20 @@
 {% endblock %}
 
 {% block main %}
+  {{ form_start(form) }}
+  <div class="row mb-3">
+    <div class="col-md-2">
+      {{ form_widget(form.term) }}
+    </div>
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-primary">{{ 'filter.submit'|trans }}</button>
+    </div>
+  </div>
+  {{ form_rest(form) }}
+  {{ form_end(form) }}
+
+  <hr>
+
   <table class="table table-striped">
     <thead>
     <tr>
@@ -63,4 +77,10 @@
     {% endfor %}
     </tbody>
   </table>
+
+  {% if users.haveToPaginate %}
+    <div class="d-flex justify-content-center">
+      {{ pagerfanta(users, 'twitter_bootstrap4_translated', {'omitFirstPage': true, 'next_message': '<span class="text-primary">»</span>', 'prev_message': '<span class="text-primary">«</span>'}) }}
+    </div>
+  {% endif %}
 {% endblock %}

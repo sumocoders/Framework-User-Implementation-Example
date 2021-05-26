@@ -60,5 +60,7 @@ class SendPasswordResetHandler implements MessageHandlerInterface
             ]);
 
         $this->mailer->send($email);
+
+        die;
     }
 }

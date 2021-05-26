@@ -2,6 +2,7 @@
 
 namespace App\Repository\User;
 
+use App\DataTransferObject\User\FilterDataTransferObject;
 use App\Entity\User\User;
 use DateInterval;
 use DateTime;
@@ -9,12 +10,16 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
+use Pagerfanta\Doctrine\ORM\QueryAdapter;
+use Pagerfanta\Pagerfanta;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
+    private const USERS_PER_PAGE = 9;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
@@ -78,5 +83,21 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         } catch (NoResultException | NonUniqueResultException $exception) {
             return null;
         }
+    }
+
+    public function getAllFilteredUsers(FilterDataTransferObject $filter): Pagerfanta
+    {
+        $queryBuilder = $this->createQueryBuilder('u');
+
+        if (isset($filter->term) && $filter->term !== null) {
+            $queryBuilder
+                ->where('u.email LIKE :term')
+                ->setParameter('term', '%' . $filter->term . '%');
+        }
+
+        $pager = new Pagerfanta(new QueryAdapter($queryBuilder));
+        $pager->setMaxPerPage(self::USERS_PER_PAGE);
+
+        return $pager;
     }
 }

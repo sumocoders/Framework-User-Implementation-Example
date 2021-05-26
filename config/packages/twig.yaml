@@ -11,4 +11,4 @@ twig:
         - "@SumoCodersFrameworkCore/Form/fields.html.twig"
         - "blocks.html.twig"
     paths:
-        '%kernel.project_dir%/public/': public
+        "%kernel.project_dir%/public/": public
