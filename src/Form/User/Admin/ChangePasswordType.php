@@ -17,7 +17,7 @@ final class ChangePasswordType extends AbstractType
                 RepeatedType::class,
                 [
                     'type' => PasswordType::class,
-                    'first_options'  => ['label' => 'Password'],
+                    'first_options'  => ['label' => 'New password'],
                     'second_options' => ['label' => 'Confirm password'],
                 ]
             );

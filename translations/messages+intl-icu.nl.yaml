@@ -38,14 +38,15 @@ account.mail.welcome: Welkon
 account.mail.confirmAccount: 'Bevestig account'
 account.mail.reset: 'Klik op onderstaande link om uw wachtwoord opnieuw in te stellen.'
 account.mail.resetPassowrd: 'Klik op onderstaande link om uw wachtwoord opnieuw in te stellen.'
-'Change your password': 'Verander uw wachtwoord'
+'Change your password': 'Wijzig uw wachtwoord'
 'Change password': 'Verander wachtwoord'
 'Sign in': 'Log in'
-'I forgot my password': 'Wachtwoord vergeten'
+'I forgot my password': 'Wachtwoord vergeten?'
 'New to x?': 'Nieuw bij ons?'
 'Update password': 'Update wachtwoord'
 Email: Email
 Password: Wachtwoord
+'New password': 'Nieuw wachtwoord'
 'Confirm password': 'Bevestig wachtwoord'
 'Switch to user': 'Log in als deze gebruiker'
 'Account activated successfully.': 'Account succesvol geactiveerd.'
