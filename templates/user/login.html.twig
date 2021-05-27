@@ -8,15 +8,16 @@
     {{ form_start(form)}}
     {{ form_row(form.email)}}
     <div class="form-group">
-        {{ form_label(form.password) }}
-        {{ form_widget(form.password) }}
-        <small class="form-text text-muted">
+        <div class="d-flex justify-content-between">
+            {{ form_label(form.password) }}
             <a href="{{ url('forgot_password') }}">{{ 'I forgot my password'|trans }}</a>
-        </small>
+        </div>
+
+        {{ form_widget(form.password) }}
     </div>
 
-    <input class="btn btn-secondary mb-4" type="submit" value="{{ 'Sign in'|trans }}" />
+    <input class="btn btn-block btn-secondary mb-4" type="submit" value="{{ 'Sign in'|trans }}" />
     {{ form_end(form) }}
 
-    <p>{{ 'New to x?'|trans }} <a href="{{ url('register') }}">{{ 'Sign up'|trans }}</a></p>
+    <p class="align-self-center">{{ 'New to x?'|trans }} <a href="{{ url('register') }}">{{ 'Sign up'|trans }}</a></p>
 {% endblock %}
