@@ -28,7 +28,7 @@ class ResetPasswordController extends AbstractController
         $user = $userRepository->checkResetToken($token);
 
         if (!$user instanceof User) {
-            $session->getBag('flashes')->add(
+            $session->getFlashBag()->add(
                 'error',
                 $translator->trans('It looks like you clicked on an invalid password reset link. Please try again.')
             );
@@ -43,7 +43,7 @@ class ResetPasswordController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->dispatchMessage($form->getData());
 
-            $session->getBag('flashes')->add(
+            $session->getFlashBag()->add(
                 'success',
                 $translator->trans('New password set successfully.')
             );

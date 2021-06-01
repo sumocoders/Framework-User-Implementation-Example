@@ -22,7 +22,7 @@ class EnableUserController extends AbstractController
     ): Response {
         $this->dispatchMessage(new EnableUser($user));
 
-        $session->getBag('flashes')->add(
+        $session->getFlashBag()->add(
             'success',
             $translator->trans('User successfully enabled.')
         );

@@ -25,7 +25,7 @@ class ConfirmController extends AbstractController
         $user = $userRepository->checkConfirmationToken($token);
 
         if (!$user instanceof User) {
-            $session->getBag('flashes')->add(
+            $session->getFlashBag()->add(
                 'error',
                 $translator->trans('It looks like you clicked on an invalid account activation link. Please try again.')
             );
@@ -35,7 +35,7 @@ class ConfirmController extends AbstractController
 
         $this->dispatchMessage(new ConfirmUser($user));
 
-        $session->getBag('flashes')->add(
+        $session->getFlashBag()->add(
             'success',
             $translator->trans('Account activated successfully.')
         );

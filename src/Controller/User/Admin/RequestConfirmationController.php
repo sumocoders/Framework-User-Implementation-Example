@@ -21,7 +21,7 @@ class RequestConfirmationController extends AbstractController
         TranslatorInterface $translator
     ): Response {
         if ($user->isConfirmed()) {
-            $session->getBag('flashes')->add(
+            $session->getFlashBag()->add(
                 'error',
                 $translator->trans('User is already confirmed.')
             );
@@ -31,7 +31,7 @@ class RequestConfirmationController extends AbstractController
 
         $this->dispatchMessage(new SendConfirmation($user));
 
-        $session->getBag('flashes')->add(
+        $session->getFlashBag()->add(
             'success',
             $translator->trans('Confirmation mail successfully sent')
         );

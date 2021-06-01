@@ -33,7 +33,7 @@ class EditUserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->dispatchMessage($form->getData());
 
-            $session->getBag('flashes')->add(
+            $session->getFlashBag()->add(
                 'success',
                 $translator->trans('User successfully edited.')
             );
