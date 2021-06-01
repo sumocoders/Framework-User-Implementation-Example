@@ -7,7 +7,6 @@ use App\Message\User\SendConfirmation;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -18,14 +17,13 @@ final class ResendConfirmationController extends AbstractController
      */
     public function __invoke(
         string $token,
-        SessionInterface $session,
         UserRepository $userRepository,
         TranslatorInterface $translator
     ): Response {
         $user = $userRepository->findOneBy(['confirmationToken' => $token]);
 
         if (!$user instanceof User) {
-            $session->getFlashBag()->add(
+            $this->addFlash(
                 'error',
                 $translator->trans('Invalid confirmation token.')
             );
@@ -35,7 +33,7 @@ final class ResendConfirmationController extends AbstractController
 
         $this->dispatchMessage(new SendConfirmation($user));
 
-        $session->getFlashBag()->add('success', $translator->trans('Confirmation mail successfully resent'));
+        $this->addFlash('success', $translator->trans('Confirmation mail successfully resent'));
 
         return $this->redirectToRoute('login');
     }

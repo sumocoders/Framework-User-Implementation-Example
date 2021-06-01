@@ -6,7 +6,6 @@ use App\Entity\User\User;
 use App\Message\User\DisableUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -17,12 +16,11 @@ class DisableUserController extends AbstractController
      */
     public function __invoke(
         User $user,
-        SessionInterface $session,
         TranslatorInterface $translator
     ): Response {
         $this->dispatchMessage(new DisableUser($user));
 
-        $session->getFlashBag()->add(
+        $this->addFlash(
             'success',
             $translator->trans('User successfully disabled.')
         );

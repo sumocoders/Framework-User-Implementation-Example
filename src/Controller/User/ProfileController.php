@@ -8,7 +8,6 @@ use SumoCoders\FrameworkCoreBundle\Annotation\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -20,7 +19,6 @@ class ProfileController extends AbstractController
      */
     public function __invoke(
         Request $request,
-        SessionInterface $session,
         TranslatorInterface $translator
     ): Response {
         $form = $this->createForm(ChangePasswordType::class, new ChangePassword($this->getUser()));
@@ -30,7 +28,7 @@ class ProfileController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->dispatchMessage($form->getData());
 
-            $session->getFlashBag()->add(
+            $this->addFlash(
                 'success',
                 $translator->trans('Password successfully edited.')
             );

@@ -5,12 +5,10 @@ namespace App\Controller\User\Admin;
 use App\Entity\User\User;
 use App\Form\User\Admin\UserType;
 use App\Message\User\UpdateUser;
-use Doctrine\Common\Collections\ArrayCollection;
 use SumoCoders\FrameworkCoreBundle\Annotation\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -23,7 +21,6 @@ class EditUserController extends AbstractController
     public function __invoke(
         User $user,
         Request $request,
-        SessionInterface $session,
         TranslatorInterface $translator
     ): Response {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
@@ -33,7 +30,7 @@ class EditUserController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->dispatchMessage($form->getData());
 
-            $session->getFlashBag()->add(
+            $this->addFlash(
                 'success',
                 $translator->trans('User successfully edited.')
             );

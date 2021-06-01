@@ -6,7 +6,6 @@ use App\Entity\User\User;
 use App\Message\User\SendConfirmation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -17,11 +16,10 @@ class RequestConfirmationController extends AbstractController
      */
     public function __invoke(
         User $user,
-        SessionInterface $session,
         TranslatorInterface $translator
     ): Response {
         if ($user->isConfirmed()) {
-            $session->getFlashBag()->add(
+            $this->addFlash(
                 'error',
                 $translator->trans('User is already confirmed.')
             );
@@ -31,7 +29,7 @@ class RequestConfirmationController extends AbstractController
 
         $this->dispatchMessage(new SendConfirmation($user));
 
-        $session->getFlashBag()->add(
+        $this->addFlash(
             'success',
             $translator->trans('Confirmation mail successfully sent')
         );
