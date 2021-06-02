@@ -21,7 +21,7 @@ class Role
         $this->validate();
     }
 
-    private function validate()
+    private function validate(): void
     {
         if (!in_array($this->role, self::ALL)) {
             throw new InvalidRoleException($this->role);

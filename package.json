@@ -3,7 +3,7 @@
         "@symfony/stimulus-bridge": "^2.0.0",
         "@symfony/webpack-encore": "^1.0.0",
         "core-js": "^3.0.0",
-        "frameworkstylepackage": "^1.4.1",
+        "frameworkstylepackage": "^1.5.1",
         "regenerator-runtime": "^0.13.2",
         "standard": "^16.0.3",
         "stimulus": "^2.0.0",

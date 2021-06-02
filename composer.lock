@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5d245d8fb54c068303dbd8ab04c8da8c",
+    "content-hash": "7c55f877b571467aca518c12c0f6b54f",
     "packages": [
         {
             "name": "babdev/pagerfanta-bundle",
@@ -4125,16 +4125,16 @@
         },
         {
             "name": "sumocoders/framework-core-bundle",
-            "version": "dev-update-bundle-structure",
+            "version": "v4.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sumocoders/FrameworkCoreBundle.git",
-                "reference": "42b6c9f38d343ba77a6c57e8bd4fb1d13640ea72"
+                "reference": "8c21facec4dc1d8a109b1ca6a4edbad3a187275e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sumocoders/FrameworkCoreBundle/zipball/42b6c9f38d343ba77a6c57e8bd4fb1d13640ea72",
-                "reference": "42b6c9f38d343ba77a6c57e8bd4fb1d13640ea72",
+                "url": "https://api.github.com/repos/sumocoders/FrameworkCoreBundle/zipball/8c21facec4dc1d8a109b1ca6a4edbad3a187275e",
+                "reference": "8c21facec4dc1d8a109b1ca6a4edbad3a187275e",
                 "shasum": ""
             },
             "require": {
@@ -4147,7 +4147,12 @@
                 "sensio/framework-extra-bundle": "^6.1",
                 "symfony/console": "^5.2",
                 "symfony/form": "^5.2",
-                "tijsverkoyen/css-to-inline-styles": "^2.2"
+                "symfony/security-bundle": "^5.2",
+                "symfony/translation": "^5.2",
+                "symfony/twig-bundle": "^5.2",
+                "tijsverkoyen/css-to-inline-styles": "^2.2",
+                "twig/cssinliner-extra": "^3.3",
+                "twig/extra-bundle": "^3.3"
             },
             "require-dev": {
                 "friendsoftwig/twigcs": "^5.0",
@@ -4186,9 +4191,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sumocoders/FrameworkCoreBundle/issues",
-                "source": "https://github.com/sumocoders/FrameworkCoreBundle/tree/update-bundle-structure"
+                "source": "https://github.com/sumocoders/FrameworkCoreBundle/tree/v4.0.0"
             },
-            "time": "2021-05-06T18:55:48+00:00"
+            "time": "2021-05-31T09:09:03+00:00"
         },
         {
             "name": "symfony/amqp-messenger",
@@ -11293,9 +11298,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "sumocoders/framework-core-bundle": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
