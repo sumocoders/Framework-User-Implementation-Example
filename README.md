@@ -13,8 +13,9 @@ How to use:
   
 * Check the config folder, mostly:
   * services.yaml
-  * routes.yml
+  * routes.yml (logout route)
   * packages/translation.yaml
+  * bundles.php (TwigExtraBundle moet geactiveerd zijn)
 
 To do:
 * Remove originUsername from core bundle usermenu.html.twig
