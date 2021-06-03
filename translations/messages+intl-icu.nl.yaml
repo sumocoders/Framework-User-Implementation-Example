@@ -11,8 +11,8 @@
 'Confirmation mail successfully sent': 'Bevestigingsmail verstuurd.'
 'It looks like you clicked on an invalid password reset link. Please try again.': 'Ongeldige wachtwoord reset link. Probeer opnieuw.'
 'New password set successfully.': 'Nieuw wachtwoord correct ingesteld.'
-account.mail.confirm.title: 'Foobar - Account activatie'
-account.mail.reset.title: 'Foobar - Wachtwoord reset'
+account.mail.confirm.title: 'Project name - Account activatie'
+account.mail.reset.title: 'Project name - Wachtwoord reset'
 'Create an account': 'Maak een nieuwe account'
 'Check your email for a link to confirm your account. If it doesn’t appear within a few minutes, check your spam folder.': 'Check uw mailbox voor uw activatie email. Indien die er niet binnen een aantal minuten is, check uw spam folder.'
 'Return to sign in': 'Keer terug naar login'
@@ -34,7 +34,7 @@ Add: Toevoegen
 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.': 'Check uw mailbox voor uw wachtwoord reset email. Indien die er niet binnen een aantal minuten is, check uw spam folder.'
 'Enter your user account''s verified email address and we will send you a password reset link.': 'Geef het emailadres van uw account in en u ontvangt binnenkort een email met verdere instructies.'
 'Send password reset email': 'Verstuur email'
-account.mail.welcome: Welkon
+account.mail.welcome: Welkom
 account.mail.confirmAccount: 'Bevestig account'
 account.mail.reset: 'Klik op onderstaande link om uw wachtwoord opnieuw in te stellen.'
 account.mail.resetPassowrd: 'Klik op onderstaande link om uw wachtwoord opnieuw in te stellen.'
