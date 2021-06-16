@@ -44,5 +44,4 @@ security:
         - { path: ^/resend-confirmation, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/confirm, roles: PUBLIC_ACCESS }
-        - { path: ^/forgot-password, roles: PUBLIC_ACCESS }
-        - { path: ^/reset-password, roles: PUBLIC_ACCESS }
+        - { path: ^/password-reset, roles: PUBLIC_ACCESS }
