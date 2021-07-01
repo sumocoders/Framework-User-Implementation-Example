@@ -14,5 +14,8 @@ class UserDataTransferObject
      */
     public string $email;
 
+    /**
+     * @var array<int, string> $roles
+     */
     public array $roles = [];
 }

@@ -43,6 +43,9 @@ class Role
         return $this->role;
     }
 
+    /**
+     * @return array<string, string> $roles
+     */
     public static function getChoices(): array
     {
         return [

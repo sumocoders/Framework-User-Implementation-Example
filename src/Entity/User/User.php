@@ -30,6 +30,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="json")
+     * @var array<int, string> $roles
      */
     private array $roles;
 
@@ -68,6 +69,9 @@ class User implements UserInterface
      */
     private ?DateTime $passwordRequestedAt;
 
+    /**
+     * @param array<int, string> $roles
+     */
     public function __construct(
         string $email,
         array $roles
@@ -83,6 +87,9 @@ class User implements UserInterface
         $this->passwordRequestedAt = null;
     }
 
+    /**
+     * @param array<int, string> $roles
+     */
     public function update(
         string $email,
         array $roles
@@ -128,6 +135,9 @@ class User implements UserInterface
         return array_unique($roles);
     }
 
+    /**
+     * @return array<int, string> $roles
+     */
     public function getDisplayRoles(): array
     {
         return array_map(function (string $role) {

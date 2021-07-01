@@ -2,6 +2,7 @@
 
 namespace App\Controller\User;
 
+use App\Entity\User\User;
 use App\Form\User\Admin\ChangePasswordType;
 use App\Message\User\ChangePassword;
 use SumoCoders\FrameworkCoreBundle\Annotation\Breadcrumb;
@@ -21,6 +22,10 @@ class ProfileController extends AbstractController
         Request $request,
         TranslatorInterface $translator
     ): Response {
+        if (!$this->getUser() instanceof User) {
+            throw new \RuntimeException('Invalid user object');
+        }
+
         $form = $this->createForm(ChangePasswordType::class, new ChangePassword($this->getUser()));
 
         $form->handleRequest($request);

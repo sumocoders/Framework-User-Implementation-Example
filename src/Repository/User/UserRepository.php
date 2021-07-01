@@ -16,6 +16,9 @@ use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * @extends ServiceEntityRepository<User>
+ */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
     private const USERS_PER_PAGE = 9;
