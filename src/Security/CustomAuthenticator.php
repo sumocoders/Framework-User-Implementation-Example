@@ -33,9 +33,9 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
     public function authenticate(Request $request): PassportInterface
     {
         $credentials = [
-            'email' => $request->request->get('login')['email'] ?? '',
-            'password' => $request->request->get('login')['password'] ?? '',
-            'token' => $request->request->get('login')['_token'] ?? '',
+            'email' => $request->request->all('login')['email'] ?? '',
+            'password' => $request->request->all('login')['password'] ?? '',
+            'token' => $request->request->all('login')['_token'] ?? '',
         ];
 
         $request->getSession()->set(Security::LAST_USERNAME, $credentials['email']);
