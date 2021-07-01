@@ -19,6 +19,9 @@ final class LoginType extends AbstractType
                 EmailType::class,
                 [
                     'label' => 'Email',
+                    'attr' => [
+                        'tabindex' => 1,
+                    ],
                 ]
             )
             ->add(
@@ -26,6 +29,9 @@ final class LoginType extends AbstractType
                 PasswordType::class,
                 [
                     'label' => 'Password',
+                    'attr' => [
+                        'tabindex' => 2,
+                    ],
                 ]
             );
     }
