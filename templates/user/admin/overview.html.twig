@@ -62,13 +62,13 @@
           {% endif %}
         </td>
         <td>
-          <a class="text-nowrap" href="{{ path('user_edit', {'user': user.id }) }}">
+          <a class="text-nowrap" href="{{ path('user_edit', {'user': user.id}) }}">
             <i class="fas fa-edit" title="{{ 'Edit user'|trans }}" data-toggle="tooltip" data-placement="top"></i>
           </a>
         </td>
         {% if is_granted('ROLE_ADMIN') %}
         <td>
-          <a class="text-nowrap" href="{{ path('profile', {'_switch_user': user.username }) }}">
+          <a class="text-nowrap" href="{{ path('profile', {'_switch_user': user.username}) }}">
             <i class="fas fa-sign-in-alt" title="{{ 'Switch to user'|trans }}" data-toggle="tooltip" data-placement="top"></i>
           </a>
         </td>

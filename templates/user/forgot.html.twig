@@ -9,9 +9,7 @@
 
         {{ form_start(form) }}
         {{ form_row(form.email) }}
-
         <input type="submit" class="btn btn-secondary" value="{{ 'Send password reset email'|trans }}" />
-        
         {{ form_end(form) }}
     {% endif %}
 {% endblock %}

@@ -5,8 +5,8 @@
         <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security')|raw }}</div>
     {% endif %}
 
-    {{ form_start(form)}}
-    {{ form_row(form.email)}}
+    {{ form_start(form) }}
+    {{ form_row(form.email) }}
     <div class="form-group">
         <div class="d-flex justify-content-between">
             {{ form_label(form.password) }}
