@@ -22,7 +22,7 @@ final class CreateUserHandler implements MessageHandlerInterface
         $this->bus = $bus;
     }
 
-    public function __invoke(CreateUser $message): void
+    public function __invoke(CreateUser $message): User
     {
         $user = new User(
             $message->email,
@@ -34,5 +34,7 @@ final class CreateUserHandler implements MessageHandlerInterface
         $this->userRepository->add($user);
 
         $this->bus->dispatch(new SendConfirmation($user));
+
+        return $user;
     }
 }

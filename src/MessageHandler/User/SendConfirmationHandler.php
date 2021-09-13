@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler\User;
 
+use App\Entity\User\User;
 use App\Message\User\ConfirmUser;
 use App\Message\User\SendConfirmation;
 use App\Repository\User\UserRepository;
@@ -35,7 +36,7 @@ class SendConfirmationHandler implements MessageHandlerInterface
         $this->from = Address::create($from);
     }
 
-    public function __invoke(SendConfirmation $message): void
+    public function __invoke(SendConfirmation $message): User
     {
         $user = $message->getUser();
 
@@ -60,5 +61,7 @@ class SendConfirmationHandler implements MessageHandlerInterface
             ]);
 
         $this->mailer->send($email);
+
+        return $user;
     }
 }
