@@ -116,6 +116,14 @@ class User implements UserInterface
         return $this->email;
     }
 
+    /**
+     * @see UserInterface
+     */
+    public function getUserIdentifier(): string
+    {
+        return $this->email;
+    }
+
     public function getOriginUsername(): string
     {
         return $this->email;
