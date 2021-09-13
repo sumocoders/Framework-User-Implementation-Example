@@ -64,8 +64,12 @@ filter.submit: 'Zoeken'
 
 # Mails
 account.mail.confirm.title: 'Project name - Account activatie'
-account.mail.reset.title: 'Project name - Wachtwoord reset'
-account.mail.welcome: Welkom
-account.mail.confirmAccount: 'Bevestig account'
-account.mail.reset: 'Klik op onderstaande link om uw wachtwoord opnieuw in te stellen.'
-account.mail.resetPassword: 'Klik op onderstaande link om uw wachtwoord opnieuw in te stellen.'
+account.mail.confirm.greeting: 'Hallo,'
+account.mail.confirm.intro: 'Welkom op Project! Klik op onderstaande knop om je account te activeren'
+account.mail.confirm.button: 'Activeer account'
+account.mail.confirm.alternative: 'Indien de knop niet werkt, probeer dan volgende link.'
+account.mail.reset.title: 'Project name - Wachtwoord vergeten'
+account.mail.reset.greeting: 'Hallo,'
+account.mail.reset.intro: 'Klik op onderstaande knop om een nieuw wachtwoord te kiezen.'
+account.mail.reset.button: 'Stel je wachtwoord opnieuw in'
+account.mail.reset.alternative: 'Indien de knop niet werkt, probeer dan volgende link.'
