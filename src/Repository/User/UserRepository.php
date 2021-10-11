@@ -10,8 +10,7 @@ use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
 use Doctrine\Persistence\ManagerRegistry;
-use Pagerfanta\Doctrine\ORM\QueryAdapter;
-use Pagerfanta\Pagerfanta;
+use SumoCoders\FrameworkCoreBundle\Pagination\Paginator;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -88,7 +87,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         }
     }
 
-    public function getAllFilteredUsers(FilterDataTransferObject $filter): Pagerfanta
+    public function getAllFilteredUsers(FilterDataTransferObject $filter): Paginator
     {
         $queryBuilder = $this->createQueryBuilder('u');
 
@@ -98,9 +97,6 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('term', '%' . $filter->term . '%');
         }
 
-        $pager = new Pagerfanta(new QueryAdapter($queryBuilder));
-        $pager->setMaxPerPage(self::USERS_PER_PAGE);
-
-        return $pager;
+        return new Paginator($queryBuilder);
     }
 }

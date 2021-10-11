@@ -78,9 +78,7 @@
     </tbody>
   </table>
 
-  {% if users.haveToPaginate %}
-    <div class="d-flex justify-content-center">
-      {{ pagerfanta(users, 'twitter_bootstrap4_translated', {'omitFirstPage': true, 'next_message': '<span class="text-primary">»</span>', 'prev_message': '<span class="text-primary">«</span>'}) }}
-    </div>
-  {% endif %}
+  <div class="d-flex justify-content-center">
+    {{ pagination(users) }}
+  </div>
 {% endblock %}
