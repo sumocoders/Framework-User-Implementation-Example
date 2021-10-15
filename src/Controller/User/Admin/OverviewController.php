@@ -5,12 +5,10 @@ namespace App\Controller\User\Admin;
 use App\DataTransferObject\User\FilterDataTransferObject;
 use App\Form\User\Admin\FilterType;
 use App\Repository\User\UserRepository;
-use Pagerfanta\Exception\NotValidCurrentPageException;
 use SumoCoders\FrameworkCoreBundle\Annotation\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OverviewController extends AbstractController
@@ -32,11 +30,7 @@ class OverviewController extends AbstractController
 
         $paginatedUsers = $userRepository->getAllFilteredUsers($form->getData());
 
-        try {
-            $paginatedUsers->setCurrentPage($request->query->getInt('page', 1));
-        } catch (NotValidCurrentPageException $exception) {
-            throw new NotFoundHttpException();
-        }
+        $paginatedUsers->paginate($request->query->getInt('page', 1));
 
         return $this->render('user/admin/overview.html.twig', [
             'form' => $form->createView(),
