@@ -64,7 +64,7 @@ filter.submit: 'Zoeken'
 
 # Mails
 account.mail.confirm.title: 'Project name - Account activatie'
-account.mail.confirm.greeting: 'Hallo'
+account.mail.confirm.greeting: 'Hallo,'
 account.mail.confirm.intro: 'Er werd voor jou een account aangemaakt op ons platform! Om je account te gebruiken moet je deze nog activeren. Dat kan je doen door op onderstaande knop te klikken:'
 account.mail.confirm.button: 'Activeer nu je account'
 account.mail.confirm.alternative: 'Kan je de knop niet aanklikken dan kan je onderstaande link kopiëren in je browser:'
