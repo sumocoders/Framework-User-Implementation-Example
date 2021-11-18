@@ -3,23 +3,11 @@
 {% block content %}
     <p>{{ 'account.mail.confirm.greeting'|trans }}</p>
     <p>{{ 'account.mail.confirm.intro'|trans }}</p>
-    <table class="button small-expanded rounded">
-        <tbody>
-        <tr>
-            <td>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td><a href="{{ confirmationLink }}">{{ 'account.mail.confirm.button'|trans }}</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+    <button href="{{ confirmationLink }}" class="button small-expanded rounded">
+        {{ 'account.mail.confirm.button'|trans }}
+    </button>
 
     <p class="text-muted dark-gray"><small>{{ 'account.mail.confirm.alternative'|trans }}
-            <a href="{{ confirmationLink }}">{{ confirmationLink }}</a></small></p>
+    <a href="{{ confirmationLink }}">{{ confirmationLink }}</a></small></p>
     <p>account.mail.confirm.signature<br>{{ fallbacks.get('site_title') }}</p>
 {% endblock %}
