@@ -3,21 +3,11 @@
 {% block content %}
     <p>{{ 'account.mail.reset.greeting'|trans }}</p>
     <p>{{ 'account.mail.reset.intro'|trans }}</p>
-    <table class="button expanded rounded">
-        <tbody>
-        <tr>
-            <td>
-                <table>
-                    <tbody>
-                    <tr>
-                        <td><a href="{{ resetLink }}">{{ 'account.mail.reset.button'|trans }}</a></td>
-                    </tr>
-                    </tbody>
-                </table>
-            </td>
-        </tr>
-        </tbody>
-    </table>
-    <p>{{ 'account.mail.reset.alternative'|trans }}</p>
-    <a href="{{ resetLink }}">{{ resetLink }}</a>
+    <button href="{{ resetLink }}" class="button small-expanded rounded">
+        {{ 'account.mail.reset.button'|trans }}
+    </button>
+
+    <p class="text-muted dark-gray"><small>{{ 'account.mail.reset.alternative'|trans }}
+    <a href="{{ resetLink }}">{{ resetLink }}</a></small></p>
+    <p>account.mail.reset.signature<br>{{ fallbacks.get('site_title') }}</p>
 {% endblock %}
