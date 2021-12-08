@@ -76,7 +76,7 @@
 'The host could not be resolved.': 'De hostnaam kon niet worden bepaald.'
 'This value does not match the expected {{ charset }} charset.': 'Deze waarde is niet in de verwachte tekencodering {{ charset }}.'
 'This is not a valid Business Identifier Code (BIC).': 'Dit is geen geldige bedrijfsidentificatiecode (BIC/SWIFT).'
-Error: __Error
+Error: Fout
 'This is not a valid UUID.': 'Dit is geen geldige UUID.'
 'This value should be a multiple of {{ compared_value }}.': 'Deze waarde zou een meervoud van {{ compared_value }} moeten zijn.'
 'This Business Identifier Code (BIC) is not associated with IBAN {{ iban }}.': 'Deze bedrijfsidentificatiecode (BIC) is niet gekoppeld aan IBAN {{ iban }}.'
@@ -94,6 +94,10 @@ Error: __Error
 'This value should satisfy at least one of the following constraints:': 'Deze waarde moet voldoen aan tenminste een van de volgende voorwaarden:'
 'Each element of this collection should satisfy its own set of constraints.': 'Elk element van deze collectie moet voldoen aan zijn eigen set voorwaarden.'
 'This value is not a valid International Securities Identification Number (ISIN).': 'Deze waarde is geen geldig International Securities Identification Number (ISIN).'
+'This value should be a valid expression.': 'Deze waarde moet een geldige expressie zijn.'
+'This value is not a valid CSS color.': 'Deze waarde is geen geldige CSS kleur.'
+'This value is not a valid CIDR notation.': 'Deze waarde is geen geldige CIDR notatie.'
+'The value of the netmask should be between {{ min }} and {{ max }}.': 'De waarde van de netmask moet zich tussen {{ min }} en {{ max }} bevinden.'
 'This form should not contain extra fields.': 'Dit formulier mag geen extra velden bevatten.'
 'The uploaded file was too large. Please try to upload a smaller file.': 'Het geüploade bestand is te groot. Probeer een kleiner bestand te uploaden.'
 'The CSRF token is invalid. Please try to resubmit the form.': 'De CSRF-token is ongeldig. Probeer het formulier opnieuw te versturen.'

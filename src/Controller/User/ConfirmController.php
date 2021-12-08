@@ -12,9 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ConfirmController extends AbstractController
 {
-    /**
-     * @Route("/confirm/{token}", name="confirm")
-     */
+    #[Route('/confirm/{token}', name: 'confirm')]
     public function __invoke(
         string $token,
         UserRepository $userRepository,

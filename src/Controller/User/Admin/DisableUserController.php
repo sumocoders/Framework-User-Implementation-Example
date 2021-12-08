@@ -11,9 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class DisableUserController extends AbstractController
 {
-    /**
-     * @Route("/admin/users/{user}/disable", name="user_disable")
-     */
+    #[Route('/admin/users/{user}/disable', name: 'user_disable')]
     public function __invoke(
         User $user,
         TranslatorInterface $translator

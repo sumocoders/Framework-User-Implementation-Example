@@ -4,7 +4,7 @@ namespace App\Controller\User\Admin;
 
 use App\Form\User\Admin\UserType;
 use App\Message\User\CreateUser;
-use SumoCoders\FrameworkCoreBundle\Annotation\Breadcrumb;
+use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,10 +13,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AddUserController extends AbstractController
 {
-    /**
-     * @Route("/admin/users/add", name="user_add")
-     * @Breadcrumb("add", parent="user_overview")
-     */
+    #[Route('/admin/users/add', name: 'user_add')]
+    #[Breadcrumb('add', parent:['name' => 'users_overview'])]
     public function __invoke(
         Request $request,
         TranslatorInterface $translator
