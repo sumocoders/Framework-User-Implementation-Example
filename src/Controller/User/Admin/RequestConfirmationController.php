@@ -11,9 +11,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RequestConfirmationController extends AbstractController
 {
-    /**
-     * @Route("/admin/users/{user}/request-confirmation", name="request_confirmation_admin")
-     */
+    #[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation_admin')]
     public function __invoke(
         User $user,
         TranslatorInterface $translator
