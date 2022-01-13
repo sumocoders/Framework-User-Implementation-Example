@@ -8,17 +8,17 @@ use App\Message\User\SendConfirmation;
 use App\Repository\User\UserRepository;
 use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class RegisterUserHandler implements MessageHandlerInterface
 {
     private UserRepository $userRepository;
-    private UserPasswordEncoderInterface $passwordEncoder;
+    private UserPasswordHasherInterface $passwordEncoder;
     private MessageBusInterface $bus;
 
     public function __construct(
         UserRepository $userRepository,
-        UserPasswordEncoderInterface $passwordEncoder,
+        UserPasswordHasherInterface $passwordEncoder,
         MessageBusInterface $bus
     ) {
         $this->userRepository = $userRepository;
@@ -33,7 +33,7 @@ final class RegisterUserHandler implements MessageHandlerInterface
             $message->roles
         );
 
-        $encodedPassword = $this->passwordEncoder->encodePassword($user, $message->password);
+        $encodedPassword = $this->passwordEncoder->hashPassword($user, $message->password);
 
         $user->setPassword($encodedPassword);
 
