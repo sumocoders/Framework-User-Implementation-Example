@@ -20,8 +20,6 @@ use Symfony\Component\Security\Core\User\PasswordUpgraderInterface;
  */
 class UserRepository extends ServiceEntityRepository implements PasswordUpgraderInterface
 {
-    private const USERS_PER_PAGE = 9;
-
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, User::class);
