@@ -34,9 +34,9 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
         $formData = $request->request->all('login');
 
         $credentials = [
-            'email' => (string) $formData['email'] ?? '',
-            'password' => (string) $formData['password'] ?? '',
-            'token' => (string) $formData['_token'] ?? '',
+            'email' => (string) ($formData['email'] ?? ''),
+            'password' => (string) ($formData['password'] ?? ''),
+            'token' => (string) ($formData['_token'] ?? ''),
         ];
 
         $request->getSession()->set(Security::LAST_USERNAME, $credentials['email']);
