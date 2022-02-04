@@ -13,4 +13,3 @@ parameters:
     - src/
   excludes_analyse:
     - %rootDir%/../../../src/Migrations
-q
