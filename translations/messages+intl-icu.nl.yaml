@@ -61,6 +61,7 @@ user: 'Gebruiker'
 'It looks like you clicked on an invalid password reset link. Please try again.': 'Ongeldige wachtwoord reset link. Probeer opnieuw.'
 'New password set successfully.': 'Nieuw wachtwoord correct ingesteld.'
 filter.submit: 'Zoeken'
+'You have to login in order to access this page.': 'Log in om deze pagina te bezoeken.'
 
 # Mails
 account.mail.confirm.title: 'Project name - Account activatie'
