@@ -7,6 +7,7 @@ use App\Message\User\ConfirmUser;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -16,7 +17,8 @@ class ConfirmController extends AbstractController
     public function __invoke(
         string $token,
         UserRepository $userRepository,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MessageBusInterface $bus
     ): Response {
         $user = $userRepository->checkConfirmationToken($token);
 
@@ -29,7 +31,7 @@ class ConfirmController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $this->dispatchMessage(new ConfirmUser($user));
+        $bus->dispatch(new ConfirmUser($user));
 
         $this->addFlash(
             'success',

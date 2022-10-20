@@ -9,6 +9,7 @@ use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -18,7 +19,8 @@ class ProfileController extends AbstractController
     #[Breadcrumb('profile')]
     public function __invoke(
         Request $request,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MessageBusInterface $bus
     ): Response {
         if (!$this->getUser() instanceof User) {
             throw new \RuntimeException('Invalid user object');
@@ -29,7 +31,7 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->dispatchMessage($form->getData());
+            $bus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
@@ -38,8 +40,8 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('user/profile.html.twig', [
-        'user' => $this->getUser(),
-        'form' => $form->createView(),
+            'user' => $this->getUser(),
+            'form' => $form->createView(),
         ]);
     }
 }
