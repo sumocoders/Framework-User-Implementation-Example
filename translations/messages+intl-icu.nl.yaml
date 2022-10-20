@@ -46,6 +46,7 @@ profile: 'Profiel'
 # Roles
 admin: 'Beheerder'
 user: 'Gebruiker'
+super_admin: 'Superbeheerder'
 
 # Toasts
 'User successfully added.': 'Gebruiker toegevoegd.'
