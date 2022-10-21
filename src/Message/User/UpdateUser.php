@@ -7,11 +7,8 @@ use App\Entity\User\User;
 
 class UpdateUser extends UserDataTransferObject
 {
-    private User $user;
-
-    public function __construct(User $user)
+    public function __construct(private readonly User $user)
     {
-        $this->user = $user;
         $this->email = $user->getEmail();
         $this->roles = $user->getRoles();
     }

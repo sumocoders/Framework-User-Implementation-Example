@@ -9,15 +9,10 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 final class ResetPasswordHandler implements MessageHandlerInterface
 {
-    private UserRepository $userRepository;
-    private UserPasswordHasherInterface $passwordEncoder;
-
     public function __construct(
-        UserRepository $userRepository,
-        UserPasswordHasherInterface $passwordEncoder
+        private readonly UserRepository $userRepository,
+        private readonly UserPasswordHasherInterface $passwordEncoder
     ) {
-        $this->userRepository = $userRepository;
-        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function __invoke(ResetPassword $message): void

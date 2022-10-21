@@ -6,12 +6,10 @@ use App\Entity\User\User;
 
 class ResetPassword
 {
-    private User $user;
     public string $password;
 
-    public function __construct(User $user)
+    public function __construct(private readonly User $user)
     {
-        $this->user = $user;
     }
 
     public function getUser(): User

@@ -4,7 +4,7 @@ namespace App\ValueObject\User;
 
 use App\Exception\User\InvalidRoleException;
 
-class Role
+class Role implements \Stringable
 {
     private const USER = 'ROLE_USER';
     private const ADMIN = 'ROLE_ADMIN';
@@ -12,12 +12,9 @@ class Role
         self::USER,
         self::ADMIN,
     ];
-    private string $role;
 
-    public function __construct(string $role)
+    public function __construct(private readonly string $role)
     {
-        $this->role = $role;
-
         $this->validate();
     }
 

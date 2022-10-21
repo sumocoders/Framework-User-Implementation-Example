@@ -13,18 +13,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class UserChecker implements UserCheckerInterface
 {
-    private TranslatorInterface $translator;
-    private RouterInterface $router;
-    private UserRepository $userRepository;
-
     public function __construct(
-        TranslatorInterface $translator,
-        RouterInterface $router,
-        UserRepository $userRepository
+        private readonly TranslatorInterface $translator,
+        private readonly RouterInterface $router,
+        private readonly UserRepository $userRepository
     ) {
-        $this->translator = $translator;
-        $this->router = $router;
-        $this->userRepository  = $userRepository;
     }
 
     public function checkPreAuth(UserInterface $user): void

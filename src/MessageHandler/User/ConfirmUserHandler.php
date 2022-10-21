@@ -8,12 +8,8 @@ use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
 
 class ConfirmUserHandler implements MessageHandlerInterface
 {
-    private UserRepository $userRepository;
-
-    public function __construct(
-        UserRepository $userRepository
-    ) {
-        $this->userRepository = $userRepository;
+    public function __construct(private readonly UserRepository $userRepository)
+    {
     }
 
     public function __invoke(ConfirmUser $message): void

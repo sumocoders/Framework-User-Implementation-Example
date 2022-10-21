@@ -3,20 +3,15 @@
 namespace App\Message\User;
 
 use App\Entity\User\User;
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class ChangePassword
 {
-    private User $user;
-
-  /**
-   * @Assert\NotBlank()
-   */
+    #[NotBlank]
     public string $password;
 
-    public function __construct(User $user)
+    public function __construct(private readonly User $user)
     {
-        $this->user = $user;
     }
 
     public function getUser(): User
