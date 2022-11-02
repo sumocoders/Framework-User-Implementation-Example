@@ -11,15 +11,10 @@ use Symfony\Component\Messenger\MessageBusInterface;
 
 final class CreateUserHandler implements MessageHandlerInterface
 {
-    private UserRepository $userRepository;
-    private MessageBusInterface $bus;
-
     public function __construct(
-        UserRepository $userRepository,
-        MessageBusInterface $bus
+        private readonly UserRepository $userRepository,
+        private readonly MessageBusInterface $bus
     ) {
-        $this->userRepository = $userRepository;
-        $this->bus = $bus;
     }
 
     public function __invoke(CreateUser $message): User

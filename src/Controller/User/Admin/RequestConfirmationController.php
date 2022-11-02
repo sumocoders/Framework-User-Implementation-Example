@@ -6,6 +6,7 @@ use App\Entity\User\User;
 use App\Message\User\SendConfirmation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -14,7 +15,8 @@ class RequestConfirmationController extends AbstractController
     #[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation_admin')]
     public function __invoke(
         User $user,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MessageBusInterface $bus
     ): Response {
         if ($user->isConfirmed()) {
             $this->addFlash(
@@ -25,7 +27,7 @@ class RequestConfirmationController extends AbstractController
             $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
         }
 
-        $this->dispatchMessage(new SendConfirmation($user));
+        $bus->dispatch(new SendConfirmation($user));
 
         $this->addFlash(
             'success',

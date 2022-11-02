@@ -20,15 +20,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'integer')]
     private int $id;
 
-    #[ORM\Column(type: 'string', length: 180, unique: true)]
-    private string $email;
-
-    /**
-     * @var array<int, string> $roles
-     */
-    #[ORM\Column(type: 'json')]
-    private array $roles;
-
     #[ORM\Column(type: 'string', nullable: true)]
     private ?string $password;
 
@@ -54,12 +45,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @param array<int, string> $roles
      */
     public function __construct(
-        string $email,
-        array $roles
+        #[ORM\Column(type: 'string', length: 180, unique: true)]
+        private string $email,
+        #[ORM\Column(type: 'json')]
+        private array $roles
     ) {
-        $this->email = $email;
         $this->password = null;
-        $this->roles = $roles;
         $this->enabled = false;
         $this->confirmationToken = null;
         $this->confirmationRequestedAt = null;
@@ -120,7 +111,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         // guarantee every user at least has ROLE_USER
         $roles[] = Role::user();
 
-
         return array_unique($roles);
     }
 
@@ -129,10 +119,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getDisplayRoles(): array
     {
-        return array_map(function (string $role) {
-            return strtolower(substr($role, 5));
-        },
-            $this->getRoles());
+        return array_map(fn (string $role) => strtolower(substr($role, 5)), $this->getRoles());
     }
 
     /**

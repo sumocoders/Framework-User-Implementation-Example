@@ -9,6 +9,7 @@ use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -19,14 +20,15 @@ class EditUserController extends AbstractController
     public function __invoke(
         User $user,
         Request $request,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MessageBusInterface $bus
     ): Response {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->dispatchMessage($form->getData());
+            $bus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',

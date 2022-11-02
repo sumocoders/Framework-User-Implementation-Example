@@ -14,23 +14,15 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SendPasswordResetHandler implements MessageHandlerInterface
 {
-    private MailerInterface $mailer;
-    private TranslatorInterface $translator;
-    private RouterInterface $router;
-    private Address $from;
-    private UserRepository $userRepository;
+    private readonly Address $from;
 
     public function __construct(
-        MailerInterface $mailer,
-        TranslatorInterface $translator,
-        RouterInterface $router,
-        UserRepository $userRepository,
+        private readonly MailerInterface $mailer,
+        private readonly TranslatorInterface $translator,
+        private readonly RouterInterface $router,
+        private readonly UserRepository $userRepository,
         string $from
     ) {
-        $this->mailer = $mailer;
-        $this->translator = $translator;
-        $this->router = $router;
-        $this->userRepository = $userRepository;
         $this->from = Address::create($from);
     }
 

@@ -14,13 +14,10 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class UniqueEmailValidator extends ConstraintValidator
 {
-    private UserRepository $userRepository;
-
-    public function __construct(
-        UserRepository $userRepository
-    ) {
-        $this->userRepository = $userRepository;
+    public function __construct(private readonly UserRepository $userRepository)
+    {
     }
+
     public function validate($value, Constraint $constraint): void
     {
         if (!$constraint instanceof UniqueEmail) {

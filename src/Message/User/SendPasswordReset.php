@@ -2,13 +2,12 @@
 
 namespace App\Message\User;
 
-use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class SendPasswordReset
 {
-    /**
-     * @Assert\Email()
-     * @Assert\NotBlank()
-     */
+    #[Email]
+    #[NotBlank]
     public ?string $email = null;
 }

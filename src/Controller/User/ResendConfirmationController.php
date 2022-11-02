@@ -7,6 +7,7 @@ use App\Message\User\SendConfirmation;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -16,7 +17,8 @@ final class ResendConfirmationController extends AbstractController
     public function __invoke(
         string $token,
         UserRepository $userRepository,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MessageBusInterface $bus
     ): Response {
         $user = $userRepository->findOneBy(['confirmationToken' => $token]);
 
@@ -29,7 +31,7 @@ final class ResendConfirmationController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $this->dispatchMessage(new SendConfirmation($user));
+        $bus->dispatch(new SendConfirmation($user));
 
         $this->addFlash('success', $translator->trans('Confirmation mail successfully resent'));
 
