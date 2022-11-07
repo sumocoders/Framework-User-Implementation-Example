@@ -15,7 +15,9 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class UserCheckerTest extends TestCase
 {
-    public function testCheckPreAuthFailsIfUnconfirmed()
+    private UserChecker $mockUserChecker;
+
+    protected function setUp(): void
     {
         $mockRouter = $this->createMock(RouterInterface::class);
         $mockRouter->expects($this->once())->method('generate');
@@ -27,53 +29,36 @@ class UserCheckerTest extends TestCase
 
         $mockUserRepository = $this->createMock(UserRepository::class);
 
-        $mockUserChecker = new UserChecker(
+        $this->mockUserChecker = new UserChecker(
             $mockTranslator,
             $mockRouter,
             $mockUserRepository
         );
+    }
 
+    public function testCheckPreAuthFailsIfUnconfirmed()
+    {
         $this->expectException(UnconfirmedAccountException::class);
 
         $userMock = new User('john.doe@foo.bar', []);
-        $mockUserChecker->checkPreAuth($userMock);
+        $this->mockUserChecker->checkPreAuth($userMock);
     }
 
     public function testCheckPreAuthFailsIfEnabled()
     {
-        $mockRouter = $this->createMock(RouterInterface::class);
-        $mockTranslator = $this->createMock(TranslatorInterface::class);
-        $mockUserRepository = $this->createMock(UserRepository::class);
-
-        $mockUserChecker = new UserChecker(
-            $mockTranslator,
-            $mockRouter,
-            $mockUserRepository
-        );
-
         $this->expectException(DisabledException::class);
 
         $userMock = new User('john.doe@foo.bar', []);
         $userMock->confirm();
         $userMock->disable();
-        $mockUserChecker->checkPreAuth($userMock);
+        $this->mockUserChecker->checkPreAuth($userMock);
     }
 
     public function testCheckPostAuthErasesPasswordRequest()
     {
-        $mockRouter = $this->createMock(RouterInterface::class);
-        $mockTranslator = $this->createMock(TranslatorInterface::class);
-        $mockUserRepository = $this->createMock(UserRepository::class);
-
-        $mockUserChecker = new UserChecker(
-            $mockTranslator,
-            $mockRouter,
-            $mockUserRepository
-        );
-
         $userMock = new User('john.doe@foo.bar', []);
         $userMock->requestPassword();
-        $mockUserChecker->checkPostAuth($userMock);
+        $this->mockUserChecker->checkPostAuth($userMock);
         $this->assertNull($userMock->getPasswordResetToken());
         $this->assertNull($userMock->getPasswordRequestedAt());
     }
