@@ -1,5 +1,5 @@
 .phpcs-cache
-/vendor/
+.phpunit.result.cache
 
 ###> symfony/framework-bundle ###
 /.env.local
