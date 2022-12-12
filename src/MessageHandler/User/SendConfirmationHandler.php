@@ -6,13 +6,15 @@ use App\Entity\User\User;
 use App\Message\User\SendConfirmation;
 use App\Repository\User\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Mime\Address;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-class SendConfirmationHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+class SendConfirmationHandler
 {
     private readonly Address $from;
 
@@ -21,6 +23,7 @@ class SendConfirmationHandler implements MessageHandlerInterface
         private readonly TranslatorInterface $translator,
         private readonly RouterInterface $router,
         private readonly UserRepository $userRepository,
+        #[Autowire('%mailer.default_sender_name% <%mailer.default_sender_email%>')]
         string $from
     ) {
         $this->from = Address::create($from);

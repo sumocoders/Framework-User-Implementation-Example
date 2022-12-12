@@ -4,9 +4,10 @@ namespace App\MessageHandler\User;
 
 use App\Message\User\UpdateUser;
 use App\Repository\User\UserRepository;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-final class UpdateUserHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class UpdateUserHandler
 {
     public function __construct(private readonly UserRepository $userRepository)
     {
