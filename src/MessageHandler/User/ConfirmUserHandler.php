@@ -4,9 +4,10 @@ namespace App\MessageHandler\User;
 
 use App\Message\User\ConfirmUser;
 use App\Repository\User\UserRepository;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
-class ConfirmUserHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+class ConfirmUserHandler
 {
     public function __construct(private readonly UserRepository $userRepository)
     {

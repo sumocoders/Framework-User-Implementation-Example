@@ -4,10 +4,11 @@ namespace App\MessageHandler\User;
 
 use App\Message\User\ChangePassword;
 use App\Repository\User\UserRepository;
-use Symfony\Component\Messenger\Handler\MessageHandlerInterface;
+use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
-final class ChangePasswordHandler implements MessageHandlerInterface
+#[AsMessageHandler]
+final class ChangePasswordHandler
 {
     public function __construct(
         private readonly UserRepository $userRepository,
