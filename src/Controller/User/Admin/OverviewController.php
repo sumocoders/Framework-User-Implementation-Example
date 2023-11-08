@@ -9,6 +9,7 @@ use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Annotation\Route;
 
 class OverviewController extends AbstractController
@@ -17,7 +18,9 @@ class OverviewController extends AbstractController
     #[Breadcrumb('users')]
     public function __invoke(
         Request $request,
-        UserRepository $userRepository
+        UserRepository $userRepository,
+        #[MapQueryParameter]
+        ?int $page = 1
     ): Response {
         $form = $this->createForm(
             FilterType::class,
@@ -27,8 +30,7 @@ class OverviewController extends AbstractController
         $form->handleRequest($request);
 
         $paginatedUsers = $userRepository->getAllFilteredUsers($form->getData());
-
-        $paginatedUsers->paginate($request->query->getInt('page', 1));
+        $paginatedUsers->paginate($page);
 
         return $this->render('user/admin/overview.html.twig', [
             'form' => $form->createView(),
