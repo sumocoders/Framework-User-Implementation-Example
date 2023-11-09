@@ -25,6 +25,6 @@ class DisableUserController extends AbstractController
             $translator->trans('User successfully disabled.')
         );
 
-        return $this->redirectToRoute('app_user_admin_overview');
+        return $this->redirectToRoute(OverviewController::class);
     }
 }

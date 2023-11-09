@@ -31,7 +31,7 @@ class ResetPasswordController extends AbstractController
                 $translator->trans('It looks like you clicked on an invalid password reset link. Please try again.')
             );
 
-            return $this->redirectToRoute('app_user_forgot_password');
+            return $this->redirectToRoute(ForgotPasswordController::class);
         }
 
         $form = $this->createForm(ResetPasswordType::class, new ResetPassword($user));
@@ -46,7 +46,7 @@ class ResetPasswordController extends AbstractController
                 $translator->trans('New password set successfully.')
             );
 
-            return $this->redirectToRoute('app_user_login');
+            return $this->redirectToRoute(LoginController::class);
         }
 
         return $this->render('user/reset.html.twig', [

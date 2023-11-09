@@ -25,6 +25,6 @@ class EnableUserController extends AbstractController
             $translator->trans('User successfully enabled.')
         );
 
-        return $this->redirectToRoute('app_user_admin_overview');
+        return $this->redirectToRoute(OverviewController::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler\User;
 
+use App\Controller\User\ConfirmController;
 use App\Entity\User\User;
 use App\Message\User\SendConfirmation;
 use App\Repository\User\UserRepository;
@@ -44,7 +45,7 @@ class SendConfirmationHandler
             ->htmlTemplate('user/mails/confirm.html.twig')
             ->context([
                 'confirmationLink' => $this->router->generate(
-                    'confirm',
+                    ConfirmController::class,
                     [
                         'token' => $user->getConfirmationToken(),
                     ],

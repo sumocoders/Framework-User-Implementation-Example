@@ -2,6 +2,8 @@
 
 namespace App\Security;
 
+use App\Controller\User\LoginController;
+use App\Controller\User\ProfileController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -20,7 +22,7 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
 
-    final public const LOGIN_ROUTE = 'app_user_login';
+    final public const LOGIN_ROUTE = LoginController::class;
 
     public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
     {
@@ -54,7 +56,7 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('app_user_profile'));
+        return new RedirectResponse($this->urlGenerator->generate(ProfileController::class));
     }
 
     protected function getLoginUrl(Request $request): string

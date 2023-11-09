@@ -33,7 +33,7 @@ class AddUserController extends AbstractController
                 $translator->trans('User successfully added.')
             );
 
-            return $this->redirectToRoute('app_user_admin_overview');
+            return $this->redirectToRoute(OverviewController::class);
         }
 
         return $this->render('user/admin/add.html.twig', [
