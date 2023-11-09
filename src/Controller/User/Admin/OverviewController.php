@@ -20,7 +20,7 @@ class OverviewController extends AbstractController
         Request $request,
         UserRepository $userRepository,
         #[MapQueryParameter]
-        ?int $page = 1
+        int $page = 1
     ): Response {
         $form = $this->createForm(
             FilterType::class,
