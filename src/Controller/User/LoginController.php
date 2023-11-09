@@ -11,12 +11,12 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
-    #[Route('/login', name: 'login')]
+    #[Route('/login')]
     public function __invoke(
         AuthenticationUtils $authenticationUtils
     ): Response {
         if ($this->getUser() instanceof User) {
-            return $this->redirectToRoute('profile');
+            return $this->redirectToRoute('app_user_profile');
         }
 
         $form = $this->createForm(LoginType::class, [

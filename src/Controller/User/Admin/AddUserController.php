@@ -14,8 +14,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AddUserController extends AbstractController
 {
-    #[Route('/admin/users/add', name: 'user_add')]
-    #[Breadcrumb('add', parent:['name' => 'user_overview'])]
+    #[Route('/admin/users/add')]
+    #[Breadcrumb('add', parent:['name' => 'app_user_admin_overview'])]
     public function __invoke(
         Request $request,
         TranslatorInterface $translator,
@@ -33,7 +33,7 @@ class AddUserController extends AbstractController
                 $translator->trans('User successfully added.')
             );
 
-            return $this->redirectToRoute('user_overview');
+            return $this->redirectToRoute('app_user_admin_overview');
         }
 
         return $this->render('user/admin/add.html.twig', [

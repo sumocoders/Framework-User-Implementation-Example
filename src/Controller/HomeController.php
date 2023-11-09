@@ -8,9 +8,9 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name:'home')]
+    #[Route('/')]
     public function __invoke(): Response
     {
-        return $this->redirectToRoute('profile');
+        return $this->redirectToRoute('app_user_profile');
     }
 }

@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResetPasswordController extends AbstractController
 {
-    #[Route('/password-reset/{token}', name: 'reset_password')]
+    #[Route('/password-reset/{token}')]
     public function __invoke(
         string $token,
         Request $request,
@@ -31,7 +31,7 @@ class ResetPasswordController extends AbstractController
                 $translator->trans('It looks like you clicked on an invalid password reset link. Please try again.')
             );
 
-            return $this->redirectToRoute('forgot_password');
+            return $this->redirectToRoute('app_user_forgot_password');
         }
 
         $form = $this->createForm(ResetPasswordType::class, new ResetPassword($user));
@@ -46,7 +46,7 @@ class ResetPasswordController extends AbstractController
                 $translator->trans('New password set successfully.')
             );
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute('app_user_login');
         }
 
         return $this->render('user/reset.html.twig', [

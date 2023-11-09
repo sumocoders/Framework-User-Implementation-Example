@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ConfirmController extends AbstractController
 {
-    #[Route('/confirm/{token}', name: 'confirm')]
+    #[Route('/confirm/{token}')]
     public function __invoke(
         string $token,
         UserRepository $userRepository,
@@ -44,7 +44,7 @@ class ConfirmController extends AbstractController
          * to the password reset page after confirming.
          */
         if ($user->getPasswordResetToken() !== null) {
-            return $this->redirectToRoute('reset_password', ['token' => $user->getPasswordResetToken()]);
+            return $this->redirectToRoute('app_user_reset_password', ['token' => $user->getPasswordResetToken()]);
         }
 
         return $this->redirectToRoute('login');

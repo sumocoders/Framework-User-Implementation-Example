@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProfileController extends AbstractController
 {
-    #[Route('/profile', name: 'profile')]
+    #[Route('/profile')]
     #[Breadcrumb('profile')]
     public function __invoke(
         Request $request,
