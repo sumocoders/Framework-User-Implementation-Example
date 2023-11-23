@@ -19,6 +19,8 @@ security:
             provider: app_user_provider
             custom_authenticator: App\Security\CustomAuthenticator
             user_checker: App\Security\UserChecker
+            login_throttling:
+                max_attempts: 5
 
             logout:
                 path: logout
