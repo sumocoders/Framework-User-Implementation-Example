@@ -16,6 +16,7 @@
         "symfony/mailgun-mailer": "^7.0",
         "symfony/messenger": "^7.0",
         "symfony/monolog-bundle": "^3.5",
+        "symfony/rate-limiter": "^7.0",
         "symfony/security-bundle": "^7.0",
         "symfony/validator": "^7.0",
         "symfony/web-profiler-bundle": "^7.0",

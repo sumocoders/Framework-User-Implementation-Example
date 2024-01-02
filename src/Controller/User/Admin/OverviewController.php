@@ -30,7 +30,6 @@ class OverviewController extends AbstractController
         $form->handleRequest($request);
 
         $paginatedUsers = $userRepository->getAllFilteredUsers($form->getData());
-
         $paginatedUsers->paginate($page);
 
         return $this->render('user/admin/overview.html.twig', [
