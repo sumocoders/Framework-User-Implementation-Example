@@ -23,7 +23,7 @@ security:
                 max_attempts: 5
 
             logout:
-                path: logout
+                path: app_logout
                 # target: app_any_route
 
             remember_me:

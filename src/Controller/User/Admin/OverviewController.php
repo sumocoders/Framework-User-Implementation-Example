@@ -14,13 +14,13 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class OverviewController extends AbstractController
 {
-    #[Route('/admin/users', name: 'user_overview')]
+    #[Route('/admin/users')]
     #[Breadcrumb('users')]
     public function __invoke(
         Request $request,
         UserRepository $userRepository,
         #[MapQueryParameter]
-        int $page = 1
+        ?int $page = 1
     ): Response {
         $form = $this->createForm(
             FilterType::class,

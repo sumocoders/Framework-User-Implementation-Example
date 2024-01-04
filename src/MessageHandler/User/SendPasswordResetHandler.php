@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler\User;
 
+use App\Controller\User\ResetPasswordController;
 use App\Entity\User\User;
 use App\Message\User\SendPasswordReset;
 use App\Repository\User\UserRepository;
@@ -47,7 +48,7 @@ class SendPasswordResetHandler
                 ->htmlTemplate('user/mails/reset.html.twig')
                 ->context([
                     'resetLink' => $this->router->generate(
-                        'reset_password',
+                        ResetPasswordController::class,
                         [
                             'token' => $user->getPasswordResetToken(),
                         ],

@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ConfirmController extends AbstractController
 {
-    #[Route('/confirm/{token}', name: 'confirm')]
+    #[Route('/confirm/{token}')]
     public function __invoke(
         string $token,
         UserRepository $userRepository,
@@ -28,7 +28,7 @@ class ConfirmController extends AbstractController
                 $translator->trans('It looks like you clicked on an invalid account activation link. Please try again.')
             );
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute(LoginController::class);
         }
 
         $bus->dispatch(new ConfirmUser($user));
@@ -44,7 +44,7 @@ class ConfirmController extends AbstractController
          * to the password reset page after confirming.
          */
         if ($user->getPasswordResetToken() !== null) {
-            return $this->redirectToRoute('reset_password', ['token' => $user->getPasswordResetToken()]);
+            return $this->redirectToRoute(ResetPasswordController::class, ['token' => $user->getPasswordResetToken()]);
         }
 
         return $this->redirectToRoute('login');

@@ -14,7 +14,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegisterController extends AbstractController
 {
-    #[Route('/register', name: 'register')]
+    #[Route('/register')]
     public function __invoke(
         Request $request,
         SessionInterface $session,

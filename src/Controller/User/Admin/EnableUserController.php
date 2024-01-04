@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EnableUserController extends AbstractController
 {
-    #[Route('/admin/users/{user}/enable', name: 'user_enable')]
+    #[Route('/admin/users/{user}/enable')]
     public function __invoke(
         User $user,
         TranslatorInterface $translator,
@@ -25,6 +25,6 @@ class EnableUserController extends AbstractController
             $translator->trans('User successfully enabled.')
         );
 
-        return $this->redirectToRoute('user_overview');
+        return $this->redirectToRoute(OverviewController::class);
     }
 }

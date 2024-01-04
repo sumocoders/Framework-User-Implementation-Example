@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ResendConfirmationController extends AbstractController
 {
-    #[Route('/resend-confirmation/{token}', name: 'resend_confirmation')]
+    #[Route('/resend-confirmation/{token}')]
     public function __invoke(
         string $token,
         UserRepository $userRepository,
@@ -28,13 +28,13 @@ final class ResendConfirmationController extends AbstractController
                 $translator->trans('Invalid confirmation token.')
             );
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute(LoginController::class);
         }
 
         $bus->dispatch(new SendConfirmation($user));
 
         $this->addFlash('success', $translator->trans('Confirmation mail successfully resent'));
 
-        return $this->redirectToRoute('login');
+        return $this->redirectToRoute(LoginController::class);
     }
 }
