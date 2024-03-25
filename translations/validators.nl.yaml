@@ -132,3 +132,4 @@ Error: Fout
 'Please select a valid range.': 'Kies een geldig bereik.'
 'Please enter a valid week.': 'Vul een geldige week in.'
 '%email% is already in use.': '%email% is al in gebruik.'
+'The password strength is too low. Please use a stronger password.': 'Het wachtwoord is te zwak. Gebruik een sterker wachtwoord.'
