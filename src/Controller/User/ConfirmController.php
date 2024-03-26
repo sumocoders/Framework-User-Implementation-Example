@@ -46,9 +46,8 @@ class ConfirmController extends AbstractController
             );
 
             /*
-             * When a new user is created from the back-end, he has to both
-             * confirm his account and set a password, so we redirect them straight
-             * to the password reset page after confirming.
+             * When a new user is created from the back-end, the user has to confirm and set a password.
+             * Therefore the user is redirected to the set password page after confirming.
              */
             if ($user->getPasswordResetToken() !== null) {
                 return $this->redirectToRoute(ResetPasswordController::class, ['token' => $user->getPasswordResetToken()]);
