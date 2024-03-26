@@ -32,14 +32,16 @@ edit: 'Bewerk'
 'Switch to user': 'Log in als deze gebruiker'
 
 # Profile
-'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.': 'Check uw mailbox voor uw wachtwoord reset email. Indien die er niet binnen een aantal minuten is, check uw spam folder.'
-'Enter your user account''s verified email address and we will send you a password reset link.': 'Geef het emailadres van uw account in en u ontvangt binnenkort een email met verdere instructies.'
+'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.': 'Je onvangt binnen enkele minuten een e-mail met daarin een link om je wachtwoord opnieuw in te stellen. Kijk ook in je spam-map indien je de mail niet krijgt.'
+'Enter your user account''s verified email address and we will send you a password reset link.': 'Geef het e-mailadres van jouw account in. We sturen je binnen enkele minuten een e-mail met een link om je wachtwoord in te stellen.'
+'Confirm your account to continue.': 'Bevestig je account om verder te gaan.'
 'Send password reset email': 'Verstuur email'
 'Change your password': 'Wijzig uw wachtwoord'
 'Change password': 'Verander wachtwoord'
 'Update password': 'Update wachtwoord'
 'New password': 'Nieuw wachtwoord'
 'Confirm password': 'Bevestig wachtwoord'
+'Confirm your account': 'Bevestig je account'
 Confirm: 'Bevestig'
 profile: 'Profiel'
 
