@@ -2,6 +2,7 @@
 'Sign in': 'Log in'
 'I forgot my password': 'Wachtwoord vergeten?'
 'New to x?': 'Nieuw bij ons?'
+'Keep me logged in': 'Houd me ingelogd'
 'Account has not been confirmed. <a href="%requestConfirmationUrl%">Resend confirmation mail</a>': 'Account werd nog niet bevestigd. <a href="{requestConfirmationUrl}">Verstuur nieuwe activatiemail.</a>'
 
 # Register
