@@ -40,7 +40,8 @@ class UniqueEmailValidator extends ConstraintValidator
          * If we're adding a new user (either through the back-end or register page),
          * throw an error if we can find an existing user with the same email address.
          */
-        if (($formData instanceof CreateUser ||
+        if (
+            ($formData instanceof CreateUser ||
             $formData instanceof RegisterUser) &&
             $userWithThatEmail instanceof User
         ) {
@@ -53,7 +54,8 @@ class UniqueEmailValidator extends ConstraintValidator
          * If we're updating an existing user, only throw an error if we the user we're updating
          * isn't the one we found in the database.
          */
-        if ($formData instanceof UpdateUser &&
+        if (
+            $formData instanceof UpdateUser &&
             $userWithThatEmail instanceof User &&
             $formData->getUser()->getId() !== $userWithThatEmail->getId()
         ) {

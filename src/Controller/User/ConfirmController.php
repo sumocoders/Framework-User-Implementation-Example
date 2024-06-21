@@ -50,7 +50,10 @@ class ConfirmController extends AbstractController
              * Therefore the user is redirected to the set password page after confirming.
              */
             if ($user->getPasswordResetToken() !== null) {
-                return $this->redirectToRoute(ResetPasswordController::class, ['token' => $user->getPasswordResetToken()]);
+                return $this->redirectToRoute(
+                    ResetPasswordController::class,
+                    ['token' => $user->getPasswordResetToken()]
+                );
             }
 
             return $this->redirectToRoute('login');
