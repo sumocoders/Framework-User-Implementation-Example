@@ -1,5 +1,6 @@
 includes:
   - vendor/phpstan/phpstan-symfony/extension.neon
+  - vendor/phpstan/phpstan-doctrine/extension.neon
 services:
   errorFormatter.junit:
     class: PHPStan\Command\ErrorFormatter\JUnitErrorFormatter
@@ -11,5 +12,5 @@ parameters:
   paths:
     - public/
     - src/
-  excludes_analyse:
+  excludePaths:
     - %rootDir%/../../../src/Migrations
