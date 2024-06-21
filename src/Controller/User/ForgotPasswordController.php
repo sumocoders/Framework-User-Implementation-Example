@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ForgotPasswordController extends AbstractController
 {
-    #[Route('/password-reset')]
+    #[Route('/password-reset', name: 'forgot_password')]
     public function __invoke(
         Request $request,
         TranslatorInterface $translator,

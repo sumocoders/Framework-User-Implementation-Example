@@ -13,7 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ResendConfirmationController extends AbstractController
 {
-    #[Route('/resend-confirmation/{token}')]
+    #[Route('/resend-confirmation/{token}', name: 'resend_confirmation')]
     public function __invoke(
         string $token,
         UserRepository $userRepository,

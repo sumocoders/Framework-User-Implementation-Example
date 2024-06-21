@@ -12,7 +12,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EnableUserController extends AbstractController
 {
-    #[Route('/admin/users/{user}/enable')]
+    #[Route('/admin/users/{user}/enable', name: 'user_enable')]
     public function __invoke(
         User $user,
         TranslatorInterface $translator,

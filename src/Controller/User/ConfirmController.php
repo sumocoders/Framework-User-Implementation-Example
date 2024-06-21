@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ConfirmController extends AbstractController
 {
-    #[Route('/confirm/{token}')]
+    #[Route('/confirm/{token}', name: 'confirm')]
     public function __invoke(
         string $token,
         UserRepository $userRepository,
@@ -56,7 +56,7 @@ class ConfirmController extends AbstractController
                 );
             }
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute(LoginController::class);
         }
 
         return $this->render('user/confirm.html.twig', [

@@ -15,8 +15,8 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class EditUserController extends AbstractController
 {
-    #[Route('/admin/users/{user}/edit')]
-    #[Breadcrumb('edit', parent:['name' => 'app_user_admin_overview'])]
+    #[Route('/admin/users/{user}/edit', name: 'user_edit')]
+    #[Breadcrumb('edit', parent:['name' => 'user_overview'])]
     public function __invoke(
         User $user,
         Request $request,
