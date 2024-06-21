@@ -139,9 +139,6 @@
             "config/routes/fos_js_routing.yaml"
         ]
     },
-    "friendsoftwig/twigcs": {
-        "version": "v5.0.0"
-    },
     "gedmo/doctrine-extensions": {
         "version": "v2.4.42"
     },
@@ -201,18 +198,6 @@
     },
     "ramsey/uuid": {
         "version": "3.9.3"
-    },
-    "sensio/framework-extra-bundle": {
-        "version": "5.2",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "master",
-            "version": "5.2",
-            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
-        },
-        "files": [
-            "config/packages/sensio_framework_extra.yaml"
-        ]
     },
     "squizlabs/php_codesniffer": {
         "version": "3.0",
@@ -662,6 +647,15 @@
     },
     "twig/twig": {
         "version": "v3.3.0"
+    },
+    "vincentlanglet/twig-cs-fixer": {
+        "version": "2.11",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "0.6",
+            "ref": "e4da12a48e8138479bd24a675321bcfd84950266"
+        }
     },
     "willdurand/js-translation-bundle": {
         "version": "2.0",

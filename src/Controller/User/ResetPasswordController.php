@@ -10,12 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResetPasswordController extends AbstractController
 {
-    #[Route('/password-reset/{token}')]
+    #[Route('/password-reset/{token}', name: 'reset_password')]
     public function __invoke(
         string $token,
         Request $request,

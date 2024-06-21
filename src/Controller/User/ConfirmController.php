@@ -10,12 +10,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ConfirmController extends AbstractController
 {
-    #[Route('/confirm/{token}')]
+    #[Route('/confirm/{token}', name: 'confirm')]
     public function __invoke(
         string $token,
         UserRepository $userRepository,
@@ -50,10 +50,13 @@ class ConfirmController extends AbstractController
              * Therefore the user is redirected to the set password page after confirming.
              */
             if ($user->getPasswordResetToken() !== null) {
-                return $this->redirectToRoute(ResetPasswordController::class, ['token' => $user->getPasswordResetToken()]);
+                return $this->redirectToRoute(
+                    ResetPasswordController::class,
+                    ['token' => $user->getPasswordResetToken()]
+                );
             }
 
-            return $this->redirectToRoute('login');
+            return $this->redirectToRoute(LoginController::class);
         }
 
         return $this->render('user/confirm.html.twig', [

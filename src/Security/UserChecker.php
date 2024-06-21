@@ -2,6 +2,7 @@
 
 namespace App\Security;
 
+use App\Controller\User\Admin\RequestConfirmationController;
 use App\Entity\User\User;
 use App\Repository\User\UserRepository;
 use App\Security\Exception\UnconfirmedAccountException;
@@ -32,7 +33,7 @@ final class UserChecker implements UserCheckerInterface
                     'Account has not been confirmed. <a href="%requestConfirmationUrl%">Resend confirmation mail</a>',
                     [
                         '%requestConfirmationUrl%' => $this->router->generate(
-                            'app_user_resend_confirmation',
+                            RequestConfirmationController::class,
                             [
                                 'token' => $user->getConfirmationToken(),
                             ]

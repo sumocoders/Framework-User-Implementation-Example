@@ -10,6 +10,7 @@ How to use:
     * symfony/validator
     * symfony/messenger
     * symfony/mailer
+    * symfony/rate-limiter
   
 * Check the config folder, mostly:
   * services.yaml
