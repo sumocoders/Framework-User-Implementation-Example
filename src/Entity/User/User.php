@@ -6,6 +6,8 @@ use App\Repository\User\UserRepository;
 use App\ValueObject\User\Role;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use SumoCoders\FrameworkCoreBundle\Attribute\AuditTrail\AuditTrail;
+use SumoCoders\FrameworkCoreBundle\Attribute\AuditTrail\SensitiveData;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -13,6 +15,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
 #[UniqueEntity('email', message: "There is already an account with this email")]
+#[AuditTrail]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -21,6 +24,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private int $id;
 
     #[ORM\Column(type: 'string', nullable: true)]
+    #[SensitiveData]
     private ?string $password;
 
     #[ORM\Column(type: 'boolean')]
