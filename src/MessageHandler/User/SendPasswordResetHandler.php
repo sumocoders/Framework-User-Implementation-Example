@@ -48,7 +48,7 @@ class SendPasswordResetHandler
                 ->htmlTemplate('user/mails/reset.html.twig')
                 ->context([
                     'resetLink' => $this->router->generate(
-                        ResetPasswordController::class,
+                        'reset_password',
                         [
                             'token' => $user->getPasswordResetToken(),
                         ],

@@ -33,7 +33,7 @@ final class UserChecker implements UserCheckerInterface
                     'Account has not been confirmed. <a href="%requestConfirmationUrl%">Resend confirmation mail</a>',
                     [
                         '%requestConfirmationUrl%' => $this->router->generate(
-                            RequestConfirmationController::class,
+                            'request_confirmation',
                             [
                                 'token' => $user->getConfirmationToken(),
                             ]

@@ -24,6 +24,6 @@ class AuthenticationEntryPoint implements AuthenticationEntryPointInterface
             $session->getFlashBag()->add('note', 'You have to login in order to access this page.');
         }
 
-        return new RedirectResponse($this->urlGenerator->generate(LoginController::class));
+        return new RedirectResponse($this->urlGenerator->generate('login'));
     }
 }
