@@ -5,7 +5,7 @@
 {% endblock %}
 
 {% block header_navigation %}
-  <a class="btn btn-primary" href="{{ path('app_user_admin_add_user') }}">
+  <a class="btn btn-primary" href="{{ path('user_add') }}">
     <i class="fas fa-plus mr-2"></i>
     {{ 'Add a new user'|trans|capitalize }}
   </a>
@@ -62,7 +62,7 @@
           {% endif %}
         </td>
         <td>
-          <a class="text-nowrap" href="{{ path('app_user_admin_edit_user', {'user': user.id}) }}">
+          <a class="text-nowrap" href="{{ path('user_edit', {user: user.id}) }}">
             <i class="fas fa-edit" title="{{ 'Edit user'|trans }}" data-toggle="tooltip" data-placement="top"></i>
           </a>
         </td>

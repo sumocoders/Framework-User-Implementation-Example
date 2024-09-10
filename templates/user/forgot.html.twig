@@ -3,7 +3,7 @@
 {% block main %}
     {% if form.vars.submitted and form.vars.valid %}
         <p>{{ 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.'|trans }}</p>
-        <a href="{{ url('app_user_login') }}">{{ 'Return to sign in'|trans }}</a>
+        <a href="{{ url('login') }}">{{ 'Return to sign in'|trans }}</a>
     {% else %}
         <p>{{ 'Enter your user account\'s verified email address and we will send you a password reset link.'|trans }}</p>
 

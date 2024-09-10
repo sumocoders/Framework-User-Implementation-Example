@@ -1,0 +1,82 @@
+# Login
+'Sign in': 'Log in'
+'I forgot my password': 'Wachtwoord vergeten?'
+'New to x?': 'Nieuw bij ons?'
+'Keep me logged in': 'Houd me ingelogd'
+'Account has not been confirmed. <a href="%requestConfirmationUrl%">Resend confirmation mail</a>': 'Account werd nog niet bevestigd. <a href="{requestConfirmationUrl}">Verstuur nieuwe activatiemail.</a>'
+
+# Register
+'Sign up': Registreer
+'Check your email for a link to confirm your account. If it doesn’t appear within a few minutes, check your spam folder.': 'Check uw mailbox voor uw activatie email. Indien die er niet binnen een aantal minuten is, check uw spam folder.'
+'Account activated successfully.': 'Account succesvol geactiveerd.'
+'Return to sign in': 'Keer terug naar login'
+
+# Admin back-end
+'Add a new user': 'Voeg gebruiker toe'
+'Edit user %user%': 'Bewerk {user}'
+'Edit user': 'Wijzig gebruiker'
+'Resend confirmation mail': 'Verstuur nieuwe activatiemail.'
+Disable: Blokkeer
+Enable: Activeer
+Save: Opslaan
+users: Gebruikers
+Username: Gebruikersnaam
+Roles: Rollen
+Confirmed: Bevestigd
+Enabled: Actief
+Add: Toevoegen
+Email: Email
+Password: Wachtwoord
+overview: 'Overzicht'
+add: 'Toevoegen'
+edit: 'Bewerk'
+'Switch to user': 'Log in als deze gebruiker'
+
+# Profile
+'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.': 'Je onvangt binnen enkele minuten een e-mail met daarin een link om je wachtwoord opnieuw in te stellen. Kijk ook in je spam-map indien je de mail niet krijgt.'
+'Enter your user account''s verified email address and we will send you a password reset link.': 'Geef het e-mailadres van jouw account in. We sturen je binnen enkele minuten een e-mail met een link om je wachtwoord in te stellen.'
+'Confirm your account to continue.': 'Bevestig je account om verder te gaan.'
+'Send password reset email': 'Verstuur email'
+'Change your password': 'Wijzig uw wachtwoord'
+'Change password': 'Verander wachtwoord'
+'Update password': 'Update wachtwoord'
+'New password': 'Nieuw wachtwoord'
+'Confirm password': 'Bevestig wachtwoord'
+'Confirm your account': 'Bevestig je account'
+Confirm: 'Bevestig'
+profile: 'Profiel'
+
+# Roles
+admin: 'Beheerder'
+user: 'Gebruiker'
+super_admin: 'Superbeheerder'
+
+# Toasts
+'User successfully added.': 'Gebruiker toegevoegd.'
+'Password successfully edited.': 'Wachtwoord aangepast.'
+'User successfully disabled.': 'Gebruiker geblokkeerd'
+'User successfully edited.': 'Gebruiker aangepast.'
+'User successfully enabled.': 'Gebruiker geactiveerd.'
+'User is already confirmed.': 'Gebruiker is al bevestigd.'
+'Invalid confirmation token.': 'Ongeldige activatietoken.'
+'Confirmation mail successfully resent': 'Bevestigingsmail opnieuw verstuurd.'
+'Confirmation mail successfully sent': 'Bevestigingsmail verstuurd.'
+'It looks like you clicked on an invalid account activation link. Please try again.': 'Ongeldige account activatie link. Probeer opnieuw.'
+'It looks like you clicked on an invalid password reset link. Please try again.': 'Ongeldige wachtwoord reset link. Probeer opnieuw.'
+'New password set successfully.': 'Nieuw wachtwoord correct ingesteld.'
+filter.submit: 'Zoeken'
+'You have to login in order to access this page.': 'Log in om deze pagina te bezoeken.'
+
+# Mails
+account.mail.confirm.title: 'Project name - Account activatie'
+account.mail.confirm.greeting: 'Hallo,'
+account.mail.confirm.intro: 'Er werd voor jou een account aangemaakt op ons platform! Om je account te gebruiken moet je deze nog activeren. Dat kan je doen door op onderstaande knop te klikken:'
+account.mail.confirm.button: 'Activeer nu je account'
+account.mail.confirm.alternative: 'Kan je de knop niet aanklikken dan kan je onderstaande link kopiëren in je browser:'
+account.mail.confirm.signature: 'Veel plezier'
+account.mail.reset.title: 'Project name - Wachtwoord vergeten'
+account.mail.reset.greeting: 'Hallo,'
+account.mail.reset.intro: 'Je hebt gevraagd om je wachtwoord in te stellen, dat kan je door middel van onderstaande knop:'
+account.mail.reset.button: 'Stel je wachtwoord in'
+account.mail.reset.alternative: 'Kan je de knop niet aanklikken dan kan je onderstaande link kopiëren in je browser:'
+account.mail.reset.signature: 'Veel plezier'

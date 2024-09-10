@@ -7,12 +7,12 @@ use App\Message\User\SendConfirmation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RequestConfirmationController extends AbstractController
 {
-    #[Route('/admin/users/{user}/request-confirmation')]
+    #[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation')]
     public function __invoke(
         User $user,
         TranslatorInterface $translator,

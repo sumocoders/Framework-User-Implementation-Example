@@ -10,17 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 
 class OverviewController extends AbstractController
 {
-    #[Route('/admin/users')]
+    #[Route('/admin/users', name: 'user_overview')]
     #[Breadcrumb('users')]
     public function __invoke(
         Request $request,
         UserRepository $userRepository,
         #[MapQueryParameter]
-        ?int $page = 1
+        int $page = 1
     ): Response {
         $form = $this->createForm(
             FilterType::class,

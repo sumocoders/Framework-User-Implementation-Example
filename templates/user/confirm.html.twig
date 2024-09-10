@@ -1,0 +1,9 @@
+{% extends '@SumoCodersFrameworkCore/user.html.twig' %}
+
+{% block main %}
+    <p>{{ 'Confirm your account to continue.'|trans }}</p>
+
+    {{ form_start(form) }}
+    <input class="btn btn-block btn-secondary mb-4" type="submit" value="{{ 'Confirm your account'|trans }}" />
+    {{ form_end(form) }}
+{% endblock %}

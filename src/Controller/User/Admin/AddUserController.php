@@ -9,13 +9,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
-use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 class AddUserController extends AbstractController
 {
-    #[Route('/admin/users/add')]
-    #[Breadcrumb('add', parent:['name' => 'app_user_admin_overview'])]
+    #[Route('/admin/users/add', name: 'user_add')]
+    #[Breadcrumb('add', parent:['name' => 'user_overview'])]
     public function __invoke(
         Request $request,
         TranslatorInterface $translator,
