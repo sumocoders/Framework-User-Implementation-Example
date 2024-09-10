@@ -51,12 +51,12 @@ class ConfirmController extends AbstractController
              */
             if ($user->getPasswordResetToken() !== null) {
                 return $this->redirectToRoute(
-                    ResetPasswordController::class,
+                    'reset_password',
                     ['token' => $user->getPasswordResetToken()]
                 );
             }
 
-            return $this->redirectToRoute(LoginController::class);
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('user/confirm.html.twig', [

@@ -16,7 +16,7 @@ class LoginController extends AbstractController
         AuthenticationUtils $authenticationUtils
     ): Response {
         if ($this->getUser() instanceof User) {
-            return $this->redirectToRoute(ProfileController::class);
+            return $this->redirectToRoute('profile');
         }
 
         $form = $this->createForm(LoginType::class, [
