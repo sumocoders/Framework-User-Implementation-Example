@@ -24,7 +24,7 @@ class RequestConfirmationController extends AbstractController
                 $translator->trans('User is already confirmed.')
             );
 
-            $this->redirectToRoute(EditUserController::class, ['user' => $user->getId()]);
+            $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
         }
 
         $bus->dispatch(new SendConfirmation($user));
@@ -34,6 +34,6 @@ class RequestConfirmationController extends AbstractController
             $translator->trans('Confirmation mail successfully sent')
         );
 
-        return $this->redirectToRoute(EditUserController::class, ['user' => $user->getId()]);
+        return $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
     }
 }

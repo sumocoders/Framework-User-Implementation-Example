@@ -35,7 +35,7 @@ class EditUserController extends AbstractController
                 $translator->trans('User successfully edited.')
             );
 
-            return $this->redirectToRoute(OverviewController::class);
+            return $this->redirectToRoute('user_overview');
         }
 
         return $this->render('user/admin/edit.html.twig', [

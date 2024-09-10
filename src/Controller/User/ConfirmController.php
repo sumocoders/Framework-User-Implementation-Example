@@ -31,7 +31,7 @@ class ConfirmController extends AbstractController
                 $translator->trans('It looks like you clicked on an invalid account activation link. Please try again.')
             );
 
-            return $this->redirectToRoute(LoginController::class);
+            return $this->redirectToRoute('login');
         }
 
         $confirmForm = $this->createForm(ConfirmType::class, new ConfirmUser($user));
@@ -51,12 +51,12 @@ class ConfirmController extends AbstractController
              */
             if ($user->getPasswordResetToken() !== null) {
                 return $this->redirectToRoute(
-                    ResetPasswordController::class,
+                    'reset_password',
                     ['token' => $user->getPasswordResetToken()]
                 );
             }
 
-            return $this->redirectToRoute(LoginController::class);
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('user/confirm.html.twig', [

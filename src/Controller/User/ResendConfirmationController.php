@@ -28,13 +28,13 @@ final class ResendConfirmationController extends AbstractController
                 $translator->trans('Invalid confirmation token.')
             );
 
-            return $this->redirectToRoute(LoginController::class);
+            return $this->redirectToRoute('login');
         }
 
         $bus->dispatch(new SendConfirmation($user));
 
         $this->addFlash('success', $translator->trans('Confirmation mail successfully resent'));
 
-        return $this->redirectToRoute(LoginController::class);
+        return $this->redirectToRoute('login');
     }
 }
