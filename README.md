@@ -2,6 +2,7 @@
 
 How to use:
 * Copy each `User` folder from the respective `src/` folder into your own project.
+* Copy the `Security` folder from `src/` into your own project.
 * Copy `template/user` into your own project.
 * Copy the `config/packages/security.yaml` into your own project.
 * Copy the MySQL migration and run it.
@@ -13,9 +14,7 @@ How to use:
     * symfony/rate-limiter
   
 * Check the config folder, mostly:
-  * services.yaml
-  * routes.yml (logout route)
-  * packages/translation.yaml
+  * packages/security.yaml
   * bundles.php (TwigExtraBundle moet geactiveerd zijn)
 
 To do:

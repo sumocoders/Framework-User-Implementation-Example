@@ -3,13 +3,14 @@ twig:
         fallbacks: "@framework.fallbacks"
         locales: "%locales%"
         breadcrumbs: '@SumoCoders\FrameworkCoreBundle\Service\BreadcrumbTrail'
+        page_title: '@SumoCoders\FrameworkCoreBundle\Service\PageTitle'
     form_themes:
         - "bootstrap_5_layout.html.twig"
         - "@SumoCodersFrameworkCore/Form/fields.html.twig"
         - "blocks.html.twig"
-    paths:
-        # Add the public folder to the default twig path so we can access the
-        # mail stylesheet through the inline_css method in the base email template.
-        '%kernel.project_dir%/public/': ~
 
-    default_path: '%kernel.project_dir%/templates'
+    file_name_pattern: '*.twig'
+
+when@test:
+    twig:
+        strict_variables: true
