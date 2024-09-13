@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "41abbe6c8f91f09323244c65031961b4",
+    "content-hash": "77b1bc0fe50f10f7f5171f4033bc1dcf",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2251,16 +2251,16 @@
         },
         {
             "name": "sumocoders/framework-core-bundle",
-            "version": "v9.0.1",
+            "version": "v10.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sumocoders/FrameworkCoreBundle.git",
-                "reference": "ad8257e2a8f82049b2dcf3b598db30cc2db51eea"
+                "reference": "9b825c64240484d196352d30283d52815412cb3b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sumocoders/FrameworkCoreBundle/zipball/ad8257e2a8f82049b2dcf3b598db30cc2db51eea",
-                "reference": "ad8257e2a8f82049b2dcf3b598db30cc2db51eea",
+                "url": "https://api.github.com/repos/sumocoders/FrameworkCoreBundle/zipball/9b825c64240484d196352d30283d52815412cb3b",
+                "reference": "9b825c64240484d196352d30283d52815412cb3b",
                 "shasum": ""
             },
             "require": {
@@ -2319,9 +2319,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sumocoders/FrameworkCoreBundle/issues",
-                "source": "https://github.com/sumocoders/FrameworkCoreBundle/tree/v9.0.1"
+                "source": "https://github.com/sumocoders/FrameworkCoreBundle/tree/v10.0.0"
             },
-            "time": "2024-09-10T13:58:26+00:00"
+            "time": "2024-09-13T06:35:13+00:00"
         },
         {
             "name": "symfony/apache-pack",
