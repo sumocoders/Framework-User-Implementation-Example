@@ -1,9 +1,0 @@
-controllers:
-    resource: ../../src/Controller/
-    type: attribute
-    prefix:
-        nl: ''
-
-kernel:
-    resource: ../../src/Kernel.php
-    type: attribute

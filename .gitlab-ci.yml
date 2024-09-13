@@ -15,17 +15,16 @@ cache: &global_cache
   policy: pull
 
 
-## Build section
+# Build section
 Install dependencies and build assets:
-  image: sumocoders/cli-tools-php74:latest
+  image: sumocoders/cli-tools-php83:latest
   script:
     - COMPOSER_MEMORY_LIMIT=-1 composer install --no-scripts --no-progress
-    - nvm install
-    - nvm use
-    - nvm exec npm install --no-progress
-    - php bin/console bazinga:js-translation:dump public/build --format=json --merge-domains
+    - COMPOSER_MEMORY_LIMIT=-1 composer run-script post-autoload-dump
+    - volta install node
+    - npm ci --no-progress
+    - node_modules/.bin/encore production
     - php bin/console fos:js-routing:dump --format=json --locale=nl --target=public/build/routes/fos_js_routes.json
-    - nvm exec node_modules/.bin/encore production
   cache:
     <<: *global_cache
     policy: pull-push
@@ -33,189 +32,170 @@ Install dependencies and build assets:
   tags:
     - docker
 
+
 # Code Quality section
 PHP_CodeSniffer - check code styling:
-  image: sumocoders/framework-php74:latest
+  image: sumocoders/cli-tools-php83:latest
   script:
-    - vendor/bin/phpcs --report-full --report-junit=phpcs-report.xml
+    - vendor/bin/phpcs --report-full --report-\\Micheh\\PhpCodeSniffer\\Report\\Gitlab=phpcs-report.xml
   artifacts:
     expire_in: 1 week
     reports:
-      junit: phpcs-report.xml
+      codequality: phpcs-report.xml
   stage: code quality
+  needs: ["Install dependencies and build assets"]
   tags:
     - docker
-  allow_failure: true
 
 PHPStan - check for bugs:
-  image: sumocoders/framework-php74:latest
+  image: sumocoders/cli-tools-php83:latest
   before_script:
     - bin/console cache:warmup --env=dev
   script:
-    - vendor/bin/phpstan analyse --memory-limit=-1 --error-format=junit --no-progress > phpstan-report.xml
+    - vendor/bin/phpstan analyse --memory-limit=-1 --error-format=gitlab --no-progress --no-interaction  > phpstan-report.xml
   after_script:
     # Run it again so the output is visible in the job
-    - vendor/bin/phpstan analyse --memory-limit=-1 --no-progress
+    - >
+      if [ $CI_JOB_STATUS != 'success' ]; then
+        vendor/bin/phpstan analyse --memory-limit=-1 --no-progress
+      fi
   artifacts:
     expire_in: 1 week
     reports:
-      junit: phpstan-report.xml
+      codequality: phpstan-report.xml
   stage: code quality
+  needs: ["Install dependencies and build assets"]
   tags:
     - docker
-  allow_failure: true
 
-Twigcs - check code styling:
-  image: sumocoders/framework-php74:latest
+Twig-CS-Fixer - check code styling:
+  image: sumocoders/cli-tools-php83:latest
   script:
-    - vendor/bin/twigcs --report-full --report-junit=phpcs-report.xml
+    - vendor/bin/twig-cs-fixer lint templates/ --report=junit > twigcs-report.xml
+  after_script:
+    # Run it again so the output is visible in the job
+    - vendor/bin/twig-cs-fixer lint templates/
   artifacts:
     expire_in: 1 week
     reports:
-      junit: phpcs-report.xml
+      junit: twigcs-report.xml
   stage: code quality
+  needs: ["Install dependencies and build assets"]
   tags:
     - docker
   allow_failure: true
 
 Stylelint - check code styling:
-  image: sumocoders/cli-tools-php74
+  image: sumocoders/cli-tools-php83:latest
   script:
-    - vendor/bin/convert-to-junit-xml convert:stylelint "$(nvm exec --silent node_modules/.bin/stylelint --formatter=json .)" > stylelint-report.xml
+    - node_modules/.bin/stylelint --output-file=stylelint-report.json --custom-formatter=node_modules/stylelint-formatter-gitlab-code-quality-report/index.js .
   after_script:
     # Run it again so the output is visible in the job
-    - nvm exec node_modules/.bin/stylelint .
+    - node_modules/.bin/stylelint --color .
   artifacts:
     expire_in: 1 week
     reports:
-      junit: stylelint-report.xml
+      codequality: stylelint-report.json
   stage: code quality
+  needs: ["Install dependencies and build assets"]
   tags:
     - docker
   allow_failure: true
 
 StandardJS - check code styling:
-  image: sumocoders/cli-tools-php74
+  image: sumocoders/cli-tools-php83:latest
   script:
-    - vendor/bin/convert-to-junit-xml convert:standardjs "$(nvm exec --silent node_modules/.bin/standard)" > standardjs-report.xml
-  after_script:
-    # Run it again so the output is visible in the job
-    - nvm exec node_modules/.bin/standard
+    - node_modules/.bin/standard | node_modules/.bin/standard-gitlab --output-file standardjs-report.json --human-readable
   artifacts:
     expire_in: 1 week
     reports:
-      junit: standardjs-report.xml
+      codequality: standardjs-report.json
   stage: code quality
-  tags:
-    - docker
-  allow_failure: true
-
-TODOs - check for unfinished code:
-  image: sumocoders/cli-tools-php74
-  script:
-    - >
-      vendor/bin/convert-to-junit-xml convert:grep "$(
-      find .
-      -path "./.gitlab-ci.yml" -prune -o
-      -path "./unresolved-todos-report.xml" -prune -o
-      -path "./bin/*" -prune -o
-      -path "./node_modules/*" -prune -o
-      -path "./public/build/*" -prune -o
-      -path "./var/*" -prune -o
-      -path "./vendor/*" -prune -o
-      -not -type d
-      -exec grep -niH -E "\b(FIXME|TODO|HACK|REVIEW|QUESTION|TEMP)\b" {} \;
-      )" > unresolved-todos-report.xml
-  after_script:
-    # Run it again so the output is visible in the job
-    - >
-      find .
-      -path "./.gitlab-ci.yml" -prune -o
-      -path "./unresolved-todos-report.xml" -prune -o
-      -path "./bin/*" -prune -o
-      -path "./node_modules/*" -prune -o
-      -path "./public/build/*" -prune -o
-      -path "./var/*" -prune -o
-      -path "./vendor/*" -prune -o
-      -not -type d
-      -exec grep -niH -E "\b(FIXME|TODO|HACK|REVIEW|QUESTION|TEMP)\b" {} \;
-  artifacts:
-    expire_in: 1 week
-    reports:
-      junit: unresolved-todos-report.xml
-  stage: code quality
+  needs: ["Install dependencies and build assets"]
   tags:
     - docker
   allow_failure: true
 
 
-## Dependency Scanning section
+# Dependency Scanning section
 NPM packages - check for vulnerabilities:
-  image: sumocoders/cli-tools-php74:latest
+  image: sumocoders/cli-tools-php83:latest
   script:
-    - vendor/bin/convert-to-junit-xml convert:npm-audit "$(nvm exec --silent npm audit --json)" > npm-audit-report.xml
-  after_script:
-    # Run it again so the output is visible in the job output
-    - nvm exec npm audit
+    - npm audit --omit=dev --json | ./node_modules/.bin/gitlab-npm-audit-parser -o npm-audit-report.json
+    - npm audit --omit=dev
   artifacts:
     expire_in: 1 week
     reports:
-      junit: npm-audit-report.xml
+      dependency_scanning: npm-audit-report.json
   stage: dependency scanning
+  needs: ["Install dependencies and build assets"]
   tags:
     - docker
   allow_failure: true
 
-PHP packages - check for vulnerabilities:
-  image: sumocoders/cli-tools-php74:latest
+PHP packages - local-php-security-checker:
+  image: sumocoders/cli-tools-php83:latest
   before_script:
     - PHP_SC_VERSION=$(curl -s "https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/;s/^v//')
-    - curl -LSs https://github.com/fabpot/local-php-security-checker/releases/download/v${PHP_SC_VERSION}/local-php-security-checker_${PHP_SC_VERSION}_linux_amd64 > ./php-security-checker
-    - chmod +x ./php-security-checker
+    - curl -LSs https://github.com/fabpot/local-php-security-checker/releases/download/v${PHP_SC_VERSION}/local-php-security-checker_linux_amd64 > ./local-php-security-checker
+    - chmod +x ./local-php-security-checker
   script:
-    - vendor/bin/convert-to-junit-xml convert:sensiolabs-security-check "$(./php-security-checker security:check --format=json)" > security-checker-report.xml
-  after_script:
-    # Run it again so the output is visible in the job output
-    - ./php-security-checker
-  artifacts:
-    expire_in: 1 week
-    reports:
-      junit: security-checker-report.xml
+    - ./local-php-security-checker --format=ansi
   stage: dependency scanning
+  needs: ["Install dependencies and build assets"]
+  tags:
+    - docker
+  allow_failure: true
+
+PHP packages - composer audit:
+  image: sumocoders/cli-tools-php83:latest
+  script:
+    - composer audit --ansi --no-interaction
+  stage: dependency scanning
+  needs: ["Install dependencies and build assets"]
   tags:
     - docker
   allow_failure: true
 
 
-## Test section
-## Uncomment this if you have tests
+# Test section
 PHPUnit - Run tests:
-  image: sumocoders/framework-php74:latest
+  image: sumocoders/framework-php83:latest
   services:
     - mysql:5.7
   before_script:
-    - mysql -h mysql -u root -proot -e "create database ci_test"
-    - apt-get install chromium-chromedriver firefox-geckodriver -y -qq
-    - export PANTHER_NO_SANDBOX=1
-    - export PANTHER_WEB_SERVER_PORT=9080
+  # Uncomment this if you need Chrome for PDF's
+  # or if you have integration tests that use Symfony Panther (https://github.com/symfony/panther)
+  #    # install Chromium
+  #    - apt-get --allow-releaseinfo-change update && apt-get install -y chromium
+  #    # install Chromium Chromedriver
+  #    - |
+  #      curl -s -f -L -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_97`/chromedriver_linux64.zip
+  #      unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
   script:
-    - bin/console doctrine:migrations:migrate
-    - bin/console doctrine:fixtures:load
-    - bin/phpunit --log-junit phpunit-report.xml
+    - php bin/console doctrine:migrations:migrate --env=test --no-interaction --allow-no-migration
+    # Uncomment this if you have fixtures that need to be loaded
+    # Make sure that you have installed doctrine/doctrine-fixtures-bundle
+    #- php bin/console doctrine:fixtures:load --env=test
+    - php vendor/bin/simple-phpunit --log-junit phpunit-report.xml
   artifacts:
     reports:
       junit: phpunit-report.xml
   stage: test
+  needs: ["Install dependencies and build assets"]
   tags:
     - docker
   variables:
     MYSQL_DATABASE: ci_test
     MYSQL_ROOT_PASSWORD: root
+    DATABASE_URL: mysql://root:root@mysql:3306/ci_test?serverVersion=5.7
+    PANTHER_NO_SANDBOX: 1
+    PANTHER_WEB_SERVER_PORT: 9080
 
 
 # Deploy section
 Deploy - to staging:
-  image: sumocoders/cli-tools-php74:latest
+  image: sumocoders/cli-tools-php83:latest
   before_script:
     # Add the private SSH key to the CI environment
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
@@ -226,12 +206,14 @@ Deploy - to staging:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - vendor/bin/dep deploy staging
+    - vendor/bin/dep deploy stage=staging
   environment:
     name: staging
-    url: https://$project.$client.php74.sumocoders.eu
+    url: https://$project.$client.php83.sumocoders.eu
   only:
     - staging
   stage: deploy
   tags:
     - docker
+  variables:
+    USER: "CI/CD gitlab-runner"
