@@ -5,7 +5,7 @@
     {{ form_errors(form) }}
     <div data-role="check-password" data-route="{{ path('admin_user_ajax_password_strength') }}">
         {{ form_row(form.password.first) }}
-        {% include '/user/password-strength-meter.html.twig' %}
+        {{ include('/user/password-strength-meter.html.twig') }}
     </div>
     {{ form_row(form.password.second) }}
 
