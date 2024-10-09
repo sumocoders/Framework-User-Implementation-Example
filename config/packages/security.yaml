@@ -38,14 +38,14 @@ security:
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
-        - { path: ^/admin/users/ajax/password-strength, roles: PUBLIC_ACCESS }
+        - { route: 'admin_user_ajax_password_strength', roles: PUBLIC_ACCESS }
+        - { route: 'login', roles: PUBLIC_ACCESS }
+        - { route: 'resend_confirmation', roles: PUBLIC_ACCESS }
+        - { route: 'register', roles: PUBLIC_ACCESS }
+        - { route: 'confirm', roles: PUBLIC_ACCESS }
+        - { route: 'reset_password', roles: PUBLIC_ACCESS }
+        - { route: 'profile', roles: ROLE_USER }
         - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/profile, roles: ROLE_USER }
-        - { path: ^/login, roles: PUBLIC_ACCESS }
-        - { path: ^/resend-confirmation, roles: PUBLIC_ACCESS }
-        - { path: ^/register, roles: PUBLIC_ACCESS }
-        - { path: ^/confirm, roles: PUBLIC_ACCESS }
-        - { path: ^/password-reset, roles: PUBLIC_ACCESS }
 
 when@test:
     security:
