@@ -15,7 +15,8 @@
 'Add a new user': 'Voeg gebruiker toe'
 'Edit user %user%': 'Bewerk {user}'
 'Edit user': 'Wijzig gebruiker'
-'Resend confirmation mail': 'Verstuur nieuwe activatiemail.'
+'Resend confirmation mail': 'Verstuur nieuwe activatiemail'
+'Send forgot password mail': 'Verstuur wachtwoord vergeten mail'
 Disable: Blokkeer
 Enable: Activeer
 Save: Opslaan
@@ -31,6 +32,7 @@ overview: 'Overzicht'
 add: 'Toevoegen'
 edit: 'Bewerk'
 'Switch to user': 'Log in als deze gebruiker'
+'Are you sure you want to send forgot password email to {user}?': 'Ben je zeker dat je een wachtwoord vergeten mail wil sturen naar {user}?'
 
 # Profile
 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.': 'Je onvangt binnen enkele minuten een e-mail met daarin een link om je wachtwoord opnieuw in te stellen. Kijk ook in je spam-map indien je de mail niet krijgt.'
@@ -61,6 +63,7 @@ super_admin: 'Superbeheerder'
 'Invalid confirmation token.': 'Ongeldige activatietoken.'
 'Confirmation mail successfully resent': 'Bevestigingsmail opnieuw verstuurd.'
 'Confirmation mail successfully sent': 'Bevestigingsmail verstuurd.'
+'Password reset successfully sent.': 'Wachtwoord reset mail verstuurd.'
 'It looks like you clicked on an invalid account activation link. Please try again.': 'Ongeldige account activatie link. Probeer opnieuw.'
 'It looks like you clicked on an invalid password reset link. Please try again.': 'Ongeldige wachtwoord reset link. Probeer opnieuw.'
 'New password set successfully.': 'Nieuw wachtwoord correct ingesteld.'
