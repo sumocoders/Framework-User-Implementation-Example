@@ -11,6 +11,12 @@
             {{ 'Resend confirmation mail'|trans }}
         </a>
     {% endif %}
+    {% if user.confirmed and user.enabled %}
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+            <i class="fas fa-envelope mr-2"></i>
+            {{ 'Send forgot password mail'|trans }}
+        </button>
+    {% endif %}
     {% if user.enabled %}
         <a class="btn btn-danger ml-2" href="{{ path('user_disable', {user: user.id}) }}">
             <i class="fas fa-lock mr-2"></i>
@@ -42,4 +48,28 @@
     </div>
 
     {{ form_end(form) }}
+
+    {{ form_start(passwordForgotForm) }}
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="forgotPasswordModal">{{ 'Send forgot password mail'|trans }}</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'dialogs.close'|trans }}"></button>
+                </div>
+                <div class="modal-body">
+                    {{ form_rest(passwordForgotForm) }}
+                    {{ 'Are you sure you want to send forgot password email to {user}?'|trans({user: user.email}) }}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'dialogs.buttons.cancel'|trans|ucfirst }}</button>
+                    <button type="submit" name="testingForm" class="btn btn-primary">
+                        <i class="fas fa-envelope mr-2"></i>
+                        {{ 'Send'|trans }}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{ form_end(passwordForgotForm) }}
 {% endblock %}
