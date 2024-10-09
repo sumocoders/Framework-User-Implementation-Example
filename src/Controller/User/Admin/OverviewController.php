@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class OverviewController extends AbstractController
 {
     #[Route('/admin/users', name: 'user_overview')]
-    #[Breadcrumb('users')]
+    #[Breadcrumb('Users')]
     public function __invoke(
         Request $request,
         UserRepository $userRepository,
