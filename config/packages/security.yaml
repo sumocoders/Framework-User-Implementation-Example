@@ -14,7 +14,7 @@ security:
             security: false
         main:
             lazy: true
-            switch_user: true
+            switch_user: { target_route: profile }
             provider: app_user_provider
             custom_authenticator: App\Security\CustomAuthenticator
             user_checker: App\Security\UserChecker
