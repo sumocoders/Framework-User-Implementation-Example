@@ -30,10 +30,10 @@ final class UserChecker implements UserCheckerInterface
         if (!$user->isConfirmed()) {
             throw new UnconfirmedAccountException(
                 $this->translator->trans(
-                    'Account has not been confirmed. <a href="%requestConfirmationUrl%">Resend confirmation mail</a>',
+                    'Account has not been confirmed. <a href="%resendConfirmationUrl%">Resend confirmation mail</a>',
                     [
-                        '%requestConfirmationUrl%' => $this->router->generate(
-                            'request_confirmation',
+                        '%resendConfirmationUrl%' => $this->router->generate(
+                            'resend_confirmation',
                             [
                                 'token' => $user->getConfirmationToken(),
                             ]
