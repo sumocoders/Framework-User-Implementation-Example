@@ -4,8 +4,6 @@ namespace App\Form\User;
 
 use App\Message\User\ResetPassword;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -16,12 +14,7 @@ class ResetPasswordType extends AbstractType
         $builder
             ->add(
                 'password',
-                RepeatedType::class,
-                [
-                    'type' => PasswordType::class,
-                    'first_options'  => ['label' => 'Password'],
-                    'second_options' => ['label' => 'Confirm password'],
-                ]
+                RepeatedPasswordStrengthType::class
             );
     }
 
