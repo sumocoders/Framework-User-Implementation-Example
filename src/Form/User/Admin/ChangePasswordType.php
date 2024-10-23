@@ -2,9 +2,8 @@
 
 namespace App\Form\User\Admin;
 
+use App\Form\User\RepeatedPasswordStrengthType;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 final class ChangePasswordType extends AbstractType
@@ -14,12 +13,7 @@ final class ChangePasswordType extends AbstractType
         $builder
             ->add(
                 'password',
-                RepeatedType::class,
-                [
-                    'type' => PasswordType::class,
-                    'first_options'  => ['label' => 'New password'],
-                    'second_options' => ['label' => 'Confirm password'],
-                ]
+                RepeatedPasswordStrengthType::class
             );
     }
 }

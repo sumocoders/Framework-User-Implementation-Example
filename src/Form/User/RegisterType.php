@@ -7,8 +7,6 @@ namespace App\Form\User;
 use App\DataTransferObject\User\UserDataTransferObject;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -26,12 +24,7 @@ final class RegisterType extends AbstractType
             )
             ->add(
                 'password',
-                RepeatedType::class,
-                [
-                    'type' => PasswordType::class,
-                    'first_options'  => ['label' => 'Password'],
-                    'second_options' => ['label' => 'Confirm password'],
-                ]
+                RepeatedPasswordStrengthType::class
             );
     }
 
