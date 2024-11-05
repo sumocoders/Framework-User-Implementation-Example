@@ -7,11 +7,7 @@
     {% else %}
         {{ form_start(form) }}
         {{ form_row(form.email) }}
-        <div data-role="check-password" data-route="{{ path('admin_user_ajax_password_strength') }}">
-            {{ form_row(form.password.first) }}
-            {{ include('/user/password-strength-meter.html.twig') }}
-        </div>
-        {{ form_row(form.password.second) }}
+        {{ form_row(form.password) }}
         {{ form_rest(form) }}
 
         <input class="btn btn-secondary" type="submit" value="{{ 'Sign up'|trans }}" />
