@@ -3,11 +3,7 @@
 {% block main %}
     {{ form_start(form) }}
     {{ form_errors(form) }}
-    <div data-role="check-password" data-route="{{ path('admin_user_ajax_password_strength') }}">
-        {{ form_row(form.password.first) }}
-        {{ include('/user/password-strength-meter.html.twig') }}
-    </div>
-    {{ form_row(form.password.second) }}
+    {{ form_row(form.password) }}
 
     <input type="submit" class="btn btn-secondary" value="{{ 'Confirm'|trans }}" />
     {{ form_end(form) }}
