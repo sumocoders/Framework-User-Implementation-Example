@@ -6,7 +6,7 @@
 
 {% block header_navigation %}
     {% if not user.confirmed %}
-        <a class="btn btn-primary" href="{{ path('request_confirmation', {user: user.id}) }}">
+        <a class="btn btn-primary" href="{{ path('request_confirmation', {user: user.id}) }}" data-turbo-prefetch="false">
             <i class="fas fa-envelope mr-2"></i>
             {{ 'Resend confirmation mail'|trans }}
         </a>
@@ -18,12 +18,12 @@
         </button>
     {% endif %}
     {% if user.enabled %}
-        <a class="btn btn-danger ml-2" href="{{ path('user_disable', {user: user.id}) }}">
+        <a class="btn btn-danger ml-2" href="{{ path('user_disable', {user: user.id}) }}" data-turbo-prefetch="false">
             <i class="fas fa-lock mr-2"></i>
             {{ 'Disable'|trans }}
         </a>
     {% else %}
-        <a class="btn btn-success ml-2" href="{{ path('user_enable', {user: user.id}) }}">
+        <a class="btn btn-success ml-2" href="{{ path('user_enable', {user: user.id}) }}" data-turbo-prefetch="false">
             <i class="fas fa-unlock mr-2"></i>
             {{ 'Enable'|trans }}
         </a>
