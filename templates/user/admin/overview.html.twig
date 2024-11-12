@@ -68,7 +68,7 @@
         </td>
         {% if is_granted('ROLE_ADMIN') %}
         <td>
-          <a class="text-nowrap" href="{{ impersonation_path(user.username) }}">
+          <a class="text-nowrap" href="{{ impersonation_path(user.username) }}" data-turbo-prefetch="false">
             <i class="fas fa-sign-in-alt" title="{{ 'Switch to user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
           </a>
         </td>
