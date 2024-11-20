@@ -17,16 +17,19 @@
             {{ 'Send forgot password mail'|trans }}
         </button>
     {% endif %}
-    {% if user.enabled %}
-        <a class="btn btn-danger ml-2" href="{{ path('user_disable', {user: user.id}) }}" data-turbo-prefetch="false">
-            <i class="fas fa-lock mr-2"></i>
-            {{ 'Disable'|trans }}
-        </a>
-    {% else %}
-        <a class="btn btn-success ml-2" href="{{ path('user_enable', {user: user.id}) }}" data-turbo-prefetch="false">
-            <i class="fas fa-unlock mr-2"></i>
-            {{ 'Enable'|trans }}
-        </a>
+
+    {% if user.id != app.user.id %}
+        {% if user.enabled %}
+            <a class="btn btn-danger ml-2" href="{{ path('user_disable', {user: user.id}) }}" data-turbo-prefetch="false">
+                <i class="fas fa-lock mr-2"></i>
+                {{ 'Disable'|trans }}
+            </a>
+        {% else %}
+            <a class="btn btn-success ml-2" href="{{ path('user_enable', {user: user.id}) }}" data-turbo-prefetch="false">
+                <i class="fas fa-unlock mr-2"></i>
+                {{ 'Enable'|trans }}
+            </a>
+        {% endif %}
     {% endif %}
 {% endblock %}
 
