@@ -10,6 +10,9 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+/**
+ * @method User getUser()
+ */
 class EnableUserController extends AbstractController
 {
     #[Route('/admin/users/{user}/enable', name: 'user_enable')]
@@ -18,6 +21,10 @@ class EnableUserController extends AbstractController
         TranslatorInterface $translator,
         MessageBusInterface $bus
     ): Response {
+        if ($user->getId() === $this->getUser()->getId()) {
+            throw $this->createAccessDeniedException();
+        }
+
         $bus->dispatch(new EnableUser($user));
 
         $this->addFlash(
