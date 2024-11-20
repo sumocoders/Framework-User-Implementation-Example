@@ -22,6 +22,12 @@ final class MenuListener extends DefaultMenuListener implements EventSubscriberI
                         'labelAttributes' => [
                             'icon' => 'fas fa-user',
                         ],
+                        'extras' => [
+                            'routes' => [
+                                'user_add',
+                                'user_edit',
+                            ],
+                        ],
                     ],
                 )
             );
