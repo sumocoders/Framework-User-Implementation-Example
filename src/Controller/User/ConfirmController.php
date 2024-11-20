@@ -60,7 +60,7 @@ class ConfirmController extends AbstractController
         }
 
         return $this->render('user/confirm.html.twig', [
-            'form' => $confirmForm->createView(),
+            'form' => $confirmForm,
         ]);
     }
 }

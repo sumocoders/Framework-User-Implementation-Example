@@ -33,7 +33,7 @@ class OverviewController extends AbstractController
         $paginatedUsers->paginate($page);
 
         return $this->render('user/admin/overview.html.twig', [
-            'form' => $form->createView(),
+            'form' => $form,
             'users' => $paginatedUsers,
         ]);
     }
