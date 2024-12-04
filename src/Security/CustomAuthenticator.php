@@ -44,7 +44,7 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
             new UserBadge($credentials['email']),
             new PasswordCredentials($credentials['password']),
             [
-                new CsrfTokenBadge('login', $credentials['token']),
+                new CsrfTokenBadge('authenticate', $credentials['token']),
                 new RememberMeBadge(),
             ],
         );
