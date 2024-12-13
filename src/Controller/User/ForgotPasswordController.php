@@ -25,6 +25,13 @@ class ForgotPasswordController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $bus->dispatch($form->getData());
+
+            $this->addFlash(
+                'success',
+                $translator->trans('Password reset link successfully sent.')
+            );
+
+            return $this->redirectToRoute('login');
         }
 
         return $this->render('user/forgot.html.twig', [
