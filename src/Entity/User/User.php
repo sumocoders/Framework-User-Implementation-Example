@@ -123,7 +123,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getDisplayRoles(): array
     {
-        return array_map(fn (string $role) => strtolower(substr($role, 5)), $this->getRoles());
+        return array_map(fn(string $role) => strtolower(substr($role, 5)), $this->getRoles());
     }
 
     /**
@@ -137,7 +137,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPassword(string $password): void
     {
         $this->password = $password;
-
         $this->erasePasswordResetRequest();
     }
 
