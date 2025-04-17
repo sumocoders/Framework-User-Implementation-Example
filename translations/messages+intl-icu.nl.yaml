@@ -3,7 +3,7 @@
 'I forgot my password': 'Wachtwoord vergeten?'
 'New to x?': 'Nieuw bij ons?'
 'Keep me logged in': 'Houd me ingelogd'
-'Account has not been confirmed. <a href="%resendConfirmationUrl%">Resend confirmation mail</a>': 'Account werd nog niet bevestigd. <a href="{requestConfirmationUrl}">Verstuur nieuwe activatiemail.</a>'
+'Account has not been confirmed. <a href="{resendConfirmationUrl}">Resend confirmation mail</a>': 'Account werd nog niet bevestigd. <a href="{resendConfirmationUrl}">Verstuur nieuwe activatiemail</a>'
 
 # Register
 'Sign up': Registreer
@@ -13,7 +13,7 @@
 
 # Admin back-end
 'Add a new user': 'Voeg gebruiker toe'
-'Edit user %user%': 'Bewerk {user}'
+'Edit user {user}': 'Bewerk {user}'
 'Edit user': 'Wijzig gebruiker'
 'Resend confirmation mail': 'Verstuur nieuwe activatiemail'
 'Send forgot password mail': 'Verstuur wachtwoord vergeten mail'
