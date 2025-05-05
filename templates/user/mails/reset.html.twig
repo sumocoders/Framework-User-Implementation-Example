@@ -1,13 +1,33 @@
 {% extends '@SumoCodersFrameworkCore/Mail/base.html.twig' %}
 
 {% block content %}
-    <p>{{ 'account.mail.reset.greeting'|trans }}</p>
-    <p>{{ 'account.mail.reset.intro'|trans }}</p>
-    <button href="{{ resetLink }}" class="button small-expanded rounded">
-        {{ 'account.mail.reset.button'|trans }}
-    </button>
+  <row>
+    <columns>
+      {{ 'account.mail.reset.greeting'|trans }}
+    </columns>
+  </row>
+  <row>
+    <columns>
+      {{ 'account.mail.reset.intro'|trans }}</p>
+    </columns>
+  </row>
 
-    <p class="text-muted dark-gray"><small>{{ 'account.mail.reset.alternative'|trans }}
-    <a href="{{ resetLink }}">{{ resetLink }}</a></small></p>
-    <p>{{ 'account.mail.confirm.signature'|trans }}<br>{{ fallbacks.get('site_title') }}</p>
+  <button href="{{ resetLink }}" class="small-expanded rounded">
+    {{ 'account.mail.reset.button'|trans }}
+  </button>
+
+  <row>
+    <columns>
+      <small class="text-muted dark-gray">
+        {{ 'account.mail.reset.alternative'|trans }}
+        <a href="{{ resetLink }}">{{ resetLink }}</a>
+      </small>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      {{ 'account.mail.confirm.signature'|trans }}<br>
+      {{ fallbacks.get('site_title') }}
+    </columns>
+  </row>
 {% endblock %}
