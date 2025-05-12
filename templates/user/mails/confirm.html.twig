@@ -1,13 +1,33 @@
 {% extends '@SumoCodersFrameworkCore/Mail/base.html.twig' %}
 
 {% block content %}
-    <p>{{ 'account.mail.confirm.greeting'|trans }}</p>
-    <p>{{ 'account.mail.confirm.intro'|trans }}</p>
-    <button href="{{ confirmationLink }}" class="button small-expanded rounded">
-        {{ 'account.mail.confirm.button'|trans }}
-    </button>
+  <row>
+    <columns>
+      {{ 'account.mail.confirm.greeting'|trans }}
+    </columns>
+  </row>
+  <row>
+    <columns>
+      {{ 'account.mail.confirm.intro'|trans }}
+    </columns>
+  </row>
 
-    <p class="text-muted dark-gray"><small>{{ 'account.mail.confirm.alternative'|trans }}
-    <a href="{{ confirmationLink }}">{{ confirmationLink }}</a></small></p>
-    <p>{{ 'account.mail.confirm.signature'|trans }}<br>{{ fallbacks.get('site_title') }}</p>
+  <button href="{{ confirmationLink }}" class="small-expanded rounded">
+    {{ 'account.mail.confirm.button'|trans }}
+  </button>
+
+  <row>
+    <columns>
+      <small class="text-muted dark-gray">
+        {{ 'account.mail.confirm.alternative'|trans }}
+        <a href="{{ confirmationLink }}">{{ confirmationLink }}</a>
+      </small>
+    </columns>
+  </row>
+  <row>
+    <columns>
+      {{ 'account.mail.confirm.signature'|trans }}<br>
+      {{ fallbacks.get('site_title') }}
+    </columns>
+  </row>
 {% endblock %}
