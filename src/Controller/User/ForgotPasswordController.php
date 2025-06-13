@@ -13,22 +13,26 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ForgotPasswordController extends AbstractController
 {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $bus
+    ) {
+    }
+
     #[Route('/password-reset', name: 'forgot_password')]
     public function __invoke(
         Request $request,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
     ): Response {
         $form = $this->createForm(ForgotPasswordType::class, new SendPasswordReset());
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bus->dispatch($form->getData());
+            $this->bus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $translator->trans('Password reset link successfully sent.')
+                $this->translator->trans('Password reset link successfully sent.')
             );
 
             return $this->redirectToRoute('login');

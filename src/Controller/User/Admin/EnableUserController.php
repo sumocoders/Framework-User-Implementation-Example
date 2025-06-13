@@ -15,21 +15,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
  */
 class EnableUserController extends AbstractController
 {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $bus
+    ) {
+    }
+
     #[Route('/admin/users/{user}/enable', name: 'user_enable')]
-    public function __invoke(
-        User $user,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __invoke(User $user): Response
+    {
         if ($user->getId() === $this->getUser()->getId()) {
             throw $this->createAccessDeniedException();
         }
 
-        $bus->dispatch(new EnableUser($user));
+        $this->bus->dispatch(new EnableUser($user));
 
         $this->addFlash(
             'success',
-            $translator->trans('User successfully enabled.')
+            $this->translator->trans('User successfully enabled.')
         );
 
         return $this->redirectToRoute('user_overview');

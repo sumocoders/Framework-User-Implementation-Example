@@ -15,20 +15,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ResetPasswordController extends AbstractController
 {
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $bus
+    ) {
+    }
+
     #[Route('/password-reset/{token}', name: 'reset_password')]
-    public function __invoke(
-        string $token,
-        Request $request,
-        UserRepository $userRepository,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
-        $user = $userRepository->checkResetToken($token);
+    public function __invoke(string $token, Request $request): Response
+    {
+        $user = $this->userRepository->checkResetToken($token);
 
         if (!$user instanceof User) {
             $this->addFlash(
                 'error',
-                $translator->trans('It looks like you clicked on an invalid password reset link. Please try again.')
+                $this->translator->trans(
+                    'It looks like you clicked on an invalid password reset link. Please try again.'
+                )
             );
 
             return $this->redirectToRoute('forgot_password');
@@ -39,11 +43,11 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bus->dispatch($form->getData());
+            $this->bus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $translator->trans('New password set successfully.')
+                $this->translator->trans('New password set successfully.')
             );
 
             return $this->redirectToRoute('login');

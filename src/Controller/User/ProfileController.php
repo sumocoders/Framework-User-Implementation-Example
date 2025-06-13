@@ -15,13 +15,16 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ProfileController extends AbstractController
 {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $bus
+    ) {
+    }
+
     #[Route('/profile', name: 'profile')]
     #[Breadcrumb('profile')]
-    public function __invoke(
-        Request $request,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __invoke(Request $request): Response
+    {
         if (!$this->getUser() instanceof User) {
             throw new \RuntimeException('Invalid user object');
         }
@@ -31,11 +34,11 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bus->dispatch($form->getData());
+            $this->bus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $translator->trans('Password successfully edited.')
+                $this->translator->trans('Password successfully edited.')
             );
         }
 

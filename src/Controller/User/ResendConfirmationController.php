@@ -13,27 +13,30 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 final class ResendConfirmationController extends AbstractController
 {
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $bus
+    ) {
+    }
+
     #[Route('/resend-confirmation/{token}', name: 'resend_confirmation')]
-    public function __invoke(
-        string $token,
-        UserRepository $userRepository,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
-        $user = $userRepository->findOneBy(['confirmationToken' => $token]);
+    public function __invoke(string $token): Response
+    {
+        $user = $this->userRepository->findOneBy(['confirmationToken' => $token]);
 
         if (!$user instanceof User) {
             $this->addFlash(
                 'error',
-                $translator->trans('Invalid confirmation token.')
+                $this->translator->trans('Invalid confirmation token.')
             );
 
             return $this->redirectToRoute('login');
         }
 
-        $bus->dispatch(new SendConfirmation($user));
+        $this->bus->dispatch(new SendConfirmation($user));
 
-        $this->addFlash('success', $translator->trans('Confirmation mail successfully resent'));
+        $this->addFlash('success', $this->translator->trans('Confirmation mail successfully resent'));
 
         return $this->redirectToRoute('login');
     }

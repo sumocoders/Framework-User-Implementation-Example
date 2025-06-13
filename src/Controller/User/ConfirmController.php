@@ -15,20 +15,24 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class ConfirmController extends AbstractController
 {
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $bus,
+    ) {
+    }
+
     #[Route('/confirm/{token}', name: 'confirm')]
-    public function __invoke(
-        string $token,
-        UserRepository $userRepository,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus,
-        Request $request
-    ): Response {
-        $user = $userRepository->checkConfirmationToken($token);
+    public function __invoke(string $token, Request $request): Response
+    {
+        $user = $this->userRepository->checkConfirmationToken($token);
 
         if (!$user instanceof User) {
             $this->addFlash(
                 'error',
-                $translator->trans('It looks like you clicked on an invalid account activation link. Please try again.')
+                $this->translator->trans(
+                    'It looks like you clicked on an invalid account activation link. Please try again.'
+                )
             );
 
             return $this->redirectToRoute('login');
@@ -38,11 +42,11 @@ class ConfirmController extends AbstractController
         $confirmForm->handleRequest($request);
 
         if ($confirmForm->isSubmitted() && $confirmForm->isValid()) {
-            $bus->dispatch(new ConfirmUser($user));
+            $this->bus->dispatch(new ConfirmUser($user));
 
             $this->addFlash(
                 'success',
-                $translator->trans('Account activated successfully.')
+                $this->translator->trans('Account activated successfully.')
             );
 
             /*

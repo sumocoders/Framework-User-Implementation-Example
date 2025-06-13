@@ -12,26 +12,29 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RequestConfirmationController extends AbstractController
 {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $bus
+    ) {
+    }
+
     #[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation')]
-    public function __invoke(
-        User $user,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __invoke(User $user): Response
+    {
         if ($user->isConfirmed()) {
             $this->addFlash(
                 'error',
-                $translator->trans('User is already confirmed.')
+                $this->translator->trans('User is already confirmed.')
             );
 
             $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
         }
 
-        $bus->dispatch(new SendConfirmation($user));
+        $this->bus->dispatch(new SendConfirmation($user));
 
         $this->addFlash(
             'success',
-            $translator->trans('Confirmation mail successfully sent')
+            $this->translator->trans('Confirmation mail successfully sent')
         );
 
         return $this->redirectToRoute('user_edit', ['user' => $user->getId()]);

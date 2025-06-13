@@ -14,19 +14,20 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 
 class RegisterController extends AbstractController
 {
+    public function __construct(
+        private MessageBusInterface $bus
+    ) {
+    }
+
     #[Route('/register', name: 'register')]
-    public function __invoke(
-        Request $request,
-        SessionInterface $session,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __invoke(Request $request, SessionInterface $session): Response
+    {
         $form = $this->createForm(RegisterType::class, new RegisterUser());
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bus->dispatch($form->getData());
+            $this->bus->dispatch($form->getData());
         }
 
         return $this->render('user/register.html.twig', [

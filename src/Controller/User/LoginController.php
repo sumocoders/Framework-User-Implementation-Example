@@ -11,21 +11,25 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class LoginController extends AbstractController
 {
+    public function __construct(
+        private readonly AuthenticationUtils $authenticationUtils
+    ) {
+    }
+
     #[Route('/login', name: 'login')]
-    public function __invoke(
-        AuthenticationUtils $authenticationUtils
-    ): Response {
+    public function __invoke(): Response
+    {
         if ($this->getUser() instanceof User) {
             return $this->redirectToRoute('profile');
         }
 
         $form = $this->createForm(LoginType::class, [
-            'email' => $authenticationUtils->getLastUsername(),
+            'email' => $this->authenticationUtils->getLastUsername(),
         ]);
 
         return $this->render('user/login.html.twig', [
-            'error' => $authenticationUtils->getLastAuthenticationError(),
-            'last_username' => $authenticationUtils->getLastUsername(),
+            'error' => $this->authenticationUtils->getLastAuthenticationError(),
+            'last_username' => $this->authenticationUtils->getLastUsername(),
             'form' => $form,
         ]);
     }

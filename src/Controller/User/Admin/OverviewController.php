@@ -14,14 +14,15 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class OverviewController extends AbstractController
 {
+    public function __construct(
+        private readonly UserRepository $userRepository
+    ) {
+    }
+
     #[Route('/admin/users', name: 'user_overview')]
     #[Breadcrumb('Users')]
-    public function __invoke(
-        Request $request,
-        UserRepository $userRepository,
-        #[MapQueryParameter]
-        int $page = 1
-    ): Response {
+    public function __invoke(Request $request, #[MapQueryParameter] int $page = 1): Response
+    {
         $form = $this->createForm(
             FilterType::class,
             new FilterDataTransferObject()
@@ -29,7 +30,7 @@ class OverviewController extends AbstractController
 
         $form->handleRequest($request);
 
-        $paginatedUsers = $userRepository->getAllFilteredUsers($form->getData());
+        $paginatedUsers = $this->userRepository->getAllFilteredUsers($form->getData());
         $paginatedUsers->paginate($page);
 
         return $this->render('user/admin/overview.html.twig', [
