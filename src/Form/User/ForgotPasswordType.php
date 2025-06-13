@@ -24,6 +24,10 @@ final class ForgotPasswordType extends AbstractType
                 EmailType::class,
                 [
                     'label' => 'Email',
+                    'attr' => [
+                        'tabindex' => 1,
+                        'autocomplete' => 'username',
+                    ],
                 ]
             );
     }

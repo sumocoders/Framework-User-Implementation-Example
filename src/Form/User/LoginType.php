@@ -25,6 +25,7 @@ final class LoginType extends AbstractType
                     'label' => 'Email',
                     'attr' => [
                         'tabindex' => 1,
+                        'autocomplete' => 'username',
                     ],
                 ]
             )
@@ -35,6 +36,7 @@ final class LoginType extends AbstractType
                     'label' => 'Password',
                     'attr' => [
                         'tabindex' => 2,
+                        'autocomplete' => 'current-password',
                     ],
                 ]
             );
