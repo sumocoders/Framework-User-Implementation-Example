@@ -11,6 +11,9 @@
 'Account activated successfully.': 'Account succesvol geactiveerd.'
 'Return to sign in': 'Keer terug naar login'
 
+# Password Strength Meter
+'Use 12 or more characters with a mix of letters, numbers & symbols': 'Gebruiker meer dan 12 tekens met een mix van letters, cijfers en symbolen'
+
 # Admin back-end
 'Add a new user': 'Voeg gebruiker toe'
 'Edit user {user}': 'Bewerk {user}'
