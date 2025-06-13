@@ -14,8 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-#[AsCommand(name: 'app:create-user', description: 'Create an user and send confirmation email')]
-class CreateUserCommand extends Command
+#[AsCommand(name: 'app:user:create', description: 'Create an user and send activation mail')]
+class CreateCommand extends Command
 {
     public function __construct(
         private readonly MessageBusInterface $messageBus,
