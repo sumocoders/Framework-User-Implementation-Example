@@ -6,6 +6,10 @@ use App\Message\User\ConfirmUser;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @template TData of ConfirmUser
+ * @extends AbstractType<TData>
+ */
 class ConfirmType extends AbstractType
 {
     public function configureOptions(OptionsResolver $resolver): void

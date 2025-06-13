@@ -7,6 +7,10 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @template TData of ResetPassword
+ * @extends AbstractType<TData>
+ */
 class ResetPasswordType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void

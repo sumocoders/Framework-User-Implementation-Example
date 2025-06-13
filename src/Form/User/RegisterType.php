@@ -10,6 +10,10 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
+/**
+ * @template TData of UserDataTransferObject
+ * @extends AbstractType<TData>
+ */
 final class RegisterType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
