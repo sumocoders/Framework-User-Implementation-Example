@@ -1,7 +1,7 @@
 {% extends '@SumoCodersFrameworkCore/user.html.twig' %}
 
 {% block main %}
-    {% if form.vars.submitted and form.vars.valid %}
+    {% if show_registered_message %}
         <p>{{ 'Check your email for a link to confirm your account. If it doesn’t appear within a few minutes, check your spam folder.'|trans }}</p>
         <a href="{{ url('login') }}">{{ 'Return to sign in'|trans }}</a>
     {% else %}

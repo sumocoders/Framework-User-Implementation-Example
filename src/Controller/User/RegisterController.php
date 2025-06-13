@@ -28,10 +28,15 @@ class RegisterController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->messageBus->dispatch($form->getData());
+
+            return $this->redirectToRoute('register', [
+                'success' => true,
+            ]);
         }
 
         return $this->render('user/register.html.twig', [
             'form' => $form,
+            'show_registered_message' => $request->query->getBoolean('success', false),
         ]);
     }
 }
