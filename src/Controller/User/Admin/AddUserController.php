@@ -16,7 +16,7 @@ class AddUserController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -29,7 +29,7 @@ class AddUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->bus->dispatch($form->getData());
+            $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',

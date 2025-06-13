@@ -18,7 +18,7 @@ class ConfirmController extends AbstractController
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $bus,
+        private MessageBusInterface $messageBus,
     ) {
     }
 
@@ -42,7 +42,7 @@ class ConfirmController extends AbstractController
         $confirmForm->handleRequest($request);
 
         if ($confirmForm->isSubmitted() && $confirmForm->isValid()) {
-            $this->bus->dispatch(new ConfirmUser($user));
+            $this->messageBus->dispatch(new ConfirmUser($user));
 
             $this->addFlash(
                 'success',

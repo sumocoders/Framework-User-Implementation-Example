@@ -17,7 +17,7 @@ class DisableUserController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -28,7 +28,7 @@ class DisableUserController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $this->bus->dispatch(new DisableUser($user));
+        $this->messageBus->dispatch(new DisableUser($user));
 
         $this->addFlash(
             'success',

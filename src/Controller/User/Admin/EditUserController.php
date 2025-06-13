@@ -19,7 +19,7 @@ class EditUserController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -32,7 +32,7 @@ class EditUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->bus->dispatch($form->getData());
+            $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
@@ -48,7 +48,7 @@ class EditUserController extends AbstractController
         $passwordForgotForm->handleRequest($request);
 
         if ($passwordForgotForm->isSubmitted() && $passwordForgotForm->isValid()) {
-            $this->bus->dispatch($sendPasswordResetMessage);
+            $this->messageBus->dispatch($sendPasswordResetMessage);
 
             $this->addFlash(
                 'success',

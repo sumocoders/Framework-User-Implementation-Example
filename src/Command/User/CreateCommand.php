@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CreateCommand extends Command
 {
     public function __construct(
-        private readonly MessageBusInterface $messageBus,
+        private MessageBusInterface $messageBus,
         private readonly ValidatorInterface $validator,
     ) {
         parent::__construct();

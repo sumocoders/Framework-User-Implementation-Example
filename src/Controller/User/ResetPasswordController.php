@@ -18,7 +18,7 @@ class ResetPasswordController extends AbstractController
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -43,7 +43,7 @@ class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->bus->dispatch($form->getData());
+            $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',

@@ -14,7 +14,7 @@ final class CreateUserHandler
 {
     public function __construct(
         private readonly UserRepository $userRepository,
-        private readonly MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -29,7 +29,7 @@ final class CreateUserHandler
 
         $this->userRepository->add($user);
 
-        $this->bus->dispatch(new SendConfirmation($user));
+        $this->messageBus->dispatch(new SendConfirmation($user));
 
         return $user;
     }

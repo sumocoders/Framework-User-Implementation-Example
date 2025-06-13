@@ -15,7 +15,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class RegisterController extends AbstractController
 {
     public function __construct(
-        private MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -27,7 +27,7 @@ class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->bus->dispatch($form->getData());
+            $this->messageBus->dispatch($form->getData());
         }
 
         return $this->render('user/register.html.twig', [

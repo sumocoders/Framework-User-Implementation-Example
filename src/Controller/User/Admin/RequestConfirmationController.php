@@ -14,7 +14,7 @@ class RequestConfirmationController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -30,7 +30,7 @@ class RequestConfirmationController extends AbstractController
             $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
         }
 
-        $this->bus->dispatch(new SendConfirmation($user));
+        $this->messageBus->dispatch(new SendConfirmation($user));
 
         $this->addFlash(
             'success',

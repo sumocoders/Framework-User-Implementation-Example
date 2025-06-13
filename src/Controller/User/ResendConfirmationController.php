@@ -16,7 +16,7 @@ final class ResendConfirmationController extends AbstractController
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -34,7 +34,7 @@ final class ResendConfirmationController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $this->bus->dispatch(new SendConfirmation($user));
+        $this->messageBus->dispatch(new SendConfirmation($user));
 
         $this->addFlash('success', $this->translator->trans('Confirmation mail successfully resent'));
 
