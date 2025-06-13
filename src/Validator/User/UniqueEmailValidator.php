@@ -14,8 +14,9 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class UniqueEmailValidator extends ConstraintValidator
 {
-    public function __construct(private readonly UserRepository $userRepository)
-    {
+    public function __construct(
+        private readonly UserRepository $userRepository
+    ) {
     }
 
     public function validate(mixed $value, Constraint $constraint): void
@@ -42,7 +43,7 @@ class UniqueEmailValidator extends ConstraintValidator
          */
         if (
             ($formData instanceof CreateUser ||
-            $formData instanceof RegisterUser) &&
+             $formData instanceof RegisterUser) &&
             $userWithThatEmail instanceof User
         ) {
             $this->context->buildViolation($constraint->message)

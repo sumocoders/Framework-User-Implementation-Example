@@ -13,8 +13,9 @@ class Role implements \Stringable
         self::ADMIN,
     ];
 
-    public function __construct(private readonly string $role)
-    {
+    public function __construct(
+        private readonly string $role
+    ) {
         $this->validate();
     }
 

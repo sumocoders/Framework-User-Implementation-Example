@@ -14,8 +14,9 @@ class ResetPassword
     #[Assert\Length(min: 12)]
     public string $password;
 
-    public function __construct(private readonly User $user)
-    {
+    public function __construct(
+        private readonly User $user
+    ) {
     }
 
     public function getUser(): User
