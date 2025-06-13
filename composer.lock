@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "929d1559020af10f7f535caf9c2f2751",
+    "content-hash": "947256d4a4ce34db22cc96a62ceac981",
     "packages": [
         {
             "name": "beberlei/doctrineextensions",
@@ -2647,16 +2647,16 @@
         },
         {
             "name": "sumocoders/framework-core-bundle",
-            "version": "v11.2.0",
+            "version": "v12.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sumocoders/FrameworkCoreBundle.git",
-                "reference": "2791dad0c67101fedc398301e84b3f3d9f50e3cc"
+                "reference": "2c603a467e0637a0b566874fd966a7d2beae7cec"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sumocoders/FrameworkCoreBundle/zipball/2791dad0c67101fedc398301e84b3f3d9f50e3cc",
-                "reference": "2791dad0c67101fedc398301e84b3f3d9f50e3cc",
+                "url": "https://api.github.com/repos/sumocoders/FrameworkCoreBundle/zipball/2c603a467e0637a0b566874fd966a7d2beae7cec",
+                "reference": "2c603a467e0637a0b566874fd966a7d2beae7cec",
                 "shasum": ""
             },
             "require": {
@@ -2665,7 +2665,7 @@
                 "friendsofsymfony/jsrouting-bundle": "^3.5",
                 "gedmo/doctrine-extensions": "^3.17",
                 "knplabs/knp-menu-bundle": "^3.4",
-                "php": "^8.3",
+                "php": "^8.4",
                 "symfony/asset": "^7.2",
                 "symfony/console": "^7.2",
                 "symfony/form": "^7.2",
@@ -2714,9 +2714,9 @@
             ],
             "support": {
                 "issues": "https://github.com/sumocoders/FrameworkCoreBundle/issues",
-                "source": "https://github.com/sumocoders/FrameworkCoreBundle/tree/v11.2.0"
+                "source": "https://github.com/sumocoders/FrameworkCoreBundle/tree/v12.2.0"
             },
-            "time": "2024-12-04T10:45:02+00:00"
+            "time": "2025-06-06T06:14:11+00:00"
         },
         {
             "name": "symfony/apache-pack",

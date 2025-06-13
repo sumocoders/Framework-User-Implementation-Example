@@ -16,6 +16,54 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    '@symfony/stimulus-bundle' => [
+        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    ],
+    'sumocoders/Clipboard' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/clipboard_controller.js',
+    ],
+    'sumocoders/SidebarCollapsable' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/sidebar_collapsable_controller.js',
+    ],
+    'sumocoders/Toast' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/toast_controller.js',
+    ],
+    'sumocoders/addToast' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/js/toast.js',
+    ],
+    'sumocoders/cookie' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/js/cookie.js',
+    ],
+    'sumocoders/Theme' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/theme_controller.js',
+    ],
+    'sumocoders/Tooltip' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/tooltip_controller.js',
+    ],
+    'sumocoders/DateTimePicker' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/date_time_picker_controller.js',
+    ],
+    'sumocoders/Tabs' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/tabs_controller.js',
+    ],
+    'sumocoders/PasswordStrengthChecker' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/password_strength_checker_controller.js',
+    ],
+    'sumocoders/FormCollection' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/form_collection_controller.js',
+    ],
+    'sumocoders/debounce' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/js/debounce.js',
+    ],
+    'sumocoders/ScrollToTop' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/scroll_to_top_controller.js',
+    ],
+    'sumocoders/Popover' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/popover_controller.js',
+    ],
+    'sumocoders/ajax_client' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/js/ajax_client.js',
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
@@ -38,13 +86,6 @@ return [
     'bootstrap' => [
         'version' => '5.3.6',
     ],
-    '@popperjs/core' => [
-        'version' => '2.11.8',
-    ],
-    'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.6',
-        'type' => 'css',
-    ],
     '@fortawesome/fontawesome-free/css/all.css' => [
         'version' => '6.7.2',
         'type' => 'css',
@@ -59,10 +100,6 @@ return [
     ],
     'flatpickr' => [
         'version' => '4.6.13',
-    ],
-    'flatpickr/dist/flatpickr.min.css' => [
-        'version' => '4.6.13',
-        'type' => 'css',
     ],
     'flatpickr/dist/flatpickr.css' => [
         'version' => '4.6.13',
@@ -137,5 +174,16 @@ return [
     ],
     '@stimulus-components/clipboard' => [
         'version' => '5.0.0',
+    ],
+    '@popperjs/core' => [
+        'version' => '2.11.8',
+    ],
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.6',
+        'type' => 'css',
+    ],
+    'flatpickr/dist/flatpickr.min.css' => [
+        'version' => '4.6.13',
+        'type' => 'css',
     ],
 ];
