@@ -20,7 +20,7 @@ class LoginController extends AbstractController
     public function __invoke(): Response
     {
         if ($this->getUser() instanceof User) {
-            return $this->redirectToRoute('profile');
+            return $this->redirectToRoute('user_profile');
         }
 
         $form = $this->createForm(LoginType::class, [

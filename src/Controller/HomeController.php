@@ -12,6 +12,6 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function __invoke(): Response
     {
-        return $this->redirectToRoute('profile');
+        return $this->redirectToRoute('user_profile');
     }
 }

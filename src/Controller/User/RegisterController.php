@@ -12,7 +12,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/register', name: 'register')]
+#[Route('/user/register', name: 'user_register')]
 class RegisterController extends AbstractController
 {
     public function __construct(
@@ -29,7 +29,7 @@ class RegisterController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $this->messageBus->dispatch($form->getData());
 
-            return $this->redirectToRoute('register', [
+            return $this->redirectToRoute('user_register', [
                 'success' => true,
             ]);
         }

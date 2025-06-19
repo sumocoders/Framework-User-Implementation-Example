@@ -45,7 +45,7 @@ class SendConfirmationHandler
             ->htmlTemplate('user/mails/confirm.html.twig')
             ->context([
                 'confirmationLink' => $this->router->generate(
-                    'confirm',
+                    'user_confirm',
                     [
                         'token' => $user->getConfirmationToken(),
                     ],

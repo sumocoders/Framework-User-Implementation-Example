@@ -11,7 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/resend-confirmation/{token}', name: 'resend_confirmation')]
+#[Route('/user/resend-confirmation/{token}', name: 'user_resend_confirmation')]
 final class ResendConfirmationController extends AbstractController
 {
     public function __construct(

@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
-#[Route('/admin/users', name: 'user_overview')]
+#[Route('/admin/users', name: 'user_admin_overview')]
 class OverviewController extends AbstractController
 {
     public function __construct(

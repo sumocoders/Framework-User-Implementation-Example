@@ -15,7 +15,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/admin/users/{user}/edit', name: 'user_edit')]
+#[Route('/admin/users/{user}/edit', name: 'user_admin_edit')]
 class EditUserController extends AbstractController
 {
     public function __construct(
@@ -24,7 +24,7 @@ class EditUserController extends AbstractController
     ) {
     }
 
-    #[Breadcrumb('edit', parent: ['name' => 'user_overview'])]
+    #[Breadcrumb('edit', parent: ['name' => 'user_admin_overview'])]
     public function __invoke(User $user, Request $request): Response
     {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
@@ -39,7 +39,7 @@ class EditUserController extends AbstractController
                 $this->translator->trans('User successfully edited.')
             );
 
-            return $this->redirectToRoute('user_overview');
+            return $this->redirectToRoute('user_admin_overview');
         }
 
         $sendPasswordResetMessage = new SendPasswordReset();
@@ -55,7 +55,7 @@ class EditUserController extends AbstractController
                 $this->translator->trans('Password reset successfully sent.')
             );
 
-            return $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
+            return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
         }
 
         return $this->render('user/admin/edit.html.twig', [

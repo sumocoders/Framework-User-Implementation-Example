@@ -10,7 +10,7 @@
     <div class="form-group">
         <div class="d-flex justify-content-between">
             {{ form_label(form.password) }}
-            <a href="{{ url('forgot_password') }}">{{ 'I forgot my password'|trans }}</a>
+            <a href="{{ url('user_forgot_password') }}">{{ 'I forgot my password'|trans }}</a>
         </div>
 
         {{ form_widget(form.password) }}
@@ -23,5 +23,5 @@
     <input class="btn btn-block btn-secondary mb-4" type="submit" value="{{ 'Sign in'|trans }}" />
     {{ form_end(form) }}
 
-    <p class="align-self-center">{{ 'New to x?'|trans }} <a href="{{ url('register') }}">{{ 'Sign up'|trans }}</a></p>
+    <p class="align-self-center">{{ 'New to x?'|trans }} <a href="{{ url('user_register') }}">{{ 'Sign up'|trans }}</a></p>
 {% endblock %}

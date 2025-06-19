@@ -11,7 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/password-reset', name: 'forgot_password')]
+#[Route('/user/password-reset', name: 'user_forgot_password')]
 class ForgotPasswordController extends AbstractController
 {
     public function __construct(

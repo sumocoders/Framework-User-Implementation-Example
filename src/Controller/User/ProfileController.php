@@ -13,7 +13,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/profile', name: 'profile')]
+#[Route('/user/profile', name: 'user_profile')]
 class ProfileController extends AbstractController
 {
     public function __construct(
@@ -22,7 +22,7 @@ class ProfileController extends AbstractController
     ) {
     }
 
-    #[Breadcrumb('profile')]
+    #[Breadcrumb('user_profile')]
     public function __invoke(Request $request): Response
     {
         if (!$this->getUser() instanceof User) {

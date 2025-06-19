@@ -13,7 +13,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/confirm/{token}', name: 'confirm')]
+#[Route('/user/confirm/{token}', name: 'user_confirm')]
 class ConfirmController extends AbstractController
 {
     public function __construct(
@@ -55,7 +55,7 @@ class ConfirmController extends AbstractController
              */
             if ($user->getPasswordResetToken() !== null) {
                 return $this->redirectToRoute(
-                    'reset_password',
+                    'user_reset_password',
                     ['token' => $user->getPasswordResetToken()]
                 );
             }
