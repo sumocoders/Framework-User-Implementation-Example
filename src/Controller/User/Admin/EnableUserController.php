@@ -13,6 +13,7 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 /**
  * @method User getUser()
  */
+#[Route('/admin/users/{user}/enable', name: 'user_enable')]
 class EnableUserController extends AbstractController
 {
     public function __construct(
@@ -21,7 +22,6 @@ class EnableUserController extends AbstractController
     ) {
     }
 
-    #[Route('/admin/users/{user}/enable', name: 'user_enable')]
     public function __invoke(User $user): Response
     {
         if ($user->getId() === $this->getUser()->getId()) {

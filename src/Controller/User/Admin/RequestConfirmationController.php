@@ -10,6 +10,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation')]
 class RequestConfirmationController extends AbstractController
 {
     public function __construct(
@@ -18,7 +19,6 @@ class RequestConfirmationController extends AbstractController
     ) {
     }
 
-    #[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation')]
     public function __invoke(User $user): Response
     {
         if ($user->isConfirmed()) {

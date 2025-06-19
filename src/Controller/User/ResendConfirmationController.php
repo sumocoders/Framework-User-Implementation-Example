@@ -11,6 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/resend-confirmation/{token}', name: 'resend_confirmation')]
 final class ResendConfirmationController extends AbstractController
 {
     public function __construct(
@@ -20,7 +21,6 @@ final class ResendConfirmationController extends AbstractController
     ) {
     }
 
-    #[Route('/resend-confirmation/{token}', name: 'resend_confirmation')]
     public function __invoke(string $token): Response
     {
         $user = $this->userRepository->findOneBy(['confirmationToken' => $token]);

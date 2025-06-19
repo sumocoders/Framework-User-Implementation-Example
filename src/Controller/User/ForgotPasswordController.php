@@ -11,6 +11,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/password-reset', name: 'forgot_password')]
 class ForgotPasswordController extends AbstractController
 {
     public function __construct(
@@ -19,10 +20,8 @@ class ForgotPasswordController extends AbstractController
     ) {
     }
 
-    #[Route('/password-reset', name: 'forgot_password')]
-    public function __invoke(
-        Request $request,
-    ): Response {
+    public function __invoke(Request $request): Response
+    {
         $form = $this->createForm(ForgotPasswordType::class, new SendPasswordReset());
 
         $form->handleRequest($request);

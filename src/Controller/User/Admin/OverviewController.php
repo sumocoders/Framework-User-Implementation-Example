@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
+#[Route('/admin/users', name: 'user_overview')]
 class OverviewController extends AbstractController
 {
     public function __construct(
@@ -19,7 +20,6 @@ class OverviewController extends AbstractController
     ) {
     }
 
-    #[Route('/admin/users', name: 'user_overview')]
     #[Breadcrumb('Users')]
     public function __invoke(Request $request, #[MapQueryParameter] int $page = 1): Response
     {

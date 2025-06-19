@@ -13,6 +13,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/password-reset/{token}', name: 'reset_password')]
 class ResetPasswordController extends AbstractController
 {
     public function __construct(
@@ -22,7 +23,6 @@ class ResetPasswordController extends AbstractController
     ) {
     }
 
-    #[Route('/password-reset/{token}', name: 'reset_password')]
     public function __invoke(string $token, Request $request): Response
     {
         $user = $this->userRepository->checkResetToken($token);

@@ -12,6 +12,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/admin/users/add', name: 'user_add')]
 class AddUserController extends AbstractController
 {
     public function __construct(
@@ -20,7 +21,6 @@ class AddUserController extends AbstractController
     ) {
     }
 
-    #[Route('/admin/users/add', name: 'user_add')]
     #[Breadcrumb('add', parent: ['name' => 'user_overview'])]
     public function __invoke(Request $request): Response
     {

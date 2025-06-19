@@ -13,6 +13,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/confirm/{token}', name: 'confirm')]
 class ConfirmController extends AbstractController
 {
     public function __construct(
@@ -22,7 +23,6 @@ class ConfirmController extends AbstractController
     ) {
     }
 
-    #[Route('/confirm/{token}', name: 'confirm')]
     public function __invoke(string $token, Request $request): Response
     {
         $user = $this->userRepository->checkConfirmationToken($token);

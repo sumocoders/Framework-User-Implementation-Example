@@ -15,6 +15,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/admin/users/{user}/edit', name: 'user_edit')]
 class EditUserController extends AbstractController
 {
     public function __construct(
@@ -23,7 +24,6 @@ class EditUserController extends AbstractController
     ) {
     }
 
-    #[Route('/admin/users/{user}/edit', name: 'user_edit')]
     #[Breadcrumb('edit', parent: ['name' => 'user_overview'])]
     public function __invoke(User $user, Request $request): Response
     {

@@ -12,6 +12,7 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/register', name: 'register')]
 class RegisterController extends AbstractController
 {
     public function __construct(
@@ -19,7 +20,6 @@ class RegisterController extends AbstractController
     ) {
     }
 
-    #[Route('/register', name: 'register')]
     public function __invoke(Request $request, SessionInterface $session): Response
     {
         $form = $this->createForm(RegisterType::class, new RegisterUser());
