@@ -38,7 +38,6 @@ class SendPasswordResetHandler
 
         if ($user instanceof User) {
             $user->requestPassword();
-
             $this->userRepository->save();
 
             $email = (new TemplatedEmail())
@@ -56,7 +55,6 @@ class SendPasswordResetHandler
                     ),
 
                 ]);
-
             $this->mailer->send($email);
         }
     }

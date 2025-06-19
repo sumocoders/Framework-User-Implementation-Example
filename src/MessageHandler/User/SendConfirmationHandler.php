@@ -51,7 +51,6 @@ class SendConfirmationHandler
                 ),
 
             ]);
-
         $this->mailer->send($email);
 
         return $user;

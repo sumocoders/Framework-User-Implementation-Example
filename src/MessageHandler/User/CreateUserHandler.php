@@ -24,11 +24,8 @@ final class CreateUserHandler
             $message->email,
             $message->roles
         );
-
         $user->requestPassword();
-
         $this->userRepository->add($user);
-
         $this->messageBus->dispatch(new SendConfirmation($user));
 
         return $user;

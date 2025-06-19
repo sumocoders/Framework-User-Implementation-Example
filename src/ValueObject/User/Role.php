@@ -6,9 +6,9 @@ use App\Exception\User\InvalidRoleException;
 
 class Role implements \Stringable
 {
-    private const USER = 'ROLE_USER';
-    private const ADMIN = 'ROLE_ADMIN';
-    private const ALL = [
+    private const string USER = 'ROLE_USER';
+    private const string ADMIN = 'ROLE_ADMIN';
+    private const array ALL = [
         self::USER,
         self::ADMIN,
     ];
