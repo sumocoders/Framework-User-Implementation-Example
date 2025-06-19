@@ -16,11 +16,10 @@ final class UpdateUserHandler
 
     public function __invoke(UpdateUser $message): void
     {
-        $message->getUser()->update(
+        $message->user->update(
             $message->email,
             $message->roles
         );
-
         $this->userRepository->save();
     }
 }

@@ -32,10 +32,8 @@ class SendConfirmationHandler
 
     public function __invoke(SendConfirmation $message): User
     {
-        $user = $message->getUser();
-
+        $user = $message->user;
         $user->requestConfirmation();
-
         $this->userRepository->save();
 
         $email = (new TemplatedEmail())

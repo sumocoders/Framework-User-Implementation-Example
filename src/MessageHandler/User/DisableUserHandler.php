@@ -16,10 +16,7 @@ class DisableUserHandler
 
     public function __invoke(DisableUser $message): void
     {
-        $user = $message->getUser();
-
-        $user->disable();
-
+        $message->user->disable();
         $this->userRepository->save();
     }
 }

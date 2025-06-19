@@ -58,7 +58,7 @@ class UniqueEmailValidator extends ConstraintValidator
         if (
             $formData instanceof UpdateUser &&
             $userWithThatEmail instanceof User &&
-            $formData->getUser()->getId() !== $userWithThatEmail->getId()
+            $formData->user->getId() !== $userWithThatEmail->getId()
         ) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%email%', $value)

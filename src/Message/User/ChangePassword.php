@@ -11,12 +11,7 @@ class ChangePassword
     public string $password;
 
     public function __construct(
-        private readonly User $user
+        public readonly User $user
     ) {
-    }
-
-    public function getUser(): User
-    {
-        return $this->user;
     }
 }

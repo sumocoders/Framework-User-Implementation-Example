@@ -16,10 +16,7 @@ class EnableUserHandler
 
     public function __invoke(EnableUser $message): void
     {
-        $user = $message->getUser();
-
-        $user->enable();
-
+        $message->user->enable();
         $this->userRepository->save();
     }
 }

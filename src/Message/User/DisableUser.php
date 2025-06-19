@@ -7,7 +7,7 @@ use App\Entity\User\User;
 class DisableUser
 {
     public function __construct(
-        private readonly User $user
+        public readonly User $user
     ) {
     }
 
