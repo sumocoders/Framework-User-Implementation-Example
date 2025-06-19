@@ -34,9 +34,12 @@
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.7",
         "micheh/phpcs-gitlab": "^1.1",
-        "phpstan/phpstan-symfony": "^2.0",
         "phpstan/phpstan-doctrine": "^2.0",
+        "phpstan/phpstan-symfony": "^2.0",
+        "phpunit/phpunit": "^12.2",
         "squizlabs/php_codesniffer": "^3.11",
+        "symfony/browser-kit": "^7.3",
+        "symfony/css-selector": "^7.3",
         "symfony/maker-bundle": "*",
         "symfony/phpunit-bridge": "^7.2",
         "symfony/stopwatch": "^7.2",
