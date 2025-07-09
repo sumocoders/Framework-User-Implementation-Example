@@ -11,8 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @template TData of SendPasswordReset
- * @extends AbstractType<TData>
+ * @extends AbstractType<SendPasswordReset>
  */
 final class ForgotPasswordType extends AbstractType
 {

@@ -9,8 +9,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @template TData of FilterDataTransferObject
- * @extends AbstractType<TData>
+ * @extends AbstractType<FilterDataTransferObject>
  */
 class FilterType extends AbstractType
 {

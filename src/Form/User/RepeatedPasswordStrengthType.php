@@ -8,8 +8,7 @@ use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @template TData of RepeatedType
- * @extends AbstractType<TData>
+ * @extends AbstractType<RepeatedType>
  */
 final class RepeatedPasswordStrengthType extends AbstractType
 {

@@ -11,8 +11,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @template TData of UserDataTransferObject
- * @extends AbstractType<TData>
+ * @extends AbstractType<UserDataTransferObject>
  */
 final class RegisterType extends AbstractType
 {

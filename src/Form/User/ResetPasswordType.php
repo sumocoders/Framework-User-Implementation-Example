@@ -8,8 +8,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @template TData of ResetPassword
- * @extends AbstractType<TData>
+ * @extends AbstractType<ResetPassword>
  */
 class ResetPasswordType extends AbstractType
 {

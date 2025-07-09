@@ -7,8 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 /**
- * @template TData of ConfirmUser
- * @extends AbstractType<TData>
+ * @extends AbstractType<ConfirmUser>
  */
 class ConfirmType extends AbstractType
 {
