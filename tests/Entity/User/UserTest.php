@@ -3,9 +3,9 @@
 namespace App\Tests\Entity\User;
 
 use App\Entity\User\User;
-use PHPUnit\Framework\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
-class UserTest extends TestCase
+class UserTest extends KernelTestCase
 {
     public function testUserIsUpdated(): void
     {

@@ -32,6 +32,7 @@
         "twbs/bootstrap": "^5.3"
     },
     "require-dev": {
+        "dama/doctrine-test-bundle": "^8.3",
         "doctrine/doctrine-fixtures-bundle": "^3.7",
         "micheh/phpcs-gitlab": "^1.1",
         "phpstan/phpstan-doctrine": "^2.0",

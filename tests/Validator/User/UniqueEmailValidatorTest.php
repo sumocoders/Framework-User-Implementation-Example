@@ -24,7 +24,6 @@ class UniqueEmailValidatorTest extends KernelTestCase
     protected function setUp(): void
     {
         $kernel = self::bootKernel();
-        $this->initDatabase($kernel);
         $this->userRepository = $kernel->getContainer()
             ->get('doctrine')
             ->getManager()
@@ -124,14 +123,5 @@ class UniqueEmailValidatorTest extends KernelTestCase
         $validator->initialize($context);
 
         $validator->validate('user-existing@example.com', new UniqueEmail());
-    }
-
-    private function initDatabase(KernelInterface $kernel): void
-    {
-        /** @var EntityManager $entityManager */
-        $entityManager = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $metaData = $entityManager->getMetadataFactory()->getAllMetadata();
-        $schemaTool = new SchemaTool($entityManager);
-        $schemaTool->updateSchema($metaData);
     }
 }

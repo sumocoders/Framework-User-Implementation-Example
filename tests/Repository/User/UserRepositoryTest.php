@@ -5,10 +5,7 @@ namespace App\Tests\Repository\User;
 use App\DataTransferObject\User\FilterDataTransferObject;
 use App\Entity\User\User;
 use App\Repository\User\UserRepository;
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\Tools\SchemaTool;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
@@ -19,7 +16,6 @@ class UserRepositoryTest extends KernelTestCase
     protected function setUp(): void
     {
         $kernel = self::bootKernel();
-        $this->initDatabase($kernel);
         $this->userRepository = $kernel->getContainer()
             ->get('doctrine')
             ->getManager()
@@ -124,14 +120,5 @@ class UserRepositoryTest extends KernelTestCase
         $this->assertSame('user@example.com', $paginator->getResults()[0]->getEmail());
         $this->assertInstanceOf(User::class, $paginator->getResults()[1]);
         $this->assertSame('other-user@example.com', $paginator->getResults()[1]->getEmail());
-    }
-
-    private function initDatabase(KernelInterface $kernel): void
-    {
-        /** @var EntityManager $entityManager */
-        $entityManager = $kernel->getContainer()->get('doctrine.orm.entity_manager');
-        $metaData = $entityManager->getMetadataFactory()->getAllMetadata();
-        $schemaTool = new SchemaTool($entityManager);
-        $schemaTool->updateSchema($metaData);
     }
 }
