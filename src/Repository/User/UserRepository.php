@@ -28,7 +28,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function add(User $user): void
     {
         $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        $this->save();
     }
 
     public function save(): void

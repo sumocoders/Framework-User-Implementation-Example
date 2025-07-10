@@ -2,7 +2,6 @@
 
 namespace App\Security;
 
-use App\Controller\User\Admin\RequestConfirmationController;
 use App\Entity\User\User;
 use App\Repository\User\UserRepository;
 use App\Security\Exception\UnconfirmedAccountException;
