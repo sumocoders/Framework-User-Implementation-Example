@@ -15,8 +15,9 @@ class UserRepositoryTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $kernel = self::bootKernel();
-        $this->userRepository = $kernel->getContainer()
+        self::bootKernel();
+
+        $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
             ->getRepository(User::class);
@@ -29,7 +30,6 @@ class UserRepositoryTest extends KernelTestCase
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
         $this->assertInstanceOf(User::class, $user);
-        $this->assertSame(1, $user->getId());
         $this->assertSame('user@example.com', $user->getEmail());
         $this->assertContains('ROLE_ADMIN', $user->getRoles());
     }

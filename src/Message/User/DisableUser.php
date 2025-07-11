@@ -10,9 +10,4 @@ class DisableUser
         public readonly User $user
     ) {
     }
-
-    public function getUser(): User
-    {
-        return $this->user;
-    }
 }

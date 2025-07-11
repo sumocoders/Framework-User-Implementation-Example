@@ -23,8 +23,9 @@ class UniqueEmailValidatorTest extends KernelTestCase
 
     protected function setUp(): void
     {
-        $kernel = self::bootKernel();
-        $this->userRepository = $kernel->getContainer()
+        self::bootKernel();
+
+        $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
             ->getRepository(User::class);
