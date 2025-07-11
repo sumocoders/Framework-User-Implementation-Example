@@ -84,7 +84,7 @@ return [
         'version' => '8.0.13',
     ],
     'bootstrap' => [
-        'version' => '5.3.6',
+        'version' => '5.3.7',
     ],
     '@fortawesome/fontawesome-free/css/all.css' => [
         'version' => '6.7.2',
@@ -170,7 +170,7 @@ return [
         'version' => '1.15.6',
     ],
     'axios' => [
-        'version' => '1.9.0',
+        'version' => '1.10.0',
     ],
     '@stimulus-components/clipboard' => [
         'version' => '5.0.0',
@@ -179,7 +179,7 @@ return [
         'version' => '2.11.8',
     ],
     'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.6',
+        'version' => '5.3.7',
         'type' => 'css',
     ],
     'flatpickr/dist/flatpickr.min.css' => [
