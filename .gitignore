@@ -8,31 +8,25 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
-###> squizlabs/php_codesniffer ###
-/.phpcs-cache
-/phpcs.xml
-###< squizlabs/php_codesniffer ###
-
-###> vincentlanglet/twig-cs-fixer ###
-/.twig-cs-fixer.cache
-###< vincentlanglet/twig-cs-fixer ###
-
 ###> phpstan/phpstan ###
 phpstan.neon
 ###< phpstan/phpstan ###
 
-###> symfony/phpunit-bridge ###
-.phpunit.result.cache
+###> phpunit/phpunit ###
 /phpunit.xml
-###< symfony/phpunit-bridge ###
+/.phpunit.cache/
+###< phpunit/phpunit ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
 
 ###> symfony/asset-mapper ###
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
-###> phpunit/phpunit ###
-/phpunit.xml
-/.phpunit.cache/
-/.phpunit.result.cache
-###< phpunit/phpunit ###
+###> vincentlanglet/twig-cs-fixer ###
+/.twig-cs-fixer.cache
+###< vincentlanglet/twig-cs-fixer ###
