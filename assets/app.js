@@ -1,13 +1,10 @@
-/*
- * Welcome to your app's main JavaScript file!
- *
- * We recommend including the built version of this JavaScript file
- * (and its CSS file) in your base layout (base.html.twig).
- */
+// CSS
+import '@fortawesome/fontawesome-free/css/all.css'
+import 'tom-select/dist/css/tom-select.default.css'
+import 'tom-select/dist/css/tom-select.bootstrap5.css'
+import 'flatpickr/dist/flatpickr.css'
+import 'flatpickr/dist/themes/airbnb.css'
 
-import { Framework } from './js/imports'
-
-// start the Stimulus application
-import './bootstrap';
-
-new Framework()
+// JS
+import 'bootstrap'
+import './bootstrap.js'

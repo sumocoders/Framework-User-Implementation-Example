@@ -10,30 +10,33 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation')]
 class RequestConfirmationController extends AbstractController
 {
-    #[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation')]
-    public function __invoke(
-        User $user,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $messageBus
+    ) {
+    }
+
+    public function __invoke(User $user): Response
+    {
         if ($user->isConfirmed()) {
             $this->addFlash(
                 'error',
-                $translator->trans('User is already confirmed.')
+                $this->translator->trans('User is already confirmed.')
             );
 
-            $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
+            return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
         }
 
-        $bus->dispatch(new SendConfirmation($user));
+        $this->messageBus->dispatch(new SendConfirmation($user));
 
         $this->addFlash(
             'success',
-            $translator->trans('Confirmation mail successfully sent')
+            $this->translator->trans('Confirmation mail successfully sent')
         );
 
-        return $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
+        return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
     }
 }

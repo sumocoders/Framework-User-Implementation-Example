@@ -1,8 +1,17 @@
+includes:
+  - vendor/phpstan/phpstan-symfony/extension.neon
+  - vendor/phpstan/phpstan-doctrine/extension.neon
+services:
+  errorFormatter.junit:
+    class: PHPStan\Command\ErrorFormatter\JUnitErrorFormatter
 parameters:
-    level: 6
-    paths:
-        - bin/
-        - config/
-        - public/
-        - src/
-        - tests/
+  inferPrivatePropertyTypeFromConstructor: true
+  symfony:
+    containerXmlPath: %rootDir%/../../../var/cache/dev/App_KernelDevDebugContainer.xml
+  level: 7
+  paths:
+    - public/
+    - src/
+  excludePaths:
+    - %rootDir%/../../../migrations
+  ignoreErrors:

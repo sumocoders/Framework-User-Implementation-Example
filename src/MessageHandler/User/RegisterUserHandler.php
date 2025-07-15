@@ -16,7 +16,7 @@ final class RegisterUserHandler
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly UserPasswordHasherInterface $passwordEncoder,
-        private readonly MessageBusInterface $bus
+        private MessageBusInterface $messageBus
     ) {
     }
 
@@ -28,11 +28,8 @@ final class RegisterUserHandler
         );
 
         $encodedPassword = $this->passwordEncoder->hashPassword($user, $message->password);
-
         $user->setPassword($encodedPassword);
-
         $this->userRepository->add($user);
-
-        $this->bus->dispatch(new SendConfirmation($user));
+        $this->messageBus->dispatch(new SendConfirmation($user));
     }
 }

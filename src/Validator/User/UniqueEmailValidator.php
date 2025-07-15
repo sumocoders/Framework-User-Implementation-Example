@@ -14,8 +14,9 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class UniqueEmailValidator extends ConstraintValidator
 {
-    public function __construct(private readonly UserRepository $userRepository)
-    {
+    public function __construct(
+        private readonly UserRepository $userRepository
+    ) {
     }
 
     public function validate(mixed $value, Constraint $constraint): void
@@ -41,9 +42,8 @@ class UniqueEmailValidator extends ConstraintValidator
          * throw an error if we can find an existing user with the same email address.
          */
         if (
-            ($formData instanceof CreateUser ||
-            $formData instanceof RegisterUser) &&
-            $userWithThatEmail instanceof User
+            ($formData instanceof CreateUser || $formData instanceof RegisterUser)
+            && $userWithThatEmail instanceof User
         ) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%email%', $value)
@@ -55,9 +55,9 @@ class UniqueEmailValidator extends ConstraintValidator
          * isn't the one we found in the database.
          */
         if (
-            $formData instanceof UpdateUser &&
-            $userWithThatEmail instanceof User &&
-            $formData->getUser()->getId() !== $userWithThatEmail->getId()
+            $formData instanceof UpdateUser
+            && $userWithThatEmail instanceof User
+            && $formData->user->getId() !== $userWithThatEmail->getId()
         ) {
             $this->context->buildViolation($constraint->message)
                 ->setParameter('%email%', $value)

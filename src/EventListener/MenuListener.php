@@ -18,14 +18,14 @@ final class MenuListener extends DefaultMenuListener implements EventSubscriberI
                 $factory->createItem(
                     $this->getTranslator()->trans('Users'),
                     [
-                        'route' => 'user_overview',
+                        'route' => 'user_admin_overview',
                         'labelAttributes' => [
                             'icon' => 'fas fa-user',
                         ],
                         'extras' => [
                             'routes' => [
-                                'user_add',
-                                'user_edit',
+                                'user_admin_add',
+                                'user_admin_edit',
                             ],
                         ],
                     ],

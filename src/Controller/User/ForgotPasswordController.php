@@ -11,24 +11,27 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/user/password-reset', name: 'user_forgot_password')]
 class ForgotPasswordController extends AbstractController
 {
-    #[Route('/password-reset', name: 'forgot_password')]
-    public function __invoke(
-        Request $request,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $messageBus
+    ) {
+    }
+
+    public function __invoke(Request $request): Response
+    {
         $form = $this->createForm(ForgotPasswordType::class, new SendPasswordReset());
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bus->dispatch($form->getData());
+            $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $translator->trans('Password reset link successfully sent.')
+                $this->translator->trans('Password reset link successfully sent.')
             );
 
             return $this->redirectToRoute('login');

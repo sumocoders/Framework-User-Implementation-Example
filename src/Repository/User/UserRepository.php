@@ -28,7 +28,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function add(User $user): void
     {
         $this->getEntityManager()->persist($user);
-        $this->getEntityManager()->flush();
+        $this->save();
     }
 
     public function save(): void
@@ -89,7 +89,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         $queryBuilder = $this->createQueryBuilder('u');
 
-        if (isset($filter->term) && $filter->term !== null) {
+        if (isset($filter->term)) {
             $queryBuilder
                 ->where('u.email LIKE :term')
                 ->setParameter('term', '%' . $filter->term . '%');

@@ -15,29 +15,31 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/admin/users/{user}/edit', name: 'user_admin_edit')]
 class EditUserController extends AbstractController
 {
-    #[Route('/admin/users/{user}/edit', name: 'user_edit')]
-    #[Breadcrumb('edit', parent:['name' => 'user_overview'])]
-    public function __invoke(
-        User $user,
-        Request $request,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $messageBus
+    ) {
+    }
+
+    #[Breadcrumb('edit', parent: ['name' => 'user_admin_overview'])]
+    public function __invoke(User $user, Request $request): Response
+    {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bus->dispatch($form->getData());
+            $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $translator->trans('User successfully edited.')
+                $this->translator->trans('User successfully edited.')
             );
 
-            return $this->redirectToRoute('user_overview');
+            return $this->redirectToRoute('user_admin_overview');
         }
 
         $sendPasswordResetMessage = new SendPasswordReset();
@@ -46,14 +48,14 @@ class EditUserController extends AbstractController
         $passwordForgotForm->handleRequest($request);
 
         if ($passwordForgotForm->isSubmitted() && $passwordForgotForm->isValid()) {
-            $bus->dispatch($sendPasswordResetMessage);
+            $this->messageBus->dispatch($sendPasswordResetMessage);
 
             $this->addFlash(
                 'success',
-                $translator->trans('Password reset successfully sent.')
+                $this->translator->trans('Password reset successfully sent.')
             );
 
-            return $this->redirectToRoute('user_edit', ['user' => $user->getId()]);
+            return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
         }
 
         return $this->render('user/admin/edit.html.twig', [

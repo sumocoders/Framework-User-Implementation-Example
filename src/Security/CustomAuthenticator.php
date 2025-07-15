@@ -24,8 +24,9 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
 
     final public const LOGIN_ROUTE = 'login';
 
-    public function __construct(private readonly UrlGeneratorInterface $urlGenerator)
-    {
+    public function __construct(
+        private readonly UrlGeneratorInterface $urlGenerator
+    ) {
     }
 
     public function authenticate(Request $request): Passport
@@ -56,7 +57,7 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-        return new RedirectResponse($this->urlGenerator->generate('profile'));
+        return new RedirectResponse($this->urlGenerator->generate('user_profile'));
     }
 
     protected function getLoginUrl(Request $request): string

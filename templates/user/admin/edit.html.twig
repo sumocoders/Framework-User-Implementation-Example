@@ -20,12 +20,12 @@
 
     {% if user.id != app.user.id %}
         {% if user.enabled %}
-            <a class="btn btn-danger ml-2" href="{{ path('user_disable', {user: user.id}) }}" data-turbo-prefetch="false">
+            <a class="btn btn-danger ml-2" href="{{ path('user_admin_disable_user', {user: user.id}) }}" data-turbo-prefetch="false">
                 <i class="fas fa-lock mr-2"></i>
                 {{ 'Disable'|trans }}
             </a>
         {% else %}
-            <a class="btn btn-success ml-2" href="{{ path('user_enable', {user: user.id}) }}" data-turbo-prefetch="false">
+            <a class="btn btn-success ml-2" href="{{ path('user_admin_enable_user', {user: user.id}) }}" data-turbo-prefetch="false">
                 <i class="fas fa-unlock mr-2"></i>
                 {{ 'Enable'|trans }}
             </a>

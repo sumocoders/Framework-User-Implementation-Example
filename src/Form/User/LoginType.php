@@ -9,6 +9,10 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 
+/**
+ * @template TData of FormBuilderInterface
+ * @extends AbstractType<TData>
+ */
 final class LoginType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -21,6 +25,7 @@ final class LoginType extends AbstractType
                     'label' => 'Email',
                     'attr' => [
                         'tabindex' => 1,
+                        'autocomplete' => 'username',
                     ],
                 ]
             )
@@ -31,6 +36,7 @@ final class LoginType extends AbstractType
                     'label' => 'Password',
                     'attr' => [
                         'tabindex' => 2,
+                        'autocomplete' => 'current-password',
                     ],
                 ]
             );

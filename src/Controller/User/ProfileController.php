@@ -13,15 +13,18 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/user/profile', name: 'user_profile')]
 class ProfileController extends AbstractController
 {
-    #[Route('/profile', name: 'profile')]
-    #[Breadcrumb('profile')]
-    public function __invoke(
-        Request $request,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $messageBus
+    ) {
+    }
+
+    #[Breadcrumb('user_profile')]
+    public function __invoke(Request $request): Response
+    {
         if (!$this->getUser() instanceof User) {
             throw new \RuntimeException('Invalid user object');
         }
@@ -31,11 +34,11 @@ class ProfileController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bus->dispatch($form->getData());
+            $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $translator->trans('Password successfully edited.')
+                $this->translator->trans('Password successfully edited.')
             );
         }
 

@@ -9,16 +9,14 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 #[AsMessageHandler]
 class EnableUserHandler
 {
-    public function __construct(private readonly UserRepository $userRepository)
-    {
+    public function __construct(
+        private readonly UserRepository $userRepository
+    ) {
     }
 
     public function __invoke(EnableUser $message): void
     {
-        $user = $message->getUser();
-
-        $user->enable();
-
+        $message->user->enable();
         $this->userRepository->save();
     }
 }

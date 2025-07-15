@@ -11,29 +11,32 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/user/resend-confirmation/{token}', name: 'user_resend_confirmation')]
 final class ResendConfirmationController extends AbstractController
 {
-    #[Route('/resend-confirmation/{token}', name: 'resend_confirmation')]
-    public function __invoke(
-        string $token,
-        UserRepository $userRepository,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
-        $user = $userRepository->findOneBy(['confirmationToken' => $token]);
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $messageBus
+    ) {
+    }
+
+    public function __invoke(string $token): Response
+    {
+        $user = $this->userRepository->findOneBy(['confirmationToken' => $token]);
 
         if (!$user instanceof User) {
             $this->addFlash(
                 'error',
-                $translator->trans('Invalid confirmation token.')
+                $this->translator->trans('Invalid confirmation token.')
             );
 
             return $this->redirectToRoute('login');
         }
 
-        $bus->dispatch(new SendConfirmation($user));
+        $this->messageBus->dispatch(new SendConfirmation($user));
 
-        $this->addFlash('success', $translator->trans('Confirmation mail successfully resent'));
+        $this->addFlash('success', $this->translator->trans('Confirmation mail successfully resent'));
 
         return $this->redirectToRoute('login');
     }

@@ -2,6 +2,7 @@ stages:
   - build
   - code quality
   - dependency scanning
+  - outdated packages
   - test
   - deploy
 
@@ -17,13 +18,12 @@ cache: &global_cache
 
 # Build section
 Install dependencies and build assets:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/cli-tools-php84:latest
   script:
     - COMPOSER_MEMORY_LIMIT=-1 composer install --no-scripts --no-progress
     - COMPOSER_MEMORY_LIMIT=-1 composer run-script post-autoload-dump
-    - volta install node
-    - npm ci --no-progress
-    - node_modules/.bin/encore production
+    - php bin/console importmap:install --no-interaction
+    - php bin/console sass:build --no-interaction
     - php bin/console fos:js-routing:dump --format=json --locale=nl --target=public/build/routes/fos_js_routes.json
   cache:
     <<: *global_cache
@@ -35,83 +35,88 @@ Install dependencies and build assets:
 
 # Code Quality section
 PHP_CodeSniffer - check code styling:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/cli-tools-php84:latest
   script:
-    - vendor/bin/phpcs --report-full --report-\\Micheh\\PhpCodeSniffer\\Report\\Gitlab=phpcs-report.xml
+    - php vendor/bin/phpcs --report-full --report-\\Micheh\\PhpCodeSniffer\\Report\\Gitlab=phpcs-report.json
   artifacts:
     expire_in: 1 week
     reports:
-      codequality: phpcs-report.xml
+      codequality: phpcs-report.json
   stage: code quality
-  needs: ["Install dependencies and build assets"]
+  needs: [ "Install dependencies and build assets" ]
   tags:
     - docker
 
 PHPStan - check for bugs:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/cli-tools-php84:latest
   before_script:
-    - bin/console cache:warmup --env=dev
+    - php bin/console cache:warmup --env=dev
   script:
-    - vendor/bin/phpstan analyse --memory-limit=-1 --error-format=gitlab --no-progress --no-interaction  > phpstan-report.xml
+    - php vendor/bin/phpstan analyse --memory-limit=-1 --error-format=gitlab --no-progress --no-interaction  > phpstan-report.json
   after_script:
     # Run it again so the output is visible in the job
     - >
       if [ $CI_JOB_STATUS != 'success' ]; then
-        vendor/bin/phpstan analyse --memory-limit=-1 --no-progress
+        php vendor/bin/phpstan analyse --memory-limit=-1 --no-progress
       fi
   artifacts:
     expire_in: 1 week
     reports:
-      codequality: phpstan-report.xml
+      codequality: phpstan-report.json
   stage: code quality
-  needs: ["Install dependencies and build assets"]
+  needs: [ "Install dependencies and build assets" ]
   tags:
     - docker
 
 Twig-CS-Fixer - check code styling:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/cli-tools-php84:latest
   script:
-    - vendor/bin/twig-cs-fixer lint templates/ --report=junit > twigcs-report.xml
+    - php vendor/bin/twig-cs-fixer lint templates/ --report=junit > twigcs-report.xml
   after_script:
     # Run it again so the output is visible in the job
-    - vendor/bin/twig-cs-fixer lint templates/
+    - >
+      if [ $CI_JOB_STATUS != 'success' ]; then
+        php vendor/bin/twig-cs-fixer --no-interaction lint templates/
+      fi
   artifacts:
     expire_in: 1 week
     reports:
       junit: twigcs-report.xml
   stage: code quality
-  needs: ["Install dependencies and build assets"]
+  needs: [ "Install dependencies and build assets" ]
   tags:
     - docker
   allow_failure: true
 
 Stylelint - check code styling:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/stylelint:latest
   script:
-    - node_modules/.bin/stylelint --output-file=stylelint-report.json --custom-formatter=node_modules/stylelint-formatter-gitlab-code-quality-report/index.js .
+    - stylelint --output-file=stylelint-report.json --custom-formatter=stylelint-formatter-gitlab-code-quality-report .
   after_script:
-    # Run it again so the output is visible in the job
-    - node_modules/.bin/stylelint --color .
+    - >
+      if [ $CI_JOB_STATUS != 'success' ]; then
+        stylelint --color .
+      fi
   artifacts:
     expire_in: 1 week
     reports:
       codequality: stylelint-report.json
   stage: code quality
-  needs: ["Install dependencies and build assets"]
+  needs: [ "Install dependencies and build assets" ]
   tags:
     - docker
   allow_failure: true
 
 StandardJS - check code styling:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/standardjs:latest
   script:
-    - node_modules/.bin/standard | node_modules/.bin/standard-gitlab --output-file standardjs-report.json --human-readable
+    - sh -c 'standard . | standard-gitlab --output-file standardjs-report.json --human-readable'
   artifacts:
     expire_in: 1 week
     reports:
       codequality: standardjs-report.json
   stage: code quality
-  needs: ["Install dependencies and build assets"]
+  needs: [ "Install dependencies and build assets" ]
   tags:
     - docker
   allow_failure: true
@@ -119,40 +124,43 @@ StandardJS - check code styling:
 
 # Dependency Scanning section
 NPM packages - check for vulnerabilities:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/cli-tools-php84:latest
   script:
-    - npm audit --omit=dev --json | ./node_modules/.bin/gitlab-npm-audit-parser -o npm-audit-report.json
-    - npm audit --omit=dev
-  artifacts:
-    expire_in: 1 week
-    reports:
-      dependency_scanning: npm-audit-report.json
+    - php bin/console importmap:audit --no-interaction --ansi
   stage: dependency scanning
-  needs: ["Install dependencies and build assets"]
-  tags:
-    - docker
-  allow_failure: true
-
-PHP packages - local-php-security-checker:
-  image: sumocoders/cli-tools-php83:latest
-  before_script:
-    - PHP_SC_VERSION=$(curl -s "https://api.github.com/repos/fabpot/local-php-security-checker/releases/latest" | grep '"tag_name":' | sed -E 's/.*"([^"]+)".*/\1/;s/^v//')
-    - curl -LSs https://github.com/fabpot/local-php-security-checker/releases/download/v${PHP_SC_VERSION}/local-php-security-checker_linux_amd64 > ./local-php-security-checker
-    - chmod +x ./local-php-security-checker
-  script:
-    - ./local-php-security-checker --format=ansi
-  stage: dependency scanning
-  needs: ["Install dependencies and build assets"]
+  needs: [ "Install dependencies and build assets" ]
   tags:
     - docker
   allow_failure: true
 
 PHP packages - composer audit:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/cli-tools-php84:latest
   script:
     - composer audit --ansi --no-interaction
   stage: dependency scanning
-  needs: ["Install dependencies and build assets"]
+  needs: [ "Install dependencies and build assets" ]
+  tags:
+    - docker
+  allow_failure: true
+
+
+# Outdated packages Scanning section
+NPM packages - check for outdated packages:
+  image: sumocoders/cli-tools-php84:latest
+  script:
+    - php bin/console importmap:outdated --no-interaction --ansi
+  stage: outdated packages
+  needs: [ "Install dependencies and build assets" ]
+  tags:
+    - docker
+  allow_failure: true
+
+PHP packages - composer outdated:
+  image: sumocoders/cli-tools-php84:latest
+  script:
+    - composer outdated --ansi --no-interaction
+  stage: outdated packages
+  needs: [ "Install dependencies and build assets" ]
   tags:
     - docker
   allow_failure: true
@@ -160,29 +168,29 @@ PHP packages - composer audit:
 
 # Test section
 PHPUnit - Run tests:
-  image: sumocoders/framework-php83:latest
+  image: sumocoders/framework-php84:latest
   services:
     - mysql:5.7
   before_script:
-  # Uncomment this if you need Chrome for PDF's
-  # or if you have integration tests that use Symfony Panther (https://github.com/symfony/panther)
-  #    # install Chromium
-  #    - apt-get --allow-releaseinfo-change update && apt-get install -y chromium
-  #    # install Chromium Chromedriver
-  #    - |
-  #      curl -s -f -L -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_97`/chromedriver_linux64.zip
-  #      unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
+# Uncomment this if you need Chrome for PDF's
+# or if you have integration tests that use Symfony Panther (https://github.com/symfony/panther)
+#    # install Chromium
+#    - apt-get --allow-releaseinfo-change update && apt-get install -y chromium
+#    # install Chromium Chromedriver
+#    - |
+#      curl -s -f -L -o /tmp/chromedriver.zip http://chromedriver.storage.googleapis.com/`curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_97`/chromedriver_linux64.zip
+#      unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/
   script:
     - php bin/console doctrine:migrations:migrate --env=test --no-interaction --allow-no-migration
     # Uncomment this if you have fixtures that need to be loaded
     # Make sure that you have installed doctrine/doctrine-fixtures-bundle
     #- php bin/console doctrine:fixtures:load --env=test
-    - php vendor/bin/simple-phpunit --log-junit phpunit-report.xml
+    - php vendor/bin/phpunit --color --testdox --log-junit phpunit-report.xml
   artifacts:
     reports:
       junit: phpunit-report.xml
   stage: test
-  needs: ["Install dependencies and build assets"]
+  needs: [ "Install dependencies and build assets" ]
   tags:
     - docker
   variables:
@@ -195,7 +203,7 @@ PHPUnit - Run tests:
 
 # Deploy section
 Deploy - to staging:
-  image: sumocoders/cli-tools-php83:latest
+  image: sumocoders/cli-tools-php84:latest
   before_script:
     # Add the private SSH key to the CI environment
     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
@@ -206,10 +214,10 @@ Deploy - to staging:
     - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
     - chmod 644 ~/.ssh/known_hosts
   script:
-    - vendor/bin/dep deploy stage=staging
+    - php vendor/bin/dep deploy stage=staging
   environment:
     name: staging
-    url: https://$project.$client.php83.sumocoders.eu
+    url: https://$project.$client.php84.sumocoders.eu
   only:
     - staging
   stage: deploy

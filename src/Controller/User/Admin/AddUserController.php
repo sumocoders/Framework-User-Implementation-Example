@@ -12,28 +12,31 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[Route('/admin/users/add', name: 'user_admin_add')]
 class AddUserController extends AbstractController
 {
-    #[Route('/admin/users/add', name: 'user_add')]
-    #[Breadcrumb('add', parent:['name' => 'user_overview'])]
-    public function __invoke(
-        Request $request,
-        TranslatorInterface $translator,
-        MessageBusInterface $bus
-    ): Response {
+    public function __construct(
+        private readonly TranslatorInterface $translator,
+        private MessageBusInterface $messageBus
+    ) {
+    }
+
+    #[Breadcrumb('add', parent: ['name' => 'user_admin_overview'])]
+    public function __invoke(Request $request): Response
+    {
         $form = $this->createForm(UserType::class, new CreateUser());
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $bus->dispatch($form->getData());
+            $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $translator->trans('User successfully added.')
+                $this->translator->trans('User successfully added.')
             );
 
-            return $this->redirectToRoute('user_overview');
+            return $this->redirectToRoute('user_admin_overview');
         }
 
         return $this->render('user/admin/add.html.twig', [

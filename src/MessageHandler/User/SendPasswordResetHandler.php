@@ -38,7 +38,6 @@ class SendPasswordResetHandler
 
         if ($user instanceof User) {
             $user->requestPassword();
-
             $this->userRepository->save();
 
             $email = (new TemplatedEmail())
@@ -48,7 +47,7 @@ class SendPasswordResetHandler
                 ->htmlTemplate('user/mails/reset.html.twig')
                 ->context([
                     'resetLink' => $this->router->generate(
-                        'reset_password',
+                        'user_reset_password',
                         [
                             'token' => $user->getPasswordResetToken(),
                         ],
@@ -56,7 +55,6 @@ class SendPasswordResetHandler
                     ),
 
                 ]);
-
             $this->mailer->send($email);
         }
     }

@@ -1,4 +1,25 @@
 {
+    "dama/doctrine-test-bundle": {
+        "version": "8.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "8.3",
+            "ref": "dfc51177476fb39d014ed89944cde53dc3326d23"
+        },
+        "files": [
+            "config/packages/dama_doctrine_test_bundle.yaml"
+        ]
+    },
+    "doctrine/deprecations": {
+        "version": "1.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "87424683adc81d7dc305eefec1fced883084aab9"
+        }
+    },
     "doctrine/doctrine-bundle": {
         "version": "2.13",
         "recipe": {
@@ -65,6 +86,33 @@
             "phpstan.dist.neon"
         ]
     },
+    "phpunit/phpunit": {
+        "version": "12.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "11.1",
+            "ref": "c6658a60fc9d594805370eacdf542c3d6b5c0869"
+        },
+        "files": [
+            ".env.test",
+            "phpunit.xml.dist",
+            "tests/bootstrap.php",
+            "bin/phpunit"
+        ]
+    },
+    "sentry/sentry-symfony": {
+        "version": "5.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "5.0",
+            "ref": "f26c577142172082bb3aeef519af6b5944b86ac2"
+        },
+        "files": [
+            "config/packages/sentry.yaml"
+        ]
+    },
     "squizlabs/php_codesniffer": {
         "version": "3.10",
         "recipe": {
@@ -90,6 +138,21 @@
         },
         "files": [
             "public/.htaccess"
+        ]
+    },
+    "symfony/asset-mapper": {
+        "version": "7.3",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "6.4",
+            "ref": "5ad1308aa756d58f999ffbe1540d1189f5d7d14a"
+        },
+        "files": [
+            "assets/app.js",
+            "assets/styles/app.css",
+            "config/packages/asset_mapper.yaml",
+            "importmap.php"
         ]
     },
     "symfony/console": {
@@ -204,19 +267,16 @@
             "config/packages/monolog.yaml"
         ]
     },
-    "symfony/phpunit-bridge": {
-        "version": "7.1",
+    "symfony/property-info": {
+        "version": "7.3",
         "recipe": {
             "repo": "github.com/symfony/recipes",
             "branch": "main",
-            "version": "6.3",
-            "ref": "a411a0480041243d97382cac7984f7dce7813c08"
+            "version": "7.3",
+            "ref": "dae70df71978ae9226ae915ffd5fad817f5ca1f7"
         },
         "files": [
-            ".env.test",
-            "bin/phpunit",
-            "phpunit.xml.dist",
-            "tests/bootstrap.php"
+            "config/packages/property_info.yaml"
         ]
     },
     "symfony/routing": {
@@ -243,6 +303,21 @@
         "files": [
             "config/packages/security.yaml",
             "config/routes/security.yaml"
+        ]
+    },
+    "symfony/stimulus-bundle": {
+        "version": "2.26",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.20",
+            "ref": "3acc494b566816514a6873a89023a35440b6386d"
+        },
+        "files": [
+            "assets/bootstrap.js",
+            "assets/controllers.json",
+            "assets/controllers/csrf_protection_controller.js",
+            "assets/controllers/hello_controller.js"
         ]
     },
     "symfony/translation": {
@@ -286,6 +361,15 @@
     "symfony/ux-toggle-password": {
         "version": "v2.19.3"
     },
+    "symfony/ux-turbo": {
+        "version": "2.26",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.20",
+            "ref": "c85ff94da66841d7ff087c19cbcd97a2df744ef9"
+        }
+    },
     "symfony/validator": {
         "version": "7.1",
         "recipe": {
@@ -326,6 +410,9 @@
             "package.json",
             "webpack.config.js"
         ]
+    },
+    "symfonycasts/sass-bundle": {
+        "version": "v0.8.2"
     },
     "twig/extra-bundle": {
         "version": "v3.13.0"
