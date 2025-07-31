@@ -5,9 +5,9 @@ namespace App\Controller\User\Ajax;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use SumoCoders\FrameworkCoreBundle\Security\PasswordStrengthService;
 use Symfony\Component\Routing\Attribute\DeprecatedAlias;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Validator\Constraints\PasswordStrengthValidator;
 
 #[Route(
     '/admin/users/ajax/password-strength',
@@ -16,17 +16,12 @@ use Symfony\Component\Routing\Attribute\Route;
 )]
 class PasswordStrengthController extends AbstractController
 {
-    public function __construct(
-        private readonly PasswordStrengthService $passwordStrengthService
-    ) {
-    }
-
     public function __invoke(Request $request): Response
     {
         $password = json_decode($request->getContent(), true)['password'] ?? '';
 
         return $this->json([
-            'strength' => $this->passwordStrengthService->estimateStrength($password),
+            'strength' => PasswordStrengthValidator::estimateStrength($password),
         ]);
     }
 }
