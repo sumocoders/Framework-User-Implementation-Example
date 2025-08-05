@@ -10,7 +10,8 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: 'home')]
+    /** The empty _locale default makes this page also work without the _locale prefix. */
+    #[Route('/', name: 'home', defaults: ['_locale' => ''])]
     public function __invoke(
         Request $request,
         #[Autowire('%locales%')] array $locales,
