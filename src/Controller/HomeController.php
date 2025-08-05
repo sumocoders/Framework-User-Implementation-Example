@@ -14,7 +14,10 @@ class HomeController extends AbstractController
     public function __invoke(
         Request $request,
         #[Autowire('%locales%')] array $locales,
+        #[Autowire('%locale%')] string $locale,
     ): Response {
-        return $this->redirectToRoute('user_profile', ['_locale' => $request->getPreferredLanguage($locales)]);
+        return $this->redirectToRoute('user_profile', [
+            '_locale' => $request->getPreferredLanguage($locales) ?? $locale
+        ]);
     }
 }
