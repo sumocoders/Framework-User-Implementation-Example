@@ -10,7 +10,7 @@
         "doctrine/doctrine-migrations-bundle": "^3.3",
         "nelmio/security-bundle": "^3.5",
         "sentry/sentry-symfony": "^5.1",
-        "sumocoders/framework-core-bundle": "^12.0",
+        "sumocoders/framework-core-bundle": "^14.0",
         "symfony/apache-pack": "^1.0.1",
         "symfony/asset-mapper": "^7.3",
         "symfony/debug-bundle": "^7.3",
