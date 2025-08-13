@@ -8,6 +8,7 @@ parameters:
   locale: 'nl'
   locales:
     - '%locale%'
+  locales_regex: '%locale%' # separate with |, for example: nl|fr|en
 
   # configuration of some fallback variables
   fallbacks:
