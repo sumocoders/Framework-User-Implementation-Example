@@ -45,7 +45,7 @@ security:
         - { route: 'user_confirm', roles: PUBLIC_ACCESS }
         - { route: 'user_reset_password', roles: PUBLIC_ACCESS }
         - { route: 'user_profile', roles: ROLE_USER }
-        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: '^(/(%locales_regex%))?/admin', roles: ROLE_ADMIN }
 
 when@test:
     security:

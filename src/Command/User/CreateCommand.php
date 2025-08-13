@@ -5,11 +5,9 @@ declare(strict_types=1);
 namespace App\Command\User;
 
 use App\Message\User\CreateUser;
+use Symfony\Component\Console\Attribute\Argument;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
@@ -18,19 +16,20 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 class CreateCommand extends Command
 {
     public function __construct(
-        private MessageBusInterface $messageBus,
+        private readonly MessageBusInterface $messageBus,
         private readonly ValidatorInterface $validator,
     ) {
         parent::__construct();
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output): int
-    {
-        $io = new SymfonyStyle($input, $output);
-
+    public function __invoke(
+        SymfonyStyle $io,
+        #[Argument(description: 'The email of the user')] string $email,
+        #[Argument(description: 'The roles of the user')] array $roles = ['ROLE_USER'],
+    ): int {
         $message = new CreateUser();
-        $message->email = $input->getArgument('email');
-        $message->roles = $input->getArgument('roles');
+        $message->email = $email;
+        $message->roles = $roles;
 
         $constraints = $this->validator->validate($message);
         if ($constraints->count() > 0) {
@@ -46,20 +45,5 @@ class CreateCommand extends Command
         $io->success('User created, an email has been sent to the user.');
 
         return Command::SUCCESS;
-    }
-
-    protected function configure(): void
-    {
-        $this->addArgument(
-            'email',
-            InputArgument::REQUIRED,
-            'The email of the user'
-        );
-        $this->addArgument(
-            'roles',
-            InputArgument::OPTIONAL | InputArgument::IS_ARRAY,
-            'The roles of the user',
-            ['ROLE_USER']
-        );
     }
 }
