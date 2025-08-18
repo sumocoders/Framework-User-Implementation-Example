@@ -24,7 +24,6 @@ Install dependencies and build assets:
     - COMPOSER_MEMORY_LIMIT=-1 composer run-script post-autoload-dump
     - php bin/console importmap:install --no-interaction
     - php bin/console sass:build --no-interaction
-    - php bin/console fos:js-routing:dump --format=json --locale=nl --target=public/build/routes/fos_js_routes.json
   cache:
     <<: *global_cache
     policy: pull-push
@@ -170,7 +169,7 @@ PHP packages - composer outdated:
 PHPUnit - Run tests:
   image: sumocoders/framework-php84:latest
   services:
-    - mysql:5.7
+    - mysql:8.0
   before_script:
 # Uncomment this if you need Chrome for PDF's
 # or if you have integration tests that use Symfony Panther (https://github.com/symfony/panther)
