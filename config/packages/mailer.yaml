@@ -1,3 +1,13 @@
 framework:
     mailer:
         dsn: '%env(MAILER_DSN)%'
+
+when@dev:
+    framework:
+        mailer:
+            envelope:
+                # needs at least one recipient, otherwise allowed_recipients is ignored
+                recipients: ['mail@localhost']
+                allowed_recipients:
+                    - '.*@sumocoders.be'
+                    - '.*@tesuta.be'

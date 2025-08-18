@@ -1,4 +1,3 @@
-
 symfonycasts_sass:
   root_sass:
     - '%kernel.project_dir%/assets/styles/style.scss'
