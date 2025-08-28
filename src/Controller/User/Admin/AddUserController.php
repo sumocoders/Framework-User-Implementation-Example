@@ -30,6 +30,7 @@ class AddUserController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $message = $form->getData();
+            // @phpstan-ignore-next-line property.notFound
             $message->locale = $request->getLocale();
             $this->messageBus->dispatch($message);
 
