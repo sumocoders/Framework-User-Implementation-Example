@@ -30,6 +30,6 @@ final class RegisterUserHandler
         $encodedPassword = $this->passwordEncoder->hashPassword($user, $message->password);
         $user->setPassword($encodedPassword);
         $this->userRepository->add($user);
-        $this->messageBus->dispatch(new SendConfirmation($user));
+        $this->messageBus->dispatch(new SendConfirmation($user, $message->locale));
     }
 }
