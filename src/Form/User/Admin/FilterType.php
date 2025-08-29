@@ -16,6 +16,7 @@ class FilterType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->setMethod('GET')
             ->add(
                 'term',
                 TextType::class,
@@ -28,6 +29,8 @@ class FilterType extends AbstractType
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefault('data_class', FilterDataTransferObject::class);
+        $resolver
+            ->setDefault('data_class', FilterDataTransferObject::class)
+            ->setDefault('csrf_protection', false);
     }
 }
