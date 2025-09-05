@@ -10,6 +10,9 @@ use Symfony\Component\Routing\Attribute\Route;
 
 class HomeController extends AbstractController
 {
+    /**
+     * @param string[] $locales
+     */
     #[Route('/', name: 'home', defaults: ['_locale' => 'nl'])]
     public function __invoke(
         Request $request,
