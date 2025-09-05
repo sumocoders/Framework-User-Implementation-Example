@@ -45,6 +45,7 @@ class SendConfirmationHandler
                 'confirmationLink' => $this->router->generate(
                     'user_confirm',
                     [
+                        '_locale' => $message->locale,
                         'token' => $user->getConfirmationToken(),
                     ],
                     RouterInterface::ABSOLUTE_URL

@@ -22,13 +22,18 @@ class CreateCommand extends Command
         parent::__construct();
     }
 
+    /**
+     * @param array<string> $roles
+     */
     public function __invoke(
         SymfonyStyle $io,
         #[Argument(description: 'The email of the user')] string $email,
+        #[Argument(description: 'The locale to use')] string $locale = 'nl',
         #[Argument(description: 'The roles of the user')] array $roles = ['ROLE_USER'],
     ): int {
         $message = new CreateUser();
         $message->email = $email;
+        $message->locale = $locale;
         $message->roles = $roles;
 
         $constraints = $this->validator->validate($message);

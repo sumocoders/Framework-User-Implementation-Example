@@ -5,6 +5,7 @@ namespace App\Controller\User\Admin;
 use App\Entity\User\User;
 use App\Message\User\SendConfirmation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
@@ -19,7 +20,7 @@ class RequestConfirmationController extends AbstractController
     ) {
     }
 
-    public function __invoke(User $user): Response
+    public function __invoke(User $user, Request $request): Response
     {
         if ($user->isConfirmed()) {
             $this->addFlash(
@@ -30,7 +31,7 @@ class RequestConfirmationController extends AbstractController
             return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
         }
 
-        $this->messageBus->dispatch(new SendConfirmation($user));
+        $this->messageBus->dispatch(new SendConfirmation($user, $request->getLocale()));
 
         $this->addFlash(
             'success',

@@ -29,7 +29,10 @@ class AddUserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->messageBus->dispatch($form->getData());
+            /** @var CreateUser $message */
+            $message = $form->getData();
+            $message->locale = $request->getLocale();
+            $this->messageBus->dispatch($message);
 
             $this->addFlash(
                 'success',

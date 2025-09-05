@@ -19,4 +19,6 @@ class UserDataTransferObject
      * @var array<int, string> $roles
      */
     public array $roles = [];
+
+    public string $locale;
 }
