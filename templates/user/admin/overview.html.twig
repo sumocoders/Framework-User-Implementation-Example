@@ -26,57 +26,53 @@
 
   <hr>
 
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th scope="col">{{ 'Username'|trans }}</th>
-      <th scope="col">{{ 'Roles'|trans }}</th>
-      <th scope="col">{{ 'Confirmed'|trans }}</th>
-      <th scope="col">{{ 'Enabled'|trans }}</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-    </tr>
-    </thead>
-    <tbody>
+  <div class="row g-3 mb-4">
     {% for user in users %}
-      <tr>
-        <th scope="row">{{ user.username }}</th>
-        <td>
-        {% for role in user.getDisplayRoles %}
-          {% if loop.index0 > 0 %},{% endif %}
-          {{ role|trans }}
-        {% endfor %}
-        </td>
-        <td>
-          {% if user.confirmed %}
-            <i class="text-success fas fa-check"></i>
-          {% else %}
-            <i class="text-danger fas fa-times"></i>
-          {% endif %}
-        </td>
-        <td>
-          {% if user.enabled %}
-            <i class="text-success fas fa-check"></i>
-          {% else %}
-            <i class="text-danger fas fa-times"></i>
-          {% endif %}
-        </td>
-        <td>
-          <a class="text-nowrap" href="{{ path('user_admin_edit', {user: user.id}) }}">
-            <i class="fas fa-edit" title="{{ 'Edit user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
-          </a>
-        </td>
-        {% if is_granted('ROLE_ADMIN') %}
-          <td>
-            <a class="text-nowrap" href="{{ impersonation_path(user.username) }}" data-turbo-prefetch="false">
-              <i class="fas fa-sign-in-alt" title="{{ 'Switch to user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
+      <div class="col-md-6 col-lg-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title mb-3">{{ user.username }}</h3>
+            <p class="mb-0">{{ 'Roles'|trans }}: {% for role in user.getDisplayRoles %}
+                {% if loop.index0 > 0 %},{% endif %}
+                {{ role|trans }}
+              {% endfor %}</p>
+            <div class="d-flex justify-content-between">
+              <div>{{ 'Confirmed'|trans }}</div>
+              <div>
+                {% if user.confirmed %}
+                  <i class="text-success fas fa-check"></i>
+                {% else %}
+                  <i class="text-danger fas fa-times"></i>
+                {% endif %}
+              </div>
+            </div>
+            <div class="d-flex justify-content-between">
+              <div>{{ 'Enabled'|trans }}</div>
+              <div>
+                {% if user.enabled %}
+                  <i class="text-success fas fa-check"></i>
+                {% else %}
+                  <i class="text-danger fas fa-times"></i>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+          <div class="card-footer">
+            <a class="text-nowrap btn btn-outline-primary me-3 px-3" href="{{ path('user_admin_edit', {user: user.id}) }}">
+              <i class="fas fa-edit" title="{{ 'Edit user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
             </a>
-          </td>
-        {% endif %}
-      </tr>
+            {% if is_granted('ROLE_ADMIN') %}
+              <td>
+                <a class="text-nowrap btn btn-outline-primary px-3" href="{{ impersonation_path(user.username) }}" data-turbo-prefetch="false">
+                  <i class="fas fa-sign-in-alt" title="{{ 'Switch to user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
+                </a>
+              </td>
+            {% endif %}
+          </div>
+        </div>
+      </div>
     {% endfor %}
-    </tbody>
-  </table>
+  </div>
 
   <div class="d-flex justify-content-center">
     {{ pagination(users) }}
