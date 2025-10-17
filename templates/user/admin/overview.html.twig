@@ -62,11 +62,9 @@
               <i class="fas fa-edit" title="{{ 'Edit user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
             </a>
             {% if is_granted('ROLE_ADMIN') %}
-              <td>
-                <a class="text-nowrap btn btn-outline-primary px-3" href="{{ impersonation_path(user.username) }}" data-turbo-prefetch="false">
-                  <i class="fas fa-sign-in-alt" title="{{ 'Switch to user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
-                </a>
-              </td>
+              <a class="text-nowrap btn btn-outline-primary px-3" href="{{ impersonation_path(user.username) }}" data-turbo-prefetch="false">
+                <i class="fas fa-sign-in-alt" title="{{ 'Switch to user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
+              </a>
             {% endif %}
           </div>
         </div>
