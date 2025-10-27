@@ -32,10 +32,13 @@
         <div class="card">
           <div class="card-body">
             <h3 class="card-title mb-3">{{ user.username }}</h3>
-            <p class="mb-0">{{ 'Roles'|trans }}: {% for role in user.getDisplayRoles %}
-                {% if loop.index0 > 0 %},{% endif %}
+            <p>
+              {{ 'Roles'|trans }}:
+              {% for role in user.getDisplayRoles %}
                 {{ role|trans }}
-              {% endfor %}</p>
+                {% if not loop.last %},{% endif %}
+              {% endfor %}
+            </p>
             <div class="d-flex justify-content-between">
               <div>{{ 'Confirmed'|trans }}</div>
               <div>
