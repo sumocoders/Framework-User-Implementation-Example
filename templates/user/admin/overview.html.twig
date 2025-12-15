@@ -6,7 +6,7 @@
 
 {% block header_navigation %}
   <a class="btn btn-primary" href="{{ path('user_admin_add') }}">
-    <i class="fas fa-plus mr-2"></i>
+    <i class="bi bi-plus-lg mr-2"></i>
     {{ 'Add a new user'|trans|capitalize }}
   </a>
 {% endblock %}
@@ -43,9 +43,9 @@
               <div>{{ 'Confirmed'|trans }}</div>
               <div>
                 {% if user.confirmed %}
-                  <i class="text-success fas fa-check"></i>
+                  <i class="text-success bi bi-check2"></i>
                 {% else %}
-                  <i class="text-danger fas fa-times"></i>
+                  <i class="text-danger bi bi-x-lg"></i>
                 {% endif %}
               </div>
             </div>
@@ -53,20 +53,20 @@
               <div>{{ 'Enabled'|trans }}</div>
               <div>
                 {% if user.enabled %}
-                  <i class="text-success fas fa-check"></i>
+                  <i class="text-success bi bi-check2"></i>
                 {% else %}
-                  <i class="text-danger fas fa-times"></i>
+                  <i class="text-danger bi bi-x-lg"></i>
                 {% endif %}
               </div>
             </div>
           </div>
           <div class="card-footer">
             <a class="text-nowrap btn btn-outline-primary me-3 px-3" href="{{ path('user_admin_edit', {user: user.id}) }}">
-              <i class="fas fa-edit" title="{{ 'Edit user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
+              <i class="bi bi-pencil-fill" title="{{ 'Edit user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
             </a>
             {% if is_granted('ROLE_ADMIN') %}
               <a class="text-nowrap btn btn-outline-primary px-3" href="{{ impersonation_path(user.username) }}" data-turbo-prefetch="false">
-                <i class="fas fa-sign-in-alt" title="{{ 'Switch to user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
+                <i class="bi bi-box-arrow-in-right" title="{{ 'Switch to user'|trans }}" data-controller="tooltip" data-bs-placement="top"></i>
               </a>
             {% endif %}
           </div>
