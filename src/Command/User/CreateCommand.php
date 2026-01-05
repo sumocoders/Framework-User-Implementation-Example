@@ -13,13 +13,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[AsCommand(name: 'app:user:create', description: 'Create an user and send activation mail')]
-class CreateCommand extends Command
+class CreateCommand
 {
     public function __construct(
         private readonly MessageBusInterface $messageBus,
         private readonly ValidatorInterface $validator,
     ) {
-        parent::__construct();
     }
 
     /**
