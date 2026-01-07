@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/user/profile', name: 'user_profile')]
@@ -23,13 +24,9 @@ class ProfileController extends AbstractController
     }
 
     #[Breadcrumb('user_profile')]
-    public function __invoke(Request $request): Response
+    public function __invoke(Request $request, #[CurrentUser] User $user): Response
     {
-        if (!$this->getUser() instanceof User) {
-            throw new \RuntimeException('Invalid user object');
-        }
-
-        $form = $this->createForm(ChangePasswordType::class, new ChangePassword($this->getUser()));
+        $form = $this->createForm(ChangePasswordType::class, new ChangePassword($user));
 
         $form->handleRequest($request);
 
@@ -43,7 +40,7 @@ class ProfileController extends AbstractController
         }
 
         return $this->render('user/profile.html.twig', [
-            'user' => $this->getUser(),
+            'user' => $user,
             'form' => $form,
         ]);
     }

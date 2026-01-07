@@ -8,11 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-/**
- * @method User getUser()
- */
 #[Route('/admin/users/{user}/enable', name: 'user_admin_enable_user')]
 class EnableUserController extends AbstractController
 {
@@ -22,9 +20,9 @@ class EnableUserController extends AbstractController
     ) {
     }
 
-    public function __invoke(User $user): Response
+    public function __invoke(#[CurrentUser] User $currentUser, User $user): Response
     {
-        if ($user->getId() === $this->getUser()->getId()) {
+        if ($user->getId() === $currentUser->getId()) {
             throw $this->createAccessDeniedException();
         }
 
