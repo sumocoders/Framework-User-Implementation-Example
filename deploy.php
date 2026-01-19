@@ -12,10 +12,10 @@ set('project', 'users');
 set('repository', 'git@github.com:sumocoders/Framework-User-Implementation-Example.git');
 set('production_url', '$productionUrl');
 set('production_user', '$productionUser');
-set('php_version', '8.4');
+set('php_version', '8.5');
 
 // Define staging
-host('dev02.sumocoders.eu')
+host('dev03.sumocoders.eu')
     ->setRemoteUser('sites')
     ->set('labels', ['stage' => 'staging'])
     ->set('deploy_path', '~/apps/{{client}}/{{project}}')
