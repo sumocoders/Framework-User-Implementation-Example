@@ -16,7 +16,8 @@ final class UpdateUserHandler
 
     public function __invoke(UpdateUser $message): void
     {
-        $message->user->update(
+        $user = $this->userRepository->find($message->userId);
+        $user->update(
             $message->email,
             $message->roles
         );

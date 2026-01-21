@@ -26,7 +26,7 @@ final class CreateUserHandler
         );
         $user->requestPassword();
         $this->userRepository->add($user);
-        $this->messageBus->dispatch(new SendConfirmation($user, $message->locale));
+        $this->messageBus->dispatch(new SendConfirmation($user->getId(), $message->locale));
 
         return $user;
     }

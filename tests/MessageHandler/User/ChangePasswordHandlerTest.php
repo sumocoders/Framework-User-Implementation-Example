@@ -33,7 +33,7 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $user = new User('user@example.com', ['ROLE_USER']);
         $this->userRepository->add($user);
 
-        $message = new ChangePassword($user);
+        $message = new ChangePassword($user->getId());
         $message->password = 'new_password';
 
         $handler = new ChangePasswordHandler(

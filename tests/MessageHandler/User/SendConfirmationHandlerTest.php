@@ -37,7 +37,7 @@ class SendConfirmationHandlerTest extends KernelTestCase
         $user = new User('user@example.com', ['ROLE_USER']);
         $this->userRepository->add($user);
 
-        $message = new SendConfirmation($user);
+        $message = new SendConfirmation($user->getId());
         $handler = new SendConfirmationHandler(
             $this->mailer,
             $this->translator,

@@ -16,7 +16,8 @@ class ConfirmUserHandler
 
     public function __invoke(ConfirmUser $message): void
     {
-        $message->user->confirm();
+        $user = $this->userRepository->find($message->userId);
+        $user->confirm();
         $this->userRepository->save();
     }
 }

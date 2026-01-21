@@ -27,7 +27,7 @@ class DisableUserHandlerTest extends KernelTestCase
         $user->enable();
         $this->userRepository->add($user);
 
-        $message = new DisableUser($user);
+        $message = new DisableUser($user->getId());
         $handler = new DisableUserHandler($this->userRepository);
         $handler->__invoke($message);
     }

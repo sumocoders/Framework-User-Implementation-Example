@@ -32,7 +32,7 @@ class SendConfirmationHandler
 
     public function __invoke(SendConfirmation $message): User
     {
-        $user = $message->user;
+        $user = $this->userRepository->find($message->userId);
         $user->requestConfirmation();
         $this->userRepository->save();
 

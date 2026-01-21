@@ -2,7 +2,6 @@
 
 namespace App\Message\User;
 
-use App\Entity\User\User;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class ResetPassword
@@ -15,7 +14,7 @@ class ResetPassword
     public string $password;
 
     public function __construct(
-        public readonly User $user
+        public readonly int $userId
     ) {
     }
 }

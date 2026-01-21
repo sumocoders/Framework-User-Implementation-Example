@@ -31,7 +31,7 @@ class RequestConfirmationController extends AbstractController
             return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
         }
 
-        $this->messageBus->dispatch(new SendConfirmation($user, $request->getLocale()));
+        $this->messageBus->dispatch(new SendConfirmation($user->getId(), $request->getLocale()));
 
         $this->addFlash(
             'success',

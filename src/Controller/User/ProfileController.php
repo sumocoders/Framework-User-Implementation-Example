@@ -26,7 +26,7 @@ class ProfileController extends AbstractController
     #[Breadcrumb('user_profile')]
     public function __invoke(Request $request, #[CurrentUser] User $user): Response
     {
-        $form = $this->createForm(ChangePasswordType::class, new ChangePassword($user));
+        $form = $this->createForm(ChangePasswordType::class, new ChangePassword($user->getId()));
 
         $form->handleRequest($request);
 

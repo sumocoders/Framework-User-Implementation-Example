@@ -18,8 +18,9 @@ final class ChangePasswordHandler
 
     public function __invoke(ChangePassword $message): void
     {
-        $encodedPassword = $this->passwordEncoder->hashPassword($message->user, $message->password);
-        $message->user->setPassword($encodedPassword);
+        $user = $this->userRepository->find($message->userId);
+        $encodedPassword = $this->passwordEncoder->hashPassword($user, $message->password);
+        $user->setPassword($encodedPassword);
         $this->userRepository->save();
     }
 }
