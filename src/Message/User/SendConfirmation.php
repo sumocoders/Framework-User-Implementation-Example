@@ -2,11 +2,11 @@
 
 namespace App\Message\User;
 
-class SendConfirmation
+readonly class SendConfirmation
 {
     public function __construct(
-        public readonly int $userId,
-        public readonly string $locale
+        public int $userId,
+        public string $locale
     ) {
     }
 }

@@ -2,10 +2,10 @@
 
 namespace App\Message\User;
 
-class DisableUser
+readonly class DisableUser
 {
     public function __construct(
-        public readonly int $userId
+        public int $userId
     ) {
     }
 }
