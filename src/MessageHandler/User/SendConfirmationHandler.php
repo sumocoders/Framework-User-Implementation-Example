@@ -2,8 +2,7 @@
 
 namespace App\MessageHandler\User;
 
-use App\Controller\User\ConfirmController;
-use App\Entity\User\User;
+use App\Exception\User\UserNotFoundException;
 use App\Message\User\SendConfirmation;
 use App\Repository\User\UserRepository;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
@@ -30,9 +29,12 @@ class SendConfirmationHandler
         $this->from = Address::create($from);
     }
 
-    public function __invoke(SendConfirmation $message): User
+    public function __invoke(SendConfirmation $message): void
     {
-        $user = $message->user;
+        $user = $this->userRepository->find($message->userId);
+        if ($user === null) {
+            throw UserNotFoundException::create($message->userId);
+        }
         $user->requestConfirmation();
         $this->userRepository->save();
 
@@ -53,7 +55,5 @@ class SendConfirmationHandler
 
             ]);
         $this->mailer->send($email);
-
-        return $user;
     }
 }

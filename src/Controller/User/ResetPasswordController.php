@@ -38,7 +38,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('user_forgot_password');
         }
 
-        $form = $this->createForm(ResetPasswordType::class, new ResetPassword($user));
+        $form = $this->createForm(ResetPasswordType::class, new ResetPassword($user->getId()));
 
         $form->handleRequest($request);
 

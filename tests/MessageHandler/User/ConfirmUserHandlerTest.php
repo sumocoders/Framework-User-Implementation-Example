@@ -28,7 +28,7 @@ class ConfirmUserHandlerTest extends KernelTestCase
         $user->requestConfirmation();
         $this->userRepository->add($user);
 
-        $message = new ConfirmUser($user);
+        $message = new ConfirmUser($user->getId());
 
         $handler = new ConfirmUserHandler($this->userRepository);
         $handler->__invoke($message);

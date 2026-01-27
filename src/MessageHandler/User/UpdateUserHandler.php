@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler\User;
 
+use App\Exception\User\UserNotFoundException;
 use App\Message\User\UpdateUser;
 use App\Repository\User\UserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -16,7 +17,11 @@ final class UpdateUserHandler
 
     public function __invoke(UpdateUser $message): void
     {
-        $message->user->update(
+        $user = $this->userRepository->find($message->userId);
+        if ($user === null) {
+            throw UserNotFoundException::create($message->userId);
+        }
+        $user->update(
             $message->email,
             $message->roles
         );

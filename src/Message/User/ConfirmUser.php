@@ -2,12 +2,10 @@
 
 namespace App\Message\User;
 
-use App\Entity\User\User;
-
-class ConfirmUser
+readonly class ConfirmUser
 {
     public function __construct(
-        public readonly User $user
+        public int $userId
     ) {
     }
 }

@@ -38,11 +38,11 @@ class ConfirmController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $confirmForm = $this->createForm(ConfirmType::class, new ConfirmUser($user));
+        $confirmForm = $this->createForm(ConfirmType::class, new ConfirmUser($user->getId()));
         $confirmForm->handleRequest($request);
 
         if ($confirmForm->isSubmitted() && $confirmForm->isValid()) {
-            $this->messageBus->dispatch(new ConfirmUser($user));
+            $this->messageBus->dispatch(new ConfirmUser($user->getId()));
 
             $this->addFlash(
                 'success',

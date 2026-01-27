@@ -26,7 +26,7 @@ class EnableUserController extends AbstractController
             throw $this->createAccessDeniedException();
         }
 
-        $this->messageBus->dispatch(new EnableUser($user));
+        $this->messageBus->dispatch(new EnableUser($user->getId()));
 
         $this->addFlash(
             'success',

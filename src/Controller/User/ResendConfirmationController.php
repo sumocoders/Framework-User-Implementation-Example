@@ -35,7 +35,7 @@ final class ResendConfirmationController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $this->messageBus->dispatch(new SendConfirmation($user, $request->getLocale()));
+        $this->messageBus->dispatch(new SendConfirmation($user->getId(), $request->getLocale()));
 
         $this->addFlash('success', $this->translator->trans('Confirmation mail successfully resent'));
 

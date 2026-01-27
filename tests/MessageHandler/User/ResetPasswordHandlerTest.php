@@ -29,7 +29,7 @@ class ResetPasswordHandlerTest extends KernelTestCase
         $user = new User('user@example.com', ['ROLE_USER']);
         $this->userRepository->add($user);
 
-        $message = new ResetPassword($user);
+        $message = new ResetPassword($user->getId());
         $message->password = 'new_password';
 
         $handler = new ResetPasswordHandler(

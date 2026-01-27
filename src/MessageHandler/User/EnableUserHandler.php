@@ -2,6 +2,7 @@
 
 namespace App\MessageHandler\User;
 
+use App\Exception\User\UserNotFoundException;
 use App\Message\User\EnableUser;
 use App\Repository\User\UserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
@@ -16,7 +17,11 @@ class EnableUserHandler
 
     public function __invoke(EnableUser $message): void
     {
-        $message->user->enable();
+        $user = $this->userRepository->find($message->userId);
+        if ($user === null) {
+            throw UserNotFoundException::create($message->userId);
+        }
+        $user->enable();
         $this->userRepository->save();
     }
 }
