@@ -16,8 +16,39 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
+    ],
+    'tom-select' => [
+        'version' => '2.4.5',
+    ],
+    '@orchidjs/sifter' => [
+        'version' => '1.1.0',
+    ],
+    '@orchidjs/unicode-variants' => [
+        'version' => '1.1.2',
+    ],
+    'tom-select/dist/css/tom-select.default.min.css' => [
+        'version' => '2.4.5',
+        'type' => 'css',
+    ],
+    'tom-select/dist/css/tom-select.default.css' => [
+        'version' => '2.4.5',
+        'type' => 'css',
+    ],
+    'tom-select/dist/css/tom-select.bootstrap4.css' => [
+        'version' => '2.4.5',
+        'type' => 'css',
+    ],
+    'tom-select/dist/css/tom-select.bootstrap5.css' => [
+        'version' => '2.4.5',
+        'type' => 'css',
+    ],
+    '@hotwired/turbo' => [
+        'version' => '8.0.23',
     ],
     'sumocoders/Clipboard' => [
         'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/clipboard_controller.js',
@@ -49,6 +80,9 @@ return [
     'sumocoders/PasswordStrengthChecker' => [
         'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/password_strength_checker_controller.js',
     ],
+    'sumocoders/TogglePassword' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/toggle_password_controller.js',
+    ],
     'sumocoders/FormCollection' => [
         'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/form_collection_controller.js',
     ],
@@ -64,38 +98,17 @@ return [
     'sumocoders/ajax_client' => [
         'path' => './vendor/sumocoders/framework-core-bundle/assets-public/js/ajax_client.js',
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
-    'tom-select' => [
-        'version' => '2.4.3',
-    ],
-    '@orchidjs/sifter' => [
-        'version' => '1.1.0',
-    ],
-    '@orchidjs/unicode-variants' => [
-        'version' => '1.1.2',
-    ],
-    'tom-select/dist/css/tom-select.default.min.css' => [
-        'version' => '2.4.3',
-        'type' => 'css',
-    ],
-    '@hotwired/turbo' => [
-        'version' => '8.0.13',
+    'sumocoders/Confirm' => [
+        'path' => './vendor/sumocoders/framework-core-bundle/assets-public/controllers/confirm_controller.js',
     ],
     'bootstrap' => [
-        'version' => '5.3.7',
+        'version' => '5.3.8',
     ],
-    '@fortawesome/fontawesome-free/css/all.css' => [
-        'version' => '6.7.2',
-        'type' => 'css',
+    '@popperjs/core' => [
+        'version' => '2.11.8',
     ],
-    'tom-select/dist/css/tom-select.default.css' => [
-        'version' => '2.4.3',
-        'type' => 'css',
-    ],
-    'tom-select/dist/css/tom-select.bootstrap5.css' => [
-        'version' => '2.4.3',
+    'bootstrap/dist/css/bootstrap.min.css' => [
+        'version' => '5.3.8',
         'type' => 'css',
     ],
     'flatpickr' => [
@@ -170,24 +183,13 @@ return [
         'version' => '1.15.6',
     ],
     'axios' => [
-        'version' => '1.10.0',
+        'version' => '1.13.4',
     ],
     '@stimulus-components/clipboard' => [
         'version' => '5.0.0',
     ],
-    '@popperjs/core' => [
-        'version' => '2.11.8',
-    ],
-    'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.7',
-        'type' => 'css',
-    ],
     'flatpickr/dist/flatpickr.min.css' => [
         'version' => '4.6.13',
-        'type' => 'css',
-    ],
-    'tom-select/dist/css/tom-select.bootstrap4.css' => [
-        'version' => '2.4.3',
         'type' => 'css',
     ],
 ];

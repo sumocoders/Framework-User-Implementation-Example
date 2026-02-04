@@ -27,6 +27,10 @@ phpstan.neon
 /assets/vendor/
 ###< symfony/asset-mapper ###
 
+###> symfonycasts/sass-bundle ###
+/public/assets/
+###< symfonycasts/sass-bundle ###
+
 ###> vincentlanglet/twig-cs-fixer ###
 /.twig-cs-fixer.cache
 ###< vincentlanglet/twig-cs-fixer ###
