@@ -98,7 +98,11 @@ previous: vorige
 next: volgende
 user.actions.logout: afmelden
 user.actions.switchback: 'terug naar eigen account'
+'Copy to clipboard': 'Kopieer naar klembord'
 'Text copied!': 'Tekst gekopieerd!'
 'Postcode and municipality': 'Postcode en woonplaats'
 'Show password': 'Toon wachtwoord'
 'Hide password': 'Verberg wachtwoord'
+'Yes': 'Ja'
+'No': 'Nee'
+'Cancel': 'Annuleer'

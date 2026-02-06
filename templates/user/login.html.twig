@@ -2,7 +2,9 @@
 
 {% block main %}
     {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security')|raw }}</div>
+        <div class="alert alert-danger">
+            {{ error.messageKey|trans(error.messageData, 'security')|raw }}
+        </div>
     {% endif %}
 
     {{ form_start(form) }}

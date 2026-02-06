@@ -1,0 +1,19 @@
+{% set items = [
+    {label: 'profile', route: 'user_profile'},
+    {label: 'password', route: 'user_password'},
+    {label: '2fa', route: 'user_2fa'},
+] %}
+
+<ul class="nav nav-tabs">
+    {% for item in items %}
+        {% set is_active = app.request.attributes.get('_route') === item.route %}
+        <li class="nav-item">
+            <a class="nav-link{% if is_active %} active{% endif %}"
+               {% if is_active %}aria-current="page"{% endif %}
+               href="{{ path(item.route) }}"
+            >
+                {{ item.label|trans|ucfirst }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>

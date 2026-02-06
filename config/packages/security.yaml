@@ -24,14 +24,13 @@ security:
                 max_attempts: 5
             logout:
                 path: /logout
-
-            # where to redirect after logout
-            # target: app_any_route
             remember_me:
                 secret: '%kernel.secret%'
                 lifetime: 604800 # 1 week in seconds
                 path: /
-                always_remember_me: false
+            two_factor:
+                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
+                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
 
     role_hierarchy:
         ROLE_ADMIN: [ ROLE_USER, ROLE_ALLOWED_TO_SWITCH ]
@@ -46,6 +45,11 @@ security:
         - { route: 'user_register', roles: PUBLIC_ACCESS }
         - { route: 'user_confirm', roles: PUBLIC_ACCESS }
         - { route: 'user_reset_password', roles: PUBLIC_ACCESS }
+        - { route: '2fa_login', roles: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+        - { route: '2fa_login_check', roles: IS_AUTHENTICATED_2FA_IN_PROGRESS }
+        - { route: 'user_2fa', roles: ROLE_USER }
+        - { route: 'user_2fa_qrcode', roles: ROLE_USER }
+        - { route: 'user_password', roles: ROLE_USER }
         - { route: 'user_profile', roles: ROLE_USER }
         - { path: '^(/(%locales_regex%))?/admin', roles: ROLE_ADMIN }
 

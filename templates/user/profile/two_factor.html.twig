@@ -1,0 +1,97 @@
+{% extends 'base.html.twig' %}
+
+{% block header_title %}
+    <h1>{{ 'profile'|trans|ucfirst }} </h1>
+{% endblock %}
+
+{% block main %}
+    <div class="container">
+        {{ include('user/_profile_navigation.html.twig') }}
+
+        {% if is_2fa_enabled %}
+            {% if show_backup_codes %}
+                <div class="alert alert-warning">
+                    <h4 class="alert-heading">
+                        {{ 'Store these codes securely'|trans }}
+                    </h4>
+                    <p>
+                        {{ 'Keep these backup codes in a safe place. If you lose your device you can use one of the backup codes.'|trans }}
+                    </p>
+
+                    <div data-controller="clipboard" data-clipboard-success-content-value="{{ 'Text copied!'|trans }}">
+                        <div class="d-flex align-items-start">
+                            <pre data-clipboard-target="source">
+                                {%- for backupCode in user.backupCodes -%}
+                                    {{ backupCode ~}}{{ '\n' }}{# this is an ugly hack, to have no spaces, but still have a newline #}
+                                {%- endfor -%}
+                            </pre>
+                            <button
+                                type="button"
+                                data-action="clipboard#copy"
+                                data-clipboard-target="button"
+                                class="btn btn-outline-secondary rounded-1 p-0 px-1 ms-2"
+                            >
+                                <i class="bi bi-clipboard"></i>
+                                <span class="visually-hidden">
+                                {{ 'Copy to clipboard'|trans }}
+                            </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+
+            <h1>
+                {{ '2FA enabled'|trans }}
+            </h1>
+            <p>
+                {{ '2FA is enabled. Your account is secured. You have {number} backup codes left.'|trans({'{number}': user.backupCodes|length}) }}
+            </p>
+            <div
+                {{ stimulus_controller(
+                    'confirm',
+                    {
+                        confirmationMessage: 'Are you sure you want to disable 2fa?'|trans,
+                        cancelButtonText: 'Cancel'|trans,
+                        confirmButtonText: 'Ok'|trans,
+                    },
+                ) }}
+            >
+                {{ form_start(disable_2fa_form, {attr: {'data-confirm-target': 'element'}}) }}
+                <button class="btn btn-primary" type="submit" data-turbo="true">
+                    <i class="bi bi-unlock mr-2"></i>
+                    {{ 'Disable 2FA'|trans }}
+                </button>
+                {{ form_end(disable_2fa_form) }}
+            </div>
+        {% else %}
+            <h1>
+                {{ 'Enable 2FA'|trans }}
+            </h1>
+            <p>
+                {{ 'Add an extra layer of security to your account by enabling two-factor authentication.'|trans }}
+            </p>
+
+            <h2>
+                {{ 'Step 1: Scan the QR Code'|trans }}
+            </h2>
+            <img src="{{ path('user_2fa_qrcode') }}" alt="2fa QR Code" class="img-thumbnail mb-4">
+
+            <h2>
+                {{ 'Step 2: Verify your code'|trans }}
+            </h2>
+            {{ form_start(enable_2fa_form) }}
+            {{ form_row(enable_2fa_form.code) }}
+            {{ form_end(enable_2fa_form) }}
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block header_actions_right %}
+    {% if not is_2fa_enabled %}
+        <button class="btn btn-primary" type="submit" form="{{ enable_2fa_form.vars.id }}" data-turbo="true">
+            <i class="bi bi-floppy-fill mr-2"></i>
+            {{ 'Confirm'|trans }}
+        </button>
+    {% endif %}
+{% endblock %}

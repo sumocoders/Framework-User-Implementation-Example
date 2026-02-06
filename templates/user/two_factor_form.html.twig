@@ -1,0 +1,42 @@
+{% extends '@SumoCodersFrameworkCore/user.html.twig' %}
+
+{% block main %}
+    <form id="2fa" method="post" action="{{ checkPathUrl ? checkPathUrl : path(checkPathRoute) }}">
+        <div class="form-group">
+            <label for="_auth_code" class="form-label">
+                {{ 'auth_code'|trans({}, 'SchebTwoFactorBundle') }}<abbr
+                    title="{{ 'forms.labels.required'|trans }}">*</abbr>
+            </label>
+            <input
+                id="_auth_code"
+                type="text"
+                name="{{ authCodeParameterName }}"
+                autocomplete="one-time-code"
+                autofocus
+                class="form-control{% if authenticationError %} is-invalid{% endif %}"
+                {% if authenticationError %}
+                    aria-describedby="_auth_code_error"
+                {% endif %}
+                inputmode="numeric"
+                pattern="[0-9]*"
+            />
+            {% if authenticationError %}
+                <div id="_auth_code_error" class="invalid-feedback">
+                    {{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}
+                </div>
+            {% endif %}
+
+        </div>
+
+        <button type="submit" class="btn btn-secondary">
+            {{ 'login'|trans({}, 'SchebTwoFactorBundle') }}
+        </button>
+    </form>
+    <p class="align-self-center mt-1">
+        <small>
+            <a class="btn-link text-secondary"
+               href="{{ logoutPath }}">{{ 'cancel'|trans({}, 'SchebTwoFactorBundle') }}</a>
+        </small>
+    </p>
+
+{% endblock %}

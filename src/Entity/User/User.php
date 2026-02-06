@@ -6,6 +6,10 @@ use App\Repository\User\UserRepository;
 use App\ValueObject\User\Role;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use Scheb\TwoFactorBundle\Model\BackupCodeInterface;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
+use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
+use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface;
 use SumoCoders\FrameworkCoreBundle\Attribute\AuditTrail\AuditTrail;
 use SumoCoders\FrameworkCoreBundle\Attribute\AuditTrail\SensitiveData;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -16,7 +20,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: 'user')]
 #[UniqueEntity('email', message: "There is already an account with this email")]
 #[AuditTrail]
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface, BackupCodeInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -44,6 +48,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: 'datetime', nullable: true)]
     private ?DateTime $passwordRequestedAt;
+
+    #[ORM\Column(type: 'string', nullable: true)]
+    private ?string $totpSecret;
+
+    /** @var array<int, string> $backupCodes */
+    #[ORM\Column(type: 'json')]
+    private array $backupCodes = [];
 
     /**
      * @param array<int, string> $roles
@@ -229,5 +240,68 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private function generateToken(): string
     {
         return bin2hex(random_bytes(32));
+    }
+
+    public function isTotpAuthenticationEnabled(): bool
+    {
+        return $this->totpSecret !== null;
+    }
+
+    public function setTotpSecret(string $totpSecret): void
+    {
+        $this->totpSecret = $totpSecret;
+    }
+
+    public function clearTotpSecret(): void
+    {
+        $this->totpSecret = null;
+    }
+
+    public function getTotpAuthenticationUsername(): string|null
+    {
+        return $this->email;
+    }
+
+    public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
+    {
+        return new TotpConfiguration(
+            $this->totpSecret,
+            TotpConfiguration::ALGORITHM_SHA1,
+            30,
+            6
+        );
+    }
+
+    /**
+     * @return array<int, string>
+     */
+    public function getBackupCodes(): array
+    {
+        return $this->backupCodes;
+    }
+
+    public function isBackupCode(string $code): bool
+    {
+        return in_array($code, $this->backupCodes);
+    }
+
+    public function invalidateBackupCode(string $backupCode): void
+    {
+        $key = array_search($backupCode, $this->backupCodes);
+        if ($key !== false) {
+            unset($this->backupCodes[$key]);
+        }
+    }
+
+    public function addBackupCode(string $backupCode): void
+    {
+        if (!in_array($backupCode, $this->backupCodes)) {
+            $this->backupCodes[] = $backupCode;
+        }
+    }
+
+    public function clearBackupCodes(): void
+    {
+        $this->backupCodes = [];
     }
 }
