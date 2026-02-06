@@ -3,14 +3,13 @@
 namespace App\Controller\User\Profile;
 
 use App\Entity\User\User;
+use App\Form\User\Disable2FaType;
 use App\Form\User\Enable2FaType;
 use App\Message\User\Disable2Fa;
 use App\Message\User\Enable2Fa;
-use App\Message\User\SendPasswordReset;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
 use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -64,7 +63,7 @@ class TwoFactorController extends AbstractController
         }
         if ($is2FaEnabled) {
             $disable2FaMessage = new Disable2Fa($user);
-            $disable2FaForm = $this->createForm(FormType::class, $disable2FaMessage);
+            $disable2FaForm = $this->createForm(Disable2FaType::class, $disable2FaMessage);
             $disable2FaForm->handleRequest($request);
 
             if ($disable2FaForm->isSubmitted() && $disable2FaForm->isValid()) {

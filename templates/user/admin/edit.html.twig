@@ -45,6 +45,8 @@
         </div>
     </div>
     {{ form_end(passwordForgotForm) }}
+
+    {{ form(disable2FaForm) }}
 {% endblock %}
 
 {% block header_actions_right %}
@@ -94,6 +96,13 @@
                 <i class="bi bi-lock mr-2"></i>
                 {{ 'Disable'|trans }}
             </a>
+        {% endif %}
+
+        {% if user.totpAuthenticationEnabled %}
+            <button class="btn btn-primary" type="submit" form="{{ disable2FaForm.vars.id }}" data-turbo="true">
+                <i class="bi bi-unlock mr-2"></i>
+                {{ 'Disable 2FA'|trans }}
+            </button>
         {% endif %}
     {% endif %}
 {% endblock %}
