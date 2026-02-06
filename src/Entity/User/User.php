@@ -10,6 +10,7 @@ use Scheb\TwoFactorBundle\Model\BackupCodeInterface;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfiguration;
 use Scheb\TwoFactorBundle\Model\Totp\TotpConfigurationInterface;
 use Scheb\TwoFactorBundle\Model\Totp\TwoFactorInterface;
+use Scheb\TwoFactorBundle\Model\TrustedDeviceInterface;
 use SumoCoders\FrameworkCoreBundle\Attribute\AuditTrail\AuditTrail;
 use SumoCoders\FrameworkCoreBundle\Attribute\AuditTrail\SensitiveData;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -20,7 +21,12 @@ use Symfony\Component\Security\Core\User\UserInterface;
 #[ORM\Table(name: 'user')]
 #[UniqueEntity('email', message: "There is already an account with this email")]
 #[AuditTrail]
-class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface, BackupCodeInterface
+class User implements
+    UserInterface,
+    PasswordAuthenticatedUserInterface,
+    TwoFactorInterface,
+    BackupCodeInterface,
+    TrustedDeviceInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -55,6 +61,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     /** @var array<int, string> $backupCodes */
     #[ORM\Column(type: 'json')]
     private array $backupCodes = [];
+
+    #[ORM\Column(type: 'integer')]
+    private int $trustedVersion = 0;
 
     /**
      * @param array<int, string> $roles
@@ -303,5 +312,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function clearBackupCodes(): void
     {
         $this->backupCodes = [];
+    }
+
+    public function getTrustedTokenVersion(): int
+    {
+        return $this->trustedVersion;
     }
 }

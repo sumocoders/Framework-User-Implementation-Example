@@ -25,8 +25,16 @@
                     {{ authenticationError|trans(authenticationErrorData, 'SchebTwoFactorBundle') }}
                 </div>
             {% endif %}
-
+            {% if displayTrustedOption %}
+                <label class="form-check-label" for="_trusted">
+                    <input class="form-check-input" type="checkbox" id="_trusted" name="{{ trustedParameterName }}">
+                    {{ 'trusted'|trans({}, 'SchebTwoFactorBundle') }}
+                </label>
+            {% endif %}
         </div>
+        {% if isCsrfProtectionEnabled %}
+            <input type="hidden" name="{{ csrfParameterName }}" value="{{ csrf_token(csrfTokenId) }}">
+        {% endif %}
 
         <button type="submit" class="btn btn-secondary">
             {{ 'login'|trans({}, 'SchebTwoFactorBundle') }}

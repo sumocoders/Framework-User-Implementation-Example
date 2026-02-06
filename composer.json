@@ -13,6 +13,7 @@
         "scheb/2fa-backup-code": "^8.3",
         "scheb/2fa-bundle": "^8.3",
         "scheb/2fa-totp": "^8.3",
+        "scheb/2fa-trusted-device": "^8.3",
         "sentry/sentry-symfony": "^5.1",
         "sumocoders/framework-core-bundle": "^17.0",
         "symfony/apache-pack": "^1.0.1",

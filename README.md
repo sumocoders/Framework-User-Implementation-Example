@@ -7,11 +7,14 @@ How to use this in your own project:
 * scheb/2fa-backup-code
 * scheb/2fa-bundle
 * scheb/2fa-totp
+* scheb/2fa-trusted-device
 * endroid/qr-code
 
 You can install them via composer:
 
-```symfony composer require 2fa scheb/2fa-backup-code scheb/2fa-totp endroid/qr-code```
+```
+symfony composer require 2fa scheb/2fa-backup-code scheb/2fa-totp scheb/2fa-trusted-device endroid/qr-code
+```
 
 This will normally enable the bundle automatically. If not, please enable it in `config/bundles.php`:
 
@@ -30,8 +33,9 @@ Add the following to your firewall in `config/packages/security.yaml`:
 
 ```yaml
             two_factor:
-                auth_form_path: 2fa_login    # The route name you have used in the routes.yaml
-                check_path: 2fa_login_check  # The route name you have used in the routes.yaml
+                auth_form_path: 2fa_login
+                check_path: 2fa_login_check
+                trusted_parameter_name: _trusted
 ```
 
 Add the routes to the access control:

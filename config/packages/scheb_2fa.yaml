@@ -7,7 +7,10 @@ scheb_two_factor:
         enabled: true
         server_name: '%env(string:SITE_TITLE)%'
         issuer: '%env(string:SITE_TITLE)%'
-        template: 'user/two_factor_form.html.twig'
+        template: 'user/2fa_form.html.twig'
 
     backup_codes:
+        enabled: true
+
+    trusted_device:
         enabled: true
