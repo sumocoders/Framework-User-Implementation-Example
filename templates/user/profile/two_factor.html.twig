@@ -8,8 +8,8 @@
     <div class="container">
         {{ include('user/_profile_navigation.html.twig') }}
 
-        {% if is_2fa_enabled %}
-            {% if show_backup_codes %}
+        {% if is2FaEnabled %}
+            {% if showBackupCodes %}
                 <div class="alert alert-warning">
                     <h4 class="alert-heading">
                         {{ 'Store these codes securely'|trans }}
@@ -57,12 +57,12 @@
                     },
                 ) }}
             >
-                {{ form_start(disable_2fa_form, {attr: {'data-confirm-target': 'element'}}) }}
+                {{ form_start(disable2FaForm, {attr: {'data-confirm-target': 'element'}}) }}
                 <button class="btn btn-primary" type="submit" data-turbo="true">
                     <i class="bi bi-unlock mr-2"></i>
                     {{ 'Disable 2FA'|trans }}
                 </button>
-                {{ form_end(disable_2fa_form) }}
+                {{ form_end(disable2FaForm) }}
             </div>
         {% else %}
             <h1>
@@ -80,16 +80,16 @@
             <h2>
                 {{ 'Step 2: Verify your code'|trans }}
             </h2>
-            {{ form_start(enable_2fa_form) }}
-            {{ form_row(enable_2fa_form.code) }}
-            {{ form_end(enable_2fa_form) }}
+            {{ form_start(enable2FaForm) }}
+            {{ form_row(enable2FaForm.code) }}
+            {{ form_end(enable2FaForm) }}
         {% endif %}
     </div>
 {% endblock %}
 
 {% block header_actions_right %}
-    {% if not is_2fa_enabled %}
-        <button class="btn btn-primary" type="submit" form="{{ enable_2fa_form.vars.id }}" data-turbo="true">
+    {% if not is2FaEnabled %}
+        <button class="btn btn-primary" type="submit" form="{{ enable2FaForm.vars.id }}" data-turbo="true">
             <i class="bi bi-floppy-fill mr-2"></i>
             {{ 'Confirm'|trans }}
         </button>

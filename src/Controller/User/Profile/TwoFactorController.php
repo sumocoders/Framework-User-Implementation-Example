@@ -85,10 +85,10 @@ class TwoFactorController extends AbstractController
 
         return $this->render('user/profile/two_factor.html.twig', [
             'user' => $user,
-            'is_2fa_enabled' => $is2FaEnabled,
-            'show_backup_codes' => $showBackupCodes,
-            'enable_2fa_form' => $enable2FaForm ?? null,
-            'disable_2fa_form' => $disable2FaForm ?? null,
+            'is2FaEnabled' => $is2FaEnabled,
+            'showBackupCodes' => $showBackupCodes,
+            'enable2FaForm' => $enable2FaForm ?? null,
+            'disable2FaForm' => $disable2FaForm ?? null,
         ]);
     }
 }
