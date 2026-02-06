@@ -33,6 +33,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $message->email = 'user@example.com';
         $message->roles = ['ROLE_USER'];
         $message->password = 'password';
+        $message->locale = 'nl';
 
         $handler = new RegisterUserHandler(
             $this->userRepository,

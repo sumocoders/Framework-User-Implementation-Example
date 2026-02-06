@@ -53,6 +53,7 @@ for more information.
 * Copy `src/*/User/*` into your own project.
 * Copy `src/Security` into your own project.
 * Copy `templates/user` into your own project.
+* Copy `tests/*/User/*` into your own project.
 
 ### Fix the menu
 

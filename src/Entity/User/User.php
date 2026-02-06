@@ -50,7 +50,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     private ?DateTime $passwordRequestedAt;
 
     #[ORM\Column(type: 'string', nullable: true)]
-    private ?string $totpSecret;
+    private ?string $totpSecret = null;
 
     /** @var array<int, string> $backupCodes */
     #[ORM\Column(type: 'json')]

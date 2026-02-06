@@ -29,6 +29,7 @@ class CreateUserHandlerTest extends KernelTestCase
         $message = new CreateUser();
         $message->email = 'user@example.com';
         $message->roles = ['ROLE_USER'];
+        $message->locale = 'nl';
 
         $handler = new CreateUserHandler(
             $this->userRepository,
