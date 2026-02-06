@@ -32,10 +32,11 @@ class TwoFactorQrCodeController extends AbstractController
             throw new BadRequestException('No secret found in session');
         }
 
-        $user->setTotpSecret($session->get('2fa_secret'));
+        $clonedUser = clone $user;
+        $clonedUser->setTotpSecret($session->get('2fa_secret'));
         $builder = new Builder(
             writer: new SvgWriter(),
-            data: $this->totpAuthenticator->getQRContent($user),
+            data: $this->totpAuthenticator->getQRContent($clonedUser),
             encoding: new Encoding('UTF-8'),
         );
 
