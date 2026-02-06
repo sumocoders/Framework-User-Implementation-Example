@@ -5,32 +5,6 @@
 {% endblock %}
 
 {% block header_navigation %}
-    {% if not user.confirmed %}
-        <a class="btn btn-primary" href="{{ path('request_confirmation', {user: user.id}) }}" data-turbo-prefetch="false">
-            <i class="bi bi-envelope-fill mr-2"></i>
-            {{ 'Resend confirmation mail'|trans }}
-        </a>
-    {% endif %}
-    {% if user.confirmed and user.enabled %}
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
-            <i class="bi bi-envelope-fill mr-2"></i>
-            {{ 'Send forgot password mail'|trans }}
-        </button>
-    {% endif %}
-
-    {% if user.id != app.user.id %}
-        {% if user.enabled %}
-            <a class="btn btn-danger ml-2" href="{{ path('user_admin_disable_user', {user: user.id}) }}" data-turbo-prefetch="false">
-                <i class="bi bi-lock mr-2"></i>
-                {{ 'Disable'|trans }}
-            </a>
-        {% else %}
-            <a class="btn btn-success ml-2" href="{{ path('user_admin_enable_user', {user: user.id}) }}" data-turbo-prefetch="false">
-                <i class="bi bi-unlock2 mr-2"></i>
-                {{ 'Enable'|trans }}
-            </a>
-        {% endif %}
-    {% endif %}
 {% endblock %}
 
 {% block main %}
@@ -40,32 +14,28 @@
         <div class="col-md-6">
             {{ form_row(form.email) }}
             {{ form_row(form.roles) }}
-
-            <div class="btn-toolbar mt-4">
-                <button class="btn btn-primary" type="submit">
-                    <i class="bi bi-floppy-fill mr-2"></i>
-                    {{ 'Save'|trans }}
-                </button>
-            </div>
         </div>
     </div>
 
     {{ form_end(form) }}
 
     {{ form_start(passwordForgotForm) }}
-    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel" aria-hidden="true">
+    <div class="modal fade" id="forgotPasswordModal" tabindex="-1" aria-labelledby="forgotPasswordModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="forgotPasswordModal">{{ 'Send forgot password mail'|trans }}</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="{{ 'dialogs.close'|trans }}"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="{{ 'dialogs.close'|trans }}"></button>
                 </div>
                 <div class="modal-body">
                     {{ form_rest(passwordForgotForm) }}
                     {{ 'Are you sure you want to send forgot password email to {user}?'|trans({user: user.email}) }}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ 'dialogs.buttons.cancel'|trans|ucfirst }}</button>
+                    <button type="button" class="btn btn-secondary"
+                            data-bs-dismiss="modal">{{ 'dialogs.buttons.cancel'|trans|ucfirst }}</button>
                     <button type="submit" name="testingForm" class="btn btn-primary">
                         <i class="bi bi-envelope-fill mr-2"></i>
                         {{ 'Send'|trans }}
@@ -75,4 +45,55 @@
         </div>
     </div>
     {{ form_end(passwordForgotForm) }}
+{% endblock %}
+
+{% block header_actions_right %}
+    <button class="btn btn-primary" type="submit" form="{{ form.vars.id }}" data-turbo="true">
+        <i class="bi bi-floppy-fill mr-2"></i>
+        {{ 'Save'|trans }}
+    </button>
+{% endblock %}
+
+{% block header_actions_center %}
+    {% if not user.confirmed %}
+        <a
+            class="btn btn-secondary"
+            href="{{ path('request_confirmation', {user: user.id}) }}"
+            data-turbo-prefetch="false"
+        >
+            <i class="bi bi-envelope-fill mr-2"></i>
+            {{ 'Resend confirmation mail'|trans }}
+        </a>
+    {% endif %}
+    {% if user.confirmed and user.enabled %}
+        <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
+            <i class="bi bi-envelope-fill mr-2"></i>
+            {{ 'Send forgot password mail'|trans }}
+        </button>
+    {% endif %}
+    {% if not user.enabled %}
+        <a
+            class="btn btn-success ml-2"
+            href="{{ path('user_admin_enable_user', {user: user.id}) }}"
+            data-turbo-prefetch="false"
+        >
+            <i class="bi bi-unlock2 mr-2"></i>
+            {{ 'Enable'|trans }}
+        </a>
+    {% endif %}
+{% endblock %}
+
+{% block header_actions_left %}
+    {% if user.id != app.user.id %}
+        {% if user.enabled %}
+            <a
+                class="btn btn-danger ml-2"
+                href="{{ path('user_admin_disable_user', {user: user.id}) }}"
+                data-turbo-prefetch="false"
+            >
+                <i class="bi bi-lock mr-2"></i>
+                {{ 'Disable'|trans }}
+            </a>
+        {% endif %}
+    {% endif %}
 {% endblock %}
