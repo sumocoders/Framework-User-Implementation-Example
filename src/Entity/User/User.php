@@ -291,7 +291,7 @@ class User implements
 
     public function isBackupCode(string $code): bool
     {
-        return in_array($code, $this->backupCodes);
+        return in_array($code, $this->backupCodes, true);
     }
 
     public function invalidateBackupCode(string $backupCode): void
