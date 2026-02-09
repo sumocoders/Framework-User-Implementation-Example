@@ -1,5 +1,6 @@
 stages:
   - build
+  - scheduled tasks
   - code quality
   - dependency scanning
   - outdated packages
@@ -36,7 +37,7 @@ Install dependencies and build assets:
 PHP_CodeSniffer - check code styling:
   image: sumocoders/cli-tools-php85:latest
   script:
-    - php vendor/bin/phpcs --report-full --report-\\Micheh\\PhpCodeSniffer\\Report\\Gitlab=phpcs-report.json
+    - php vendor/bin/phpcs --colors --report-full --report-\\Micheh\\PhpCodeSniffer\\Report\\Gitlab=phpcs-report.json
   artifacts:
     expire_in: 1 week
     reports:
@@ -157,7 +158,7 @@ NPM packages - check for outdated packages:
 PHP packages - composer outdated:
   image: sumocoders/cli-tools-php85:latest
   script:
-    - composer outdated --ansi --no-interaction
+    - composer outdated --ansi --no-interaction --strict
   stage: outdated packages
   needs: [ "Install dependencies and build assets" ]
   tags:
@@ -183,7 +184,7 @@ PHPUnit - Run tests:
     - php bin/console doctrine:migrations:migrate --env=test --no-interaction --allow-no-migration
     # Uncomment this if you have fixtures that need to be loaded
     # Make sure that you have installed doctrine/doctrine-fixtures-bundle
-    #- php bin/console doctrine:fixtures:load --env=test
+    #- php bin/console doctrine:fixtures:load --env=test --no-interaction
     - php vendor/bin/phpunit --color --testdox --log-junit phpunit-report.xml
   artifacts:
     reports:
@@ -195,9 +196,26 @@ PHPUnit - Run tests:
   variables:
     MYSQL_DATABASE: ci_test
     MYSQL_ROOT_PASSWORD: root
-    DATABASE_URL: mysql://root:root@mysql:3306/ci_test?serverVersion=5.7
+    DATABASE_URL: mysql://root:root@mysql:3306/ci_test?serverVersion=8.0
     PANTHER_NO_SANDBOX: 1
     PANTHER_WEB_SERVER_PORT: 9080
+
+
+# Scheduled tasks section
+Task - Update dependencies:
+  image: sumocoders/cli-tools-php85:latest
+  script:
+    - git config --global user.email "bot@sumocoders.be"
+    - git config --global user.name "Sumo Bot"
+    - git config --global push.autoSetupRemote true
+    - git remote set-url origin "https://bot:${GITLAB_ACCESS_TOKEN}@${CI_SERVER_HOST}/${CI_PROJECT_PATH}.git"
+    - php bin/console sumo:maintenance:create-pr-for-outdated-dependencies --no-interaction --ansi
+  stage: scheduled tasks
+  needs: [ "Install dependencies and build assets" ]
+  rules:
+    - if: '$CI_PIPELINE_SOURCE =~ /schedule|web/'
+  tags:
+    - docker
 
 
 # Deploy section
@@ -217,9 +235,37 @@ Deploy - to staging:
   environment:
     name: staging
     url: https://$project.$client.php85.sumocoders.eu
-  only:
-    - staging
   stage: deploy
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "staging"'
+  tags:
+    - docker
+  variables:
+    USER: "CI/CD gitlab-runner"
+
+Deploy - to production:
+  image: sumocoders/cli-tools-php85:latest
+  before_script:
+    # Add the private SSH key to the CI environment
+    - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - echo "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+    - chmod 644 ~/.ssh/known_hosts
+  script:
+    - php vendor/bin/dep deploy stage=production
+  environment:
+    name: production
+    url: https://$productionUrl
+  stage: deploy
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "schedule"'
+      when: never
+    - if: '$CI_COMMIT_BRANCH == "master"'
   tags:
     - docker
   variables:

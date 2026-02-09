@@ -8,8 +8,10 @@ import Popover from 'sumocoders/Popover'
 import DateTimePicker from 'sumocoders/DateTimePicker'
 import Tabs from 'sumocoders/Tabs'
 import PasswordStrengthChecker from 'sumocoders/PasswordStrengthChecker'
+import TogglePassword from 'sumocoders/TogglePassword'
 import FormCollection from 'sumocoders/FormCollection'
 import ScrollToTop from 'sumocoders/ScrollToTop'
+import Confirm from 'sumocoders/Confirm'
 
 const app = startStimulusApp()
 // register any custom, 3rd party controllers here
@@ -23,5 +25,7 @@ app.register('popover', Popover)
 app.register('date-time-picker', DateTimePicker)
 app.register('tabs', Tabs)
 app.register('password-strength-checker', PasswordStrengthChecker)
+app.register('toggle-password', TogglePassword)
 app.register('form-collection', FormCollection)
 app.register('scroll-to-top', ScrollToTop)
+app.register('confirm', Confirm)

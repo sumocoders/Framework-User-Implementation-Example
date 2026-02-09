@@ -1,5 +1,4 @@
 // CSS
-import '@fortawesome/fontawesome-free/css/all.css'
 import 'tom-select/dist/css/tom-select.default.css'
 import 'tom-select/dist/css/tom-select.bootstrap5.css'
 import 'flatpickr/dist/flatpickr.css'
@@ -12,5 +11,5 @@ document.addEventListener('turbo:before-fetch-request', (event) => {
 })
 
 // JS
-import 'bootstrap'
-import './bootstrap.js'
+import 'bootstrap' // eslint-disable-line import/first
+import './bootstrap.js' // eslint-disable-line import/first

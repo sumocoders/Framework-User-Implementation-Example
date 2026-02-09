@@ -4,7 +4,10 @@ framework:
         paths:
             - assets/
             - vendor/sumocoders/framework-core-bundle/assets-public/
+            - vendor/twbs/bootstrap-icons/font/
         missing_import_mode: strict
+        excluded_patterns:
+            - '**/assets/styles/**/_*.scss'
 
 when@prod:
     framework:

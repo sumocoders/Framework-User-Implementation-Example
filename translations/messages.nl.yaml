@@ -1,0 +1,104 @@
+core.interface.backToTop: 'terug naar boven'
+core.interface.loading: 'aan het laden'
+core.interface.collapse: 'verberg menu'
+'core.languages.toggle language': 'taal wisselen'
+core.themes.themes: modus
+core.themes.dark: donker
+core.themes.light: licht
+core.themes.auto: auto
+'core.themes.toggle theme': 'thema wisselen'
+core.menu.home: home
+core.menu.navigation: navigatie
+core.warnings.oldBrowser: '<strong>Warning:</strong> You are using an older browser. If you want to see the site as it is intended, you may want to download a new version or a decent browser like <a href="http://www.google.com/chrome‎">Chrome</a>.'
+datagrids.actions.edit: bewerk
+datagrids.actions.show: toon
+datepicker.pickDate: 'pick a date'
+datepicker.buttons.close: close
+datepicker.buttons.next: next
+datepicker.buttons.previous: previous
+datepicker.buttons.today: today
+datepicker.full.days.sunday: zondag
+datepicker.full.days.monday: maandag
+datepicker.full.days.tuesday: dinsdag
+datepicker.full.days.wednesday: woensdag
+datepicker.full.days.thursday: donderdag
+datepicker.full.days.friday: vrijdag
+datepicker.full.days.saturday: zaterdag
+datepicker.full.months.january: januari
+datepicker.full.months.february: februari
+datepicker.full.months.march: maart
+datepicker.full.months.april: april
+datepicker.full.months.may: mei
+datepicker.full.months.june: juni
+datepicker.full.months.july: juli
+datepicker.full.months.august: augustus
+datepicker.full.months.september: september
+datepicker.full.months.october: oktober
+datepicker.full.months.november: november
+datepicker.full.months.december: december
+datepicker.minimal.days.sunday: zo
+datepicker.minimal.days.monday: ma
+datepicker.minimal.days.tuesday: di
+datepicker.minimal.days.wednesday: wo
+datepicker.minimal.days.thursday: do
+datepicker.minimal.days.friday: vr
+datepicker.minimal.days.saturday: za
+datepicker.short.days.sunday: zon
+datepicker.short.days.monday: maa
+datepicker.short.days.tuesday: din
+datepicker.short.days.wednesday: woe
+datepicker.short.days.thursday: don
+datepicker.short.days.friday: vri
+datepicker.short.days.saturday: zat
+datepicker.short.months.january: jan
+datepicker.short.months.february: feb
+datepicker.short.months.march: maa
+datepicker.short.months.april: apr
+datepicker.short.months.may: mei
+datepicker.short.months.june: jun
+datepicker.short.months.july: jul
+datepicker.short.months.august: aug
+datepicker.short.months.september: sep
+datepicker.short.months.october: okt
+datepicker.short.months.november: nov
+datepicker.short.months.december: dec
+dialogs.buttons.cancel: annuleer
+dialogs.buttons.ok: ok
+dialogs.close: sluiten
+dialogs.messages.confirmDelete: 'Ben je zeker dat je %entity% wil verwijderen?'
+error.messages.generic: 'Er ging iets mis.'
+error.messages.noRouteFound: 'De pagina werd niet gevonden.'
+error.messages.noRouteFoundMessage: 'Het lijkt erop dat deze pagina niet (meer) bestaat of verhuisd is.'
+error.messages.unauthorized: 'Je hebt geen toegang tot deze pagina.'
+error.messages.unauthorizedMessage: 'Controleer of je bent ingelogd en de nodige rechten hebt om deze pagina te bekijken.'
+error.messages.crash: 'Oeps. Er ging iets mis.'
+error.messages.crashMessage: 'Dat was niet de bedoeling. Neem contact op met de eigenaar van de website of de ontwikkelaar indien het probleem zich blijft voordoen'
+'go back': 'Keer terug'
+forms.labels.required: 'dit veld is verplicht'
+forms.labels.optional: (optioneel)
+forms.labels.removeImage: 'verwijder afbeelding'
+forms.labels.removeFile: 'verwijder bestand'
+forms.labels.viewCurrentFile: 'bekijk huidig bestand'
+forms.labels.other: andere
+forms.buttons.new: toevoegen
+forms.buttons.update: opslaan
+forms.buttons.addItem: toevoegen
+forms.buttons.removeItem: verwijderen
+forms.buttons.moveUp: 'naar boven verplaatsen'
+forms.buttons.moveDown: 'naar beneden verplaatsen'
+forms.message.hasErrors: 'Uw formulier bevat ongeldige informatie'
+header.navigation.actions.add: toevoegen
+header.navigation.actions.delete: verwijderen
+header.navigation.actions.edit: bewerken
+header.navigation.actions.overview: overzicht
+navigation.translations: vertalingen
+navigation.titles.possible_actions: 'mogelijke acties'
+navigation.titles.showHideMenu: 'toon/verberg menu'
+previous: vorige
+next: volgende
+user.actions.logout: afmelden
+user.actions.switchback: 'terug naar eigen account'
+'Text copied!': 'Tekst gekopieerd!'
+'Postcode and municipality': 'Postcode en woonplaats'
+'Show password': 'Toon wachtwoord'
+'Hide password': 'Verberg wachtwoord'
