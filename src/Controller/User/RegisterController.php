@@ -22,7 +22,9 @@ class RegisterController extends AbstractController
 
     public function __invoke(Request $request, SessionInterface $session): Response
     {
-        $form = $this->createForm(RegisterType::class, new RegisterUser());
+        $registerUser = new registerUser();
+        $registerUser->locale = $request->getLocale();
+        $form = $this->createForm(RegisterType::class, $registerUser);
 
         $form->handleRequest($request);
 

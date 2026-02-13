@@ -51,6 +51,28 @@ edit: 'Bewerk'
 'Confirm your account': 'Bevestig je account'
 Confirm: 'Bevestig'
 profile: 'Profiel'
+password: 'Wachtwoord'
+2fa: '2FA'
+
+# Breadcrumbs
+user_profile: 'Profiel'
+user_password: 'Wachtwoord'
+user_2fa: '2FA'
+
+# 2FA
+'Enable 2FA': '2FA inschakelen'
+'Disable 2FA': '2FA uitschakelen'
+'Add an extra layer of security to your account by enabling two-factor authentication.': 'Voeg een extra beveiligingslaag toe aan je account door twee-factor-authenticatie in te schakelen.'
+'Step 1: Scan the QR Code': 'Stap 1: Scan de QR-code'
+'Step 2: Verify your code': 'Stap 2: Verifieer je code'
+'Enter the code from your authenticator app': 'Voer de code van je authenticator-app in'
+'Store these codes securely': 'Bewaar deze codes op een veilige plaats'
+'Keep these backup codes in a safe place. If you lose your device you can use one of the backup codes.': 'Bewaar deze back-upcodes op een veilige plaats. Als je je apparaat verliest, kun je een van de back-upcodes gebruiken.'
+'Warning: The backup codes will only shown once.': 'Let op: De back-upcodes worden slechts één keer getoond.'
+'2FA enabled': '2FA ingeschakeld'
+'2FA disabled': '2FA uitgeschakeld'
+'Are you sure you want to disable 2fa?': 'Weet je zeker dat je 2FA wilt uitschakelen?'
+'2FA is enabled. Your account is secured. You have {number} backup codes left.': '2FA is ingeschakeld. Je account is beveiligd. Je hebt nog {number} back-upcodes over.'
 
 # Roles
 admin: 'Beheerder'

@@ -2,8 +2,6 @@
 
 namespace App\Security;
 
-use App\Controller\User\LoginController;
-use App\Controller\User\ProfileController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;

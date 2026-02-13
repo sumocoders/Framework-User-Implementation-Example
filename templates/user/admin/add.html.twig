@@ -11,15 +11,15 @@
         <div class="col-md-6">
             {{ form_row(form.email) }}
             {{ form_row(form.roles) }}
-
-            <div class="btn-toolbar mt-4">
-                <button class="btn btn-primary" type="submit">
-                    <i class="bi bi-plus-lg mr-2"></i>
-                    {{ 'Save'|trans }}
-                </button>
-            </div>
         </div>
     </div>
 
     {{ form_end(form) }}
+{% endblock %}
+
+{% block header_actions_right %}
+    <button class="btn btn-primary" type="submit" form="{{ form.vars.id }}" data-turbo="true">
+        <i class="bi bi-plus-lg mr-2"></i>
+        {{ 'Save'|trans }}
+    </button>
 {% endblock %}

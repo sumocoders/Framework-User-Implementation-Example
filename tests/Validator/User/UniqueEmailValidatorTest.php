@@ -12,11 +12,13 @@ use App\Validator\User\UniqueEmail;
 use App\Validator\User\UniqueEmailValidator;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Tools\SchemaTool;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Validator\Context\ExecutionContext;
 use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
+#[AllowMockObjectsWithoutExpectations]
 class UniqueEmailValidatorTest extends KernelTestCase
 {
     private UserRepository $userRepository;

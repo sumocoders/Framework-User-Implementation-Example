@@ -1,0 +1,16 @@
+# See the configuration reference at https://symfony.com/bundles/SchebTwoFactorBundle/6.x/configuration.html
+scheb_two_factor:
+    security_tokens:
+        - Symfony\Component\Security\Core\Authentication\Token\UsernamePasswordToken
+        - Symfony\Component\Security\Http\Authenticator\Token\PostAuthenticationToken
+    totp:
+        enabled: true
+        server_name: '%env(string:SITE_TITLE)%'
+        issuer: '%env(string:SITE_TITLE)%'
+        template: 'user/2fa_form.html.twig'
+
+    backup_codes:
+        enabled: true
+
+    trusted_device:
+        enabled: true

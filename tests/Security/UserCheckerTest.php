@@ -6,11 +6,13 @@ use App\Entity\User\User;
 use App\Repository\User\UserRepository;
 use App\Security\Exception\UnconfirmedAccountException;
 use App\Security\UserChecker;
+use PHPUnit\Framework\Attributes\AllowMockObjectsWithoutExpectations;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Component\Security\Core\Exception\DisabledException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
+#[AllowMockObjectsWithoutExpectations]
 class UserCheckerTest extends KernelTestCase
 {
     private UserChecker $userChecker;
