@@ -21,7 +21,7 @@ final class AddUserController extends AbstractController
     ) {
     }
 
-    #[Breadcrumb('add', parent: ['name' => 'user_admin_overview'])]
+    #[Breadcrumb('Add', parent: ['name' => 'user_admin_overview'])]
     public function __invoke(Request $request): Response
     {
         $form = $this->createForm(UserType::class, new CreateUser());

@@ -30,7 +30,7 @@ final class EditUserController extends AbstractController
     ) {
     }
 
-    #[Breadcrumb('edit', parent: ['name' => 'user_admin_overview'])]
+    #[Breadcrumb('Edit', parent: ['name' => 'user_admin_overview'])]
     public function __invoke(Request $request, #[CurrentUser] User $currentUser, User $user): Response
     {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
