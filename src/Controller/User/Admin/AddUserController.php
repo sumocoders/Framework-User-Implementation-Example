@@ -13,11 +13,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/users/add', name: 'user_admin_add')]
-class AddUserController extends AbstractController
+final class AddUserController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $messageBus
+        private readonly MessageBusInterface $messageBus,
     ) {
     }
 
@@ -25,7 +25,6 @@ class AddUserController extends AbstractController
     public function __invoke(Request $request): Response
     {
         $form = $this->createForm(UserType::class, new CreateUser());
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -42,8 +41,11 @@ class AddUserController extends AbstractController
             return $this->redirectToRoute('user_admin_overview');
         }
 
-        return $this->render('user/admin/add.html.twig', [
-            'form' => $form,
-        ]);
+        return $this->render(
+            'user/admin/add.html.twig',
+            [
+                'form' => $form,
+            ]
+        );
     }
 }

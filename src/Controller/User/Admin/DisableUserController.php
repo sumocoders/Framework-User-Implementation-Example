@@ -12,11 +12,11 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/users/{user}/disable', name: 'user_admin_disable_user')]
-class DisableUserController extends AbstractController
+final class DisableUserController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $messageBus
+        private readonly MessageBusInterface $messageBus,
     ) {
     }
 

@@ -12,11 +12,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/users/{user}/request-confirmation', name: 'request_confirmation')]
-class RequestConfirmationController extends AbstractController
+final class RequestConfirmationController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $messageBus
+        private readonly MessageBusInterface $messageBus,
     ) {
     }
 

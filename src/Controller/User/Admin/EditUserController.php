@@ -18,11 +18,11 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/users/{user}/edit', name: 'user_admin_edit')]
-class EditUserController extends AbstractController
+final class EditUserController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $messageBus
+        private readonly MessageBusInterface $messageBus,
     ) {
     }
 
@@ -30,7 +30,6 @@ class EditUserController extends AbstractController
     public function __invoke(User $user, Request $request): Response
     {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -75,11 +74,14 @@ class EditUserController extends AbstractController
             return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
         }
 
-        return $this->render('user/admin/edit.html.twig', [
-            'user' => $user,
-            'form' => $form,
-            'passwordForgotForm' => $passwordForgotForm,
-            'disable2FaForm' => $disable2FaForm,
-        ]);
+        return $this->render(
+            'user/admin/edit.html.twig',
+            [
+                'user' => $user,
+                'form' => $form,
+                'passwordForgotForm' => $passwordForgotForm,
+                'disable2FaForm' => $disable2FaForm,
+            ]
+        );
     }
 }

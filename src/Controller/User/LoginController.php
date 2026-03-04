@@ -10,10 +10,10 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 #[Route('/login', name: 'login')]
-class LoginController extends AbstractController
+final class LoginController extends AbstractController
 {
     public function __construct(
-        private readonly AuthenticationUtils $authenticationUtils
+        private readonly AuthenticationUtils $authenticationUtils,
     ) {
     }
 
@@ -23,14 +23,20 @@ class LoginController extends AbstractController
             return $this->redirectToRoute('user_profile');
         }
 
-        $form = $this->createForm(LoginType::class, [
-            'email' => $this->authenticationUtils->getLastUsername(),
-        ]);
+        $form = $this->createForm(
+            LoginType::class,
+            [
+                'email' => $this->authenticationUtils->getLastUsername(),
+            ]
+        );
 
-        return $this->render('user/login.html.twig', [
-            'error' => $this->authenticationUtils->getLastAuthenticationError(),
-            'last_username' => $this->authenticationUtils->getLastUsername(),
-            'form' => $form,
-        ]);
+        return $this->render(
+            'user/login.html.twig',
+            [
+                'error' => $this->authenticationUtils->getLastAuthenticationError(),
+                'last_username' => $this->authenticationUtils->getLastUsername(),
+                'form' => $form,
+            ]
+        );
     }
 }

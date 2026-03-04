@@ -10,14 +10,18 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/user/profile', name: 'user_profile')]
-class ProfileController extends AbstractController
+final class ProfileController extends AbstractController
 {
     #[Breadcrumb('user_profile')]
     public function __invoke(
-        #[CurrentUser] User $user
+        #[CurrentUser]
+        User $user,
     ): Response {
-        return $this->render('user/profile.html.twig', [
-            'user' => $user,
-        ]);
+        return $this->render(
+            'user/profile.html.twig',
+            [
+                'user' => $user,
+            ]
+        );
     }
 }
