@@ -8,6 +8,7 @@ use App\Form\User\Disable2FaType;
 use App\Message\User\Disable2Fa;
 use App\Message\User\DisableUser;
 use App\Message\User\EnableUser;
+use App\Message\User\SendConfirmation;
 use App\Message\User\SendPasswordReset;
 use App\Message\User\UpdateUser;
 use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
@@ -79,6 +80,22 @@ final class EditUserController extends AbstractController
             }
         }
 
+        if (!$user->isConfirmed()) {
+            $resendConfirmationForm = $this->formFactory->createNamed('resend_confirmation');
+            $resendConfirmationForm->handleRequest($request);
+
+            if ($resendConfirmationForm->isSubmitted() && $resendConfirmationForm->isValid()) {
+                $this->messageBus->dispatch(new SendConfirmation($user->getId(), $request->getLocale()));
+
+                $this->addFlash(
+                    'success',
+                    $this->translator->trans('Confirmation mail successfully sent')
+                );
+
+                return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
+            }
+        }
+
         $sendPasswordResetMessage = new SendPasswordReset();
         $sendPasswordResetMessage->email = $user->getEmail();
         $passwordForgotForm = $this->formFactory->createNamed('password_forgot');
@@ -119,6 +136,7 @@ final class EditUserController extends AbstractController
                 'disable2FaForm' => $disable2FaForm,
                 'disableUserForm' => $disableUserForm ?? null,
                 'enableUserForm' => $enableUserForm ?? null,
+                'resendConfirmationForm' => $resendConfirmationForm ?? null,
             ]
         );
     }
