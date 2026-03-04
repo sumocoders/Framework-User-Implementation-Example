@@ -32,10 +32,11 @@ Add: Toevoegen
 Email: Email
 Password: Wachtwoord
 overview: 'Overzicht'
-add: 'Toevoegen'
-edit: 'Bewerk'
 'Switch to user': 'Log in als deze gebruiker'
+'Are you sure you want to disable {user}?': 'Ben je zeker dat je {user} wil blokkeren?'
+'Are you sure you want to enable {user}?': 'Ben je zeker dat je {user} wil activeren?'
 'Are you sure you want to send forgot password email to {user}?': 'Ben je zeker dat je een wachtwoord vergeten mail wil sturen naar {user}?'
+Send: Verstuur
 
 # Profile
 'Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.': 'Je onvangt binnen enkele minuten een e-mail met daarin een link om je wachtwoord opnieuw in te stellen. Kijk ook in je spam-map indien je de mail niet krijgt.'

@@ -6,28 +6,32 @@ use App\Entity\User\User;
 use App\Form\User\Admin\UserType;
 use App\Form\User\Disable2FaType;
 use App\Message\User\Disable2Fa;
+use App\Message\User\DisableUser;
+use App\Message\User\EnableUser;
 use App\Message\User\SendPasswordReset;
 use App\Message\User\UpdateUser;
 use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/users/{user}/edit', name: 'user_admin_edit')]
 final class EditUserController extends AbstractController
 {
     public function __construct(
+        private readonly FormFactoryInterface $formFactory,
         private readonly TranslatorInterface $translator,
         private readonly MessageBusInterface $messageBus,
     ) {
     }
 
     #[Breadcrumb('edit', parent: ['name' => 'user_admin_overview'])]
-    public function __invoke(User $user, Request $request): Response
+    public function __invoke(Request $request, #[CurrentUser] User $currentUser, User $user): Response
     {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
         $form->handleRequest($request);
@@ -43,9 +47,41 @@ final class EditUserController extends AbstractController
             return $this->redirectToRoute('user_admin_overview');
         }
 
+        if ($user->isEnabled() && $user->getId() !== $currentUser->getId()) {
+            $disableUserForm = $this->formFactory->createNamed('disable_user');
+            $disableUserForm->handleRequest($request);
+
+            if ($disableUserForm->isSubmitted() && $disableUserForm->isValid()) {
+                $this->messageBus->dispatch(new DisableUser($user->getId()));
+
+                $this->addFlash(
+                    'success',
+                    $this->translator->trans('User successfully disabled.')
+                );
+
+                return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
+            }
+        }
+
+        if (!$user->isEnabled()) {
+            $enableUserForm = $this->formFactory->createNamed('enable_user');
+            $enableUserForm->handleRequest($request);
+
+            if ($enableUserForm->isSubmitted() && $enableUserForm->isValid()) {
+                $this->messageBus->dispatch(new EnableUser($user->getId()));
+
+                $this->addFlash(
+                    'success',
+                    $this->translator->trans('User successfully enabled.')
+                );
+
+                return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
+            }
+        }
+
         $sendPasswordResetMessage = new SendPasswordReset();
         $sendPasswordResetMessage->email = $user->getEmail();
-        $passwordForgotForm = $this->createForm(FormType::class, $sendPasswordResetMessage);
+        $passwordForgotForm = $this->formFactory->createNamed('password_forgot');
         $passwordForgotForm->handleRequest($request);
 
         if ($passwordForgotForm->isSubmitted() && $passwordForgotForm->isValid()) {
@@ -81,6 +117,8 @@ final class EditUserController extends AbstractController
                 'form' => $form,
                 'passwordForgotForm' => $passwordForgotForm,
                 'disable2FaForm' => $disable2FaForm,
+                'disableUserForm' => $disableUserForm ?? null,
+                'enableUserForm' => $enableUserForm ?? null,
             ]
         );
     }
