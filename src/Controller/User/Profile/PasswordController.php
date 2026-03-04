@@ -38,6 +38,8 @@ final class PasswordController extends AbstractController
                 'success',
                 $this->translator->trans('Password successfully edited.')
             );
+
+            return $this->redirectToRoute('user_profile');
         }
 
         return $this->render('user/profile/password.html.twig', [
