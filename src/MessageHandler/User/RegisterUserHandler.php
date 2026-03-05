@@ -11,12 +11,12 @@ use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsMessageHandler]
-final class RegisterUserHandler
+final readonly class RegisterUserHandler
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly UserPasswordHasherInterface $passwordEncoder,
-        private MessageBusInterface $messageBus
+        private UserRepository $userRepository,
+        private UserPasswordHasherInterface $passwordEncoder,
+        private MessageBusInterface $messageBus,
     ) {
     }
 

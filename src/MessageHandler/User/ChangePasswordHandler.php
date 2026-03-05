@@ -9,11 +9,11 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[AsMessageHandler]
-final class ChangePasswordHandler
+final readonly class ChangePasswordHandler
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
-        private readonly UserPasswordHasherInterface $passwordEncoder
+        private UserRepository $userRepository,
+        private UserPasswordHasherInterface $passwordEncoder,
     ) {
     }
 

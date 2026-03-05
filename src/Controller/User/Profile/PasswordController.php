@@ -15,11 +15,11 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/user/password', name: 'user_password')]
-class PasswordController extends AbstractController
+final class PasswordController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $messageBus
+        private readonly MessageBusInterface $messageBus,
     ) {
     }
 
@@ -29,7 +29,6 @@ class PasswordController extends AbstractController
         #[CurrentUser] User $user
     ): Response {
         $form = $this->createForm(ChangePasswordType::class, new ChangePassword($user->getId()));
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -39,6 +38,8 @@ class PasswordController extends AbstractController
                 'success',
                 $this->translator->trans('Password successfully edited.')
             );
+
+            return $this->redirectToRoute('user_profile');
         }
 
         return $this->render('user/profile/password.html.twig', [
