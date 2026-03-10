@@ -25,6 +25,10 @@ final class ChangeEmailHandler
             return;
         }
 
+        if ($message->email === null) {
+            return;
+        }
+
         $existingUser = $this->userRepository->findOneByEmail((string) $message->email);
         if ($existingUser !== null && $existingUser->getId() !== $user->getId()) {
             throw EmailAlreadyInUseException::create((string) $message->email);
