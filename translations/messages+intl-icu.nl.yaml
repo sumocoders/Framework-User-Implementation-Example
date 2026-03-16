@@ -55,6 +55,8 @@ Confirm: 'Bevestig'
 profile: 'Profiel'
 password: 'Wachtwoord'
 2fa: '2FA'
+'Email successfully edited.': 'Email gewijzigd'
+'Change your email': 'Wijzig uw email'
 
 # Breadcrumbs
 user_profile: 'Profiel'

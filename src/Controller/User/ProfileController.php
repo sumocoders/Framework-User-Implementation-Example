@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 #[Route('/user/profile', name: 'user_profile')]
 final class ProfileController extends AbstractController
 {
-    #[Breadcrumb('user_profile')]
+    #[Breadcrumb('Profile')]
     public function __invoke(
         #[CurrentUser]
         User $user,
