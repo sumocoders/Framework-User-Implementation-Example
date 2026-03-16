@@ -28,8 +28,7 @@ class ProfileController extends AbstractController
         Request $request,
         #[CurrentUser] User $user
     ): Response {
-        $message = new ChangeEmail($user->getId());
-        $message->email = $user->getEmail();
+        $message = new ChangeEmail($user->getId(), $user->getEmail());
 
         $form = $this->createForm(ChangeEmailType::class, $message);
         $form->handleRequest($request);
