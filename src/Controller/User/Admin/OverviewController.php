@@ -13,10 +13,10 @@ use Symfony\Component\HttpKernel\Attribute\MapQueryParameter;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/admin/users', name: 'user_admin_overview')]
-class OverviewController extends AbstractController
+final class OverviewController extends AbstractController
 {
     public function __construct(
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
     ) {
     }
 
@@ -27,15 +27,17 @@ class OverviewController extends AbstractController
             FilterType::class,
             new FilterDataTransferObject()
         );
-
         $form->handleRequest($request);
 
         $paginatedUsers = $this->userRepository->getAllFilteredUsers($form->getData());
         $paginatedUsers->paginate($page);
 
-        return $this->render('user/admin/overview.html.twig', [
-            'form' => $form,
-            'users' => $paginatedUsers,
-        ]);
+        return $this->render(
+            'user/admin/overview.html.twig',
+            [
+                'form' => $form,
+                'users' => $paginatedUsers,
+            ]
+        );
     }
 }

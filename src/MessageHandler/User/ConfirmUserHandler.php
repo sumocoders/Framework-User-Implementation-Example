@@ -8,10 +8,10 @@ use App\Repository\User\UserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-class ConfirmUserHandler
+final readonly class ConfirmUserHandler
 {
     public function __construct(
-        private readonly UserRepository $userRepository
+        private UserRepository $userRepository,
     ) {
     }
 

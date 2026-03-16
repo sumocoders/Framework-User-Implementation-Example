@@ -16,7 +16,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 #[Route('/user/2fa/qrcode', name: 'user_2fa_qrcode')]
-class TwoFactorQrCodeController extends AbstractController
+final class TwoFactorQrCodeController extends AbstractController
 {
     public function __construct(
         private readonly TotpAuthenticatorInterface $totpAuthenticator,
@@ -25,7 +25,8 @@ class TwoFactorQrCodeController extends AbstractController
 
     #[Breadcrumb('user_2fa')]
     public function __invoke(
-        #[CurrentUser] User $user,
+        #[CurrentUser]
+        User $user,
         SessionInterface $session,
     ): Response {
         if (!$session->has('2fa_secret')) {
