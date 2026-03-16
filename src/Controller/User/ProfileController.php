@@ -12,11 +12,11 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 #[Route('/user/profile', name: 'user_profile')]
 class ProfileController extends AbstractController
 {
-    #[Breadcrumb('user_profile')]
+    #[Breadcrumb('Profile')]
     public function __invoke(
         #[CurrentUser] User $user
     ): Response {
-        return $this->render('user/profile.html.twig', [
+        return $this->render('user/profile/index.html.twig', [
             'user' => $user,
         ]);
     }
