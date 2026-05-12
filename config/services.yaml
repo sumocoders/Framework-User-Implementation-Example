@@ -38,3 +38,12 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Security\OAuth\AzureUserProvider:
+        arguments:
+            $allowedEmailDomain: '%env(AZURE_ALLOWED_EMAIL_DOMAIN)%'
+
+    App\Controller\User\LoginController:
+        arguments:
+            $azureClientId: '%env(AZURE_CLIENT_ID)%'
+            $sumocodersClientId: '%env(SUMOCODERS_CLIENT_ID)%'

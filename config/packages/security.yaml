@@ -18,6 +18,7 @@ security:
             lazy: true
             switch_user: { target_route: user_profile }
             provider: app_user_provider
+            entry_point: App\Security\CustomAuthenticator
             custom_authenticator: App\Security\CustomAuthenticator
             user_checker: App\Security\UserChecker
             login_throttling:
@@ -33,6 +34,14 @@ security:
                 check_path: 2fa_login_check
                 enable_csrf: true
                 trusted_parameter_name: _trusted
+            oauth:
+                resource_owners:
+                    azure:      /login/check-azure
+                    sumocoders: /login/check-sumocoders
+                login_path: /login
+                failure_path: /login
+                oauth_user_provider:
+                    service: App\Security\OAuth\AzureUserProvider
 
     role_hierarchy:
         ROLE_ADMIN: [ ROLE_USER, ROLE_ALLOWED_TO_SWITCH ]
@@ -42,6 +51,9 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { route: 'login', roles: PUBLIC_ACCESS }
+        - { path: '^/login/check-azure', roles: PUBLIC_ACCESS }
+        - { path: '^/login/check-sumocoders', roles: PUBLIC_ACCESS }
+        - { path: '^/connect/', roles: PUBLIC_ACCESS }
         - { route: 'user_ajax_password_strength', roles: PUBLIC_ACCESS }
         - { route: 'user_resend_confirmation', roles: PUBLIC_ACCESS }
         - { route: 'user_register', roles: PUBLIC_ACCESS }

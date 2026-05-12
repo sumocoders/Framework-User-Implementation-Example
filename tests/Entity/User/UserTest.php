@@ -84,4 +84,51 @@ class UserTest extends KernelTestCase
 
         $this->assertFalse($user->isEnabled());
     }
+
+    public function testNewUserIsNotAnAzureUser(): void
+    {
+        $user = new User('user@example.com', []);
+
+        $this->assertFalse($user->isAzureUser());
+        $this->assertNull($user->getAzureObjectId());
+    }
+
+    public function testLinkAzureAccount(): void
+    {
+        $user = new User('user@example.com', []);
+        $user->linkAzureAccount('azure-oid-123');
+
+        $this->assertTrue($user->isAzureUser());
+        $this->assertSame('azure-oid-123', $user->getAzureObjectId());
+    }
+
+    public function testUnlinkAzureAccount(): void
+    {
+        $user = new User('user@example.com', []);
+        $user->linkAzureAccount('azure-oid-123');
+        $user->unlinkAzureAccount();
+
+        $this->assertFalse($user->isAzureUser());
+        $this->assertNull($user->getAzureObjectId());
+    }
+
+    public function testCreateFromAzureProfileIsEnabledAndConfirmed(): void
+    {
+        $user = User::createFromAzureProfile('azure@sumocoders.be', 'azure-oid-123');
+
+        $this->assertSame('azure@sumocoders.be', $user->getEmail());
+        $this->assertSame('azure-oid-123', $user->getAzureObjectId());
+        $this->assertTrue($user->isAzureUser());
+        $this->assertTrue($user->isEnabled());
+        $this->assertTrue($user->isConfirmed());
+        $this->assertContains('ROLE_USER', $user->getRoles());
+    }
+
+    public function testCreateFromAzureProfileWithCustomRoles(): void
+    {
+        $user = User::createFromAzureProfile('azure@sumocoders.be', 'azure-oid-123', ['ROLE_ADMIN']);
+
+        $this->assertContains('ROLE_ADMIN', $user->getRoles());
+        $this->assertContains('ROLE_USER', $user->getRoles());
+    }
 }

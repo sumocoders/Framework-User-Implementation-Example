@@ -13,7 +13,9 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 class LoginController extends AbstractController
 {
     public function __construct(
-        private readonly AuthenticationUtils $authenticationUtils
+        private readonly AuthenticationUtils $authenticationUtils,
+        private readonly string $azureClientId,
+        private readonly string $sumocodersClientId,
     ) {
     }
 
@@ -31,6 +33,8 @@ class LoginController extends AbstractController
             'error' => $this->authenticationUtils->getLastAuthenticationError(),
             'last_username' => $this->authenticationUtils->getLastUsername(),
             'form' => $form,
+            'azure_login_enabled' => $this->azureClientId !== '',
+            'sumocoders_login_enabled' => $this->sumocodersClientId !== '',
         ]);
     }
 }

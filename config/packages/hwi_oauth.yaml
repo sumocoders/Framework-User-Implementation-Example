@@ -1,8 +1,22 @@
 hwi_oauth:
     # https://github.com/hwi/HWIOAuthBundle/blob/master/docs/2-configuring_resource_owners.md
+    firewall_names: [main]
     resource_owners:
-        facebook:
-            type:                facebook
-            client_id:           '%env(FB_ID)%'
-            client_secret:       '%env(FB_SECRET)%'
-            scope:               "email public_profile"
+        azure:
+            type: azure
+            client_id: '%env(AZURE_CLIENT_ID)%'
+            client_secret: '%env(AZURE_CLIENT_SECRET)%'
+            scope: 'openid profile email User.Read'
+            options:
+                # HWI substitutes this into the Azure authorize/token URLs via sprintf.
+                # Use your tenant ID for single-tenant apps, or 'common' for multi-tenant.
+                application: '%env(AZURE_TENANT_ID)%'
+        sumocoders:
+            type: azure
+            client_id: '%env(SUMOCODERS_CLIENT_ID)%'
+            client_secret: '%env(SUMOCODERS_CLIENT_SECRET)%'
+            scope: 'openid profile email User.Read'
+            options:
+                # HWI substitutes this into the Azure authorize/token URLs via sprintf.
+                # Use your tenant ID for single-tenant apps, or 'common' for multi-tenant.
+                application: '%env(SUMOCODERS_TENANT_ID)%'
