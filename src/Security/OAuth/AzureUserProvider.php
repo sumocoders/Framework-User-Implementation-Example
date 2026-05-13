@@ -9,6 +9,7 @@ use App\Event\User\AzureLoginEvent;
 use App\Repository\User\UserRepository;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
@@ -22,7 +23,7 @@ final class AzureUserProvider implements UserProviderInterface, OAuthAwareUserPr
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
-        private readonly string $allowedEmailDomain,
+        #[Autowire(env: 'AZURE_ALLOWED_EMAIL_DOMAIN')] private readonly string $allowedEmailDomain,
     ) {
     }
 

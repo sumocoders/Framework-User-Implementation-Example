@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\User\User;
 use App\Form\User\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -14,8 +15,8 @@ class LoginController extends AbstractController
 {
     public function __construct(
         private readonly AuthenticationUtils $authenticationUtils,
-        private readonly string $azureClientId,
-        private readonly string $sumocodersClientId,
+        #[Autowire(env: 'AZURE_CLIENT_ID')] private readonly string $azureClientId,
+        #[Autowire(env: 'SUMOCODERS_CLIENT_ID')] private readonly string $sumocodersClientId,
     ) {
     }
 
