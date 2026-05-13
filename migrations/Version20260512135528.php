@@ -16,15 +16,26 @@ final class Version20260512135528 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        $table = $schema->getTable('user');
-        $table->addColumn('azure_object_id', 'string', ['length' => 36, 'notnull' => false]);
-        $table->addUniqueIndex(['azure_object_id'], 'UNIQ_USER_AZURE_OID');
+        $this->addSql(<<<'SQL'
+            ALTER TABLE user
+                ADD azure_object_id VARCHAR(36) DEFAULT NULL,
+                ADD UNIQUE INDEX UNIQ_USER_AZURE_OID (azure_object_id)
+        SQL
+        );
     }
 
     public function down(Schema $schema): void
     {
-        $table = $schema->getTable('user');
-        $table->dropIndex('UNIQ_USER_AZURE_OID');
-        $table->dropColumn('azure_object_id');
+        $this->addSql(<<<'SQL'
+            ALTER TABLE user
+                DROP INDEX UNIQ_USER_AZURE_OID,
+                DROP COLUMN azure_object_id
+        SQL
+        );
+    }
+
+    public function isTransactional(): bool
+    {
+        return false;
     }
 }
