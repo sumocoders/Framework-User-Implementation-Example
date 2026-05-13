@@ -1,6 +1,5 @@
 hwi_oauth:
     # https://github.com/hwi/HWIOAuthBundle/blob/master/docs/2-configuring_resource_owners.md
-    firewall_names: [main]
     resource_owners:
         azure:
             type: azure
