@@ -193,7 +193,6 @@ Add the following to your `.env.local` file:
 AZURE_CLIENT_ID=
 AZURE_CLIENT_SECRET=
 AZURE_TENANT_ID=
-AZURE_ALLOWED_EMAIL_DOMAIN=   # e.g. sumocoders.be — leave empty to allow any domain
 
 SUMOCODERS_CLIENT_ID=
 SUMOCODERS_CLIENT_SECRET=
