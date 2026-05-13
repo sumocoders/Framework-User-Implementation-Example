@@ -9,8 +9,6 @@ use App\Event\User\AzureLoginEvent;
 use App\Repository\User\UserRepository;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Symfony\Component\Security\Core\Exception\AuthenticationException;
 use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
 use Symfony\Component\Security\Core\Exception\UserNotFoundException;
@@ -23,7 +21,6 @@ final class AzureUserProvider implements UserProviderInterface, OAuthAwareUserPr
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly EventDispatcherInterface $eventDispatcher,
-        #[Autowire(env: 'AZURE_ALLOWED_EMAIL_DOMAIN')] private readonly string $allowedEmailDomain,
     ) {
     }
 
@@ -40,7 +37,7 @@ final class AzureUserProvider implements UserProviderInterface, OAuthAwareUserPr
 
         // 1. Match on azure_object_id — most common path after first login
         $user = $this->userRepository->findOneBy(['azureObjectId' => $oid]);
-        if ($user !== null) {
+        if ($user instanceof User) {
             $user->syncAzureRoles($roles);
 
             // Keep email in sync in case it changed in Azure
@@ -56,7 +53,7 @@ final class AzureUserProvider implements UserProviderInterface, OAuthAwareUserPr
 
         // 2. Match on email — existing local user logging in via Azure for the first time
         $user = $this->userRepository->findOneBy(['email' => $email]);
-        if ($user !== null) {
+        if ($user instanceof User) {
             $user->linkAzureAccount($oid);
             $user->syncAzureRoles($roles);
             $this->userRepository->save();
@@ -65,9 +62,7 @@ final class AzureUserProvider implements UserProviderInterface, OAuthAwareUserPr
             return $user;
         }
 
-        // 3. No match — auto-provision if domain whitelist allows it
-        $this->assertEmailDomainIsAllowed($email);
-
+        // 3. No match — auto-provision
         $user = User::createFromAzureProfile($email, $oid, $roles);
         $this->userRepository->add($user);
         $this->eventDispatcher->dispatch(new AzureLoginEvent($user));
@@ -104,19 +99,5 @@ final class AzureUserProvider implements UserProviderInterface, OAuthAwareUserPr
         }
 
         return $user;
-    }
-
-    private function assertEmailDomainIsAllowed(string $email): void
-    {
-        if ($this->allowedEmailDomain === '') {
-            return;
-        }
-
-        $allowedDomain = ltrim($this->allowedEmailDomain, '@');
-        if (!str_ends_with(strtolower($email), '@' . strtolower($allowedDomain))) {
-            throw new AccessDeniedException(
-                sprintf('Email domain of "%s" is not allowed to log in via Azure.', $email)
-            );
-        }
     }
 }
