@@ -103,12 +103,12 @@ Users can log in with their Microsoft account alongside — or instead of — lo
   * Name: the name of the application, e.g. the URL of the web application
   * Supported account types: select "Accounts in this organizational directory only (... only - Single tenant)"
   * Redirect URI — you will need to add extra URLs later on:
-    * Platform: Web, URL: `https://<project>.wip/login/check-azure`
+    * Platform: Web, URL: `https://project.client.wip/login/check-azure`
   * You will be redirected to the newly created app registration
   * Note down the **Application (client) ID** and **Directory (tenant) ID**
 * Click "Redirect URIs" → "Add URI" and add all required URLs, then save. E.g.:
-  * `https://<project>.wip/login/check-azure`
-  * `https://<project>.phpXX.sumocoders.eu/login/check-azure`
+  * `https://project.client.wip/login/check-azure`
+  * `https://project.client.phpXX.sumocoders.eu/login/check-azure`
 * Click "Certificates & Secrets" → "New client secret"
   * Description: the URL of the web application
   * Expires: 12 months, or as long as you are comfortable with
@@ -240,10 +240,9 @@ To allow SumoCoders developers to log in with their `@sumocoders.be` accounts, a
 
 Add the following redirect URIs to the SumoCoders app registration in the Azure Portal:
 
-* `https://<project>.wip/login/check-sumocoders`
-* `https://<project>.phpXX.sumocoders.eu/login/check-sumocoders`
+* `https://project.client.wip/login/check-sumocoders`
+* `https://project.client.phpXX.sumocoders.eu/login/check-sumocoders`
 
-> Replace `<project>` with the project name.
 
 Add the credentials to `.env.local`:
 
