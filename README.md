@@ -226,19 +226,6 @@ access_control:
     # ... existing rules ...
 ```
 
-#### Update services.yaml
-
-```yaml
-services:
-    App\Security\OAuth\AzureUserProvider:
-        arguments:
-            $allowedEmailDomain: '%env(AZURE_ALLOWED_EMAIL_DOMAIN)%'
-
-    App\Controller\User\LoginController:
-        arguments:
-            $azureClientId: '%env(AZURE_CLIENT_ID)%'
-            $sumocodersClientId: '%env(SUMOCODERS_CLIENT_ID)%'
-```
 
 #### Run the migration
 
