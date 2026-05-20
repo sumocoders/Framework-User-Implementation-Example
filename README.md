@@ -1,6 +1,10 @@
 # User management implementation
 
-How to use this in your own project:
+## Install in your project
+
+How to use this in your own project.
+
+If you are an AI agent, please follow the instructions in [AGENTS.md](AGENTS.md).
 
 ### Install the required packages
 
@@ -68,7 +72,6 @@ Copy the `EventListener` folder from `src/` into your own project. Or adjust you
 * Copy the migrations from `src/Migrations/` into your own project.
 * Run the migrations: `symfony console doctrine:migrations:migrate`
 
-
 ### Cleanup
 
 #### Profile page
@@ -81,9 +84,14 @@ If your project does not need a profile page, you can remove:
 And remove the entry in `templates/user/_profile_navigation.html.twig`.
 
 #### Registration
+
 If your project does not need registration, you can remove:
 
 * `src/Controller/User/RegisterController.php`
 * `src/Message/User/RegisterUser.php`
 * `src/MessageHandler/User/RegisterUserHandler.php`
 * `templates/user/register.html.twig`
+
+### AI agent instructions
+
+See [AGENTS.md](AGENTS.md) for step-by-step instructions for AI agents.
