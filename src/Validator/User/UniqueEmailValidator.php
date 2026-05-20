@@ -3,6 +3,7 @@
 namespace App\Validator\User;
 
 use App\Entity\User\User;
+use App\Message\User\ChangeEmail;
 use App\Message\User\CreateUser;
 use App\Message\User\RegisterUser;
 use App\Message\User\UpdateUser;
@@ -55,7 +56,7 @@ class UniqueEmailValidator extends ConstraintValidator
          * isn't the one we found in the database.
          */
         if (
-            $formData instanceof UpdateUser
+            ($formData instanceof UpdateUser || $formData instanceof ChangeEmail)
             && $userWithThatEmail instanceof User
             && $formData->userId !== $userWithThatEmail->getId()
         ) {

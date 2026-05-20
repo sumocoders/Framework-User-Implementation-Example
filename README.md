@@ -1,6 +1,10 @@
 # User management implementation
 
-How to use this in your own project:
+## Install in your project
+
+How to use this in your own project.
+
+If you are an AI agent, please follow the instructions in [AGENTS.md](AGENTS.md).
 
 ### Install the required packages
 
@@ -68,34 +72,12 @@ Copy the `EventListener` folder from `src/` into your own project. Or adjust you
 * Copy the migrations from `migrations/` into your own project.
 * Run the migrations: `symfony console doctrine:migrations:migrate`
 
-
-### Cleanup
-
-#### Profile page
-
-If your project does not need a profile page, you can remove:
-
-* `src/Controller/User/ProfileController.php`
-* `templates/user/profile.html.twig`
-
-And remove the entry in `templates/user/_profile_navigation.html.twig`.
-
-#### Registration
-If your project does not need registration, you can remove:
-
-* `src/Controller/User/RegisterController.php`
-* `src/Message/User/RegisterUser.php`
-* `src/MessageHandler/User/RegisterUserHandler.php`
-* `templates/user/register.html.twig`
-
----
-
-## Azure SSO (optional)
+### Azure SSO (optional)
 
 This project includes optional Azure Entra ID (SSO) support via `hwi/oauth-bundle`.
 Users can log in with their Microsoft account alongside — or instead of — local email/password accounts.
 
-### Create an application in Azure
+#### Create an application in Azure
 
 * Go to **[Azure Portal](https://portal.azure.com/)**
 * Search for "App registrations"
@@ -121,7 +103,7 @@ Users can log in with their Microsoft account alongside — or instead of — lo
 
 Full article: **[Register a Microsoft Entra app and create a service principal](https://learn.microsoft.com/en-us/entra/identity-platform/howto-create-service-principal-portal)**
 
-### Allow the application to be used
+#### Allow the application to be used
 
 When this is done, you still need to allow the users to use this application:
 
@@ -133,7 +115,7 @@ When this is done, you still need to allow the users to use this application:
 
 Full article: **[Grant tenant-wide admin consent to an application](https://learn.microsoft.com/en-us/azure/active-directory/manage-apps/grant-admin-consent?pivots=portal)**
 
-### Configure the roles
+#### Configure the roles
 
 * Go to the **[Azure Portal](https://portal.azure.com/)**
 * Search for "App registrations"
@@ -147,7 +129,7 @@ Full article: **[Grant tenant-wide admin consent to an application](https://lear
 
 Full article: **[Add app roles to your application and receive them in the token](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-add-app-roles-in-azure-ad-apps)**
 
-### Give users a role
+#### Give users a role
 
 * Go to the **[Azure Portal](https://portal.azure.com/)**
 * Search for "Microsoft Entra ID"
@@ -157,8 +139,6 @@ Full article: **[Add app roles to your application and receive them in the token
 * Add users/groups with the correct role
 
 Full article: **[Assign users and groups to roles](https://learn.microsoft.com/en-us/azure/active-directory/develop/howto-add-app-roles-in-azure-ad-apps#assign-users-and-groups-to-roles)**
-
-### Configure the application
 
 #### Install the bundle
 
@@ -234,7 +214,7 @@ The `azure_object_id` column is added via a dedicated migration so projects that
 symfony console doctrine:migrations:migrate
 ```
 
-### SumoCoders login (optional)
+#### SumoCoders login (optional)
 
 To allow SumoCoders developers to log in with their `@sumocoders.be` accounts, a second Azure app registration is needed in the SumoCoders tenant. This is separate from the client's app registration.
 
@@ -253,3 +233,27 @@ SUMOCODERS_TENANT_ID=
 ```
 
 The "Sign in with Microsoft (SumoCoders)" button appears automatically on the login page when `SUMOCODERS_CLIENT_ID` is set. Leave it empty to hide the button.
+
+### Cleanup
+
+#### Profile page
+
+If your project does not need a profile page, you can remove:
+
+* `src/Controller/User/ProfileController.php`
+* `templates/user/profile.html.twig`
+
+And remove the entry in `templates/user/_profile_navigation.html.twig`.
+
+#### Registration
+
+If your project does not need registration, you can remove:
+
+* `src/Controller/User/RegisterController.php`
+* `src/Message/User/RegisterUser.php`
+* `src/MessageHandler/User/RegisterUserHandler.php`
+* `templates/user/register.html.twig`
+
+### AI agent instructions
+
+See [AGENTS.md](AGENTS.md) for step-by-step instructions for AI agents.

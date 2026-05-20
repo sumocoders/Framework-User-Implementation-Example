@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Controller\User\Profile;
 
 use App\Entity\User\User;
-use App\Form\User\Admin\ChangePasswordType;
-use App\Message\User\ChangePassword;
+use App\Form\User\ChangeEmailType;
+use App\Message\User\ChangeEmail;
 use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,8 +16,8 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
-#[Route('/user/password', name: 'user_password')]
-final class PasswordController extends AbstractController
+#[Route('/user/email', name: 'user_email')]
+class EmailController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
@@ -23,12 +25,14 @@ final class PasswordController extends AbstractController
     ) {
     }
 
-    #[Breadcrumb('user_password')]
+    #[Breadcrumb('Email')]
     public function __invoke(
         Request $request,
         #[CurrentUser] User $user
     ): Response {
-        $form = $this->createForm(ChangePasswordType::class, new ChangePassword($user->getId()));
+        $message = new ChangeEmail($user->getId(), $user->getEmail());
+
+        $form = $this->createForm(ChangeEmailType::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -36,13 +40,13 @@ final class PasswordController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Password successfully edited.')
+                $this->translator->trans('Email successfully edited.')
             );
 
-            return $this->redirectToRoute('user_profile');
+            return $this->redirectToRoute('user_email');
         }
 
-        return $this->render('user/profile/password.html.twig', [
+        return $this->render('user/profile/email.html.twig', [
             'user' => $user,
             'form' => $form,
         ]);

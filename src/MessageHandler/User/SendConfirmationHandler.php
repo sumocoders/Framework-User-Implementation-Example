@@ -14,17 +14,17 @@ use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[AsMessageHandler]
-class SendConfirmationHandler
+final readonly class SendConfirmationHandler
 {
-    private readonly Address $from;
+    private Address $from;
 
     public function __construct(
-        private readonly MailerInterface $mailer,
-        private readonly TranslatorInterface $translator,
-        private readonly RouterInterface $router,
-        private readonly UserRepository $userRepository,
+        private MailerInterface $mailer,
+        private TranslatorInterface $translator,
+        private RouterInterface $router,
+        private UserRepository $userRepository,
         #[Autowire('%mailer.default_sender_name% <%mailer.default_sender_email%>')]
-        string $from
+        string $from,
     ) {
         $this->from = Address::create($from);
     }

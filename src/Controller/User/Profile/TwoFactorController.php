@@ -19,7 +19,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/user/2fa', name: 'user_2fa')]
-class TwoFactorController extends AbstractController
+final class TwoFactorController extends AbstractController
 {
     public function __construct(
         private readonly TotpAuthenticatorInterface $totpAuthenticator,
@@ -30,7 +30,8 @@ class TwoFactorController extends AbstractController
 
     #[Breadcrumb('user_2fa')]
     public function __invoke(
-        #[CurrentUser] User $user,
+        #[CurrentUser]
+        User $user,
         SessionInterface $session,
         Request $request,
     ): Response {
@@ -83,12 +84,15 @@ class TwoFactorController extends AbstractController
             $session->remove('2fa_show_backup_codes');
         }
 
-        return $this->render('user/profile/two_factor.html.twig', [
-            'user' => $user,
-            'is2FaEnabled' => $is2FaEnabled,
-            'showBackupCodes' => $showBackupCodes,
-            'enable2FaForm' => $enable2FaForm ?? null,
-            'disable2FaForm' => $disable2FaForm ?? null,
-        ]);
+        return $this->render(
+            'user/profile/two_factor.html.twig',
+            [
+                'user' => $user,
+                'is2FaEnabled' => $is2FaEnabled,
+                'showBackupCodes' => $showBackupCodes,
+                'enable2FaForm' => $enable2FaForm ?? null,
+                'disable2FaForm' => $disable2FaForm ?? null,
+            ]
+        );
     }
 }

@@ -1,27 +1,31 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\MessageHandler\User;
 
-use App\Exception\User\UserNotFoundException;
-use App\Message\User\DisableUser;
+use App\Message\User\ChangeEmail;
 use App\Repository\User\UserRepository;
 use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 
 #[AsMessageHandler]
-final readonly class DisableUserHandler
+final class ChangeEmailHandler
 {
     public function __construct(
         private UserRepository $userRepository,
     ) {
     }
 
-    public function __invoke(DisableUser $message): void
+    public function __invoke(ChangeEmail $message): void
     {
         $user = $this->userRepository->find($message->userId);
+
         if ($user === null) {
-            throw UserNotFoundException::create($message->userId);
+            return;
         }
-        $user->disable();
+
+        $user->changeEmail($message->email);
+
         $this->userRepository->save();
     }
 }

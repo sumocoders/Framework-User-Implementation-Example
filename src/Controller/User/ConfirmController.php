@@ -14,12 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/user/confirm/{token}', name: 'user_confirm')]
-class ConfirmController extends AbstractController
+final class ConfirmController extends AbstractController
 {
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $messageBus,
+        private readonly MessageBusInterface $messageBus,
     ) {
     }
 
@@ -63,8 +63,11 @@ class ConfirmController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('user/confirm.html.twig', [
-            'form' => $confirmForm,
-        ]);
+        return $this->render(
+            'user/confirm.html.twig',
+            [
+                'form' => $confirmForm,
+            ]
+        );
     }
 }

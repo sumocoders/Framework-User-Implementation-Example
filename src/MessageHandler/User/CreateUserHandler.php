@@ -10,11 +10,11 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 #[AsMessageHandler]
-final class CreateUserHandler
+final readonly class CreateUserHandler
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
-        private MessageBusInterface $messageBus
+        private UserRepository $userRepository,
+        private MessageBusInterface $messageBus,
     ) {
     }
 

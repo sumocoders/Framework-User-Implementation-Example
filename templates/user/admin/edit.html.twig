@@ -25,7 +25,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="forgotPasswordModal">{{ 'Send forgot password mail'|trans }}</h1>
+                    <h1 class="modal-title fs-5" id="forgotPasswordModalLabel">{{ 'Send forgot password mail'|trans }}</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="{{ 'dialogs.close'|trans }}"></button>
                 </div>
@@ -36,7 +36,7 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary"
                             data-bs-dismiss="modal">{{ 'dialogs.buttons.cancel'|trans|ucfirst }}</button>
-                    <button type="submit" name="testingForm" class="btn btn-primary">
+                    <button type="submit" class="btn btn-primary">
                         <i class="bi bi-envelope-fill mr-2"></i>
                         {{ 'Send'|trans }}
                     </button>
@@ -47,6 +47,93 @@
     {{ form_end(passwordForgotForm) }}
 
     {{ form(disable2FaForm) }}
+
+    {% if disableUserForm is defined and disableUserForm %}
+        {{ form_start(disableUserForm) }}
+        <div class="modal fade" id="disableUserModal" tabindex="-1" aria-labelledby="disableUserModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="disableUserModalLabel">{{ 'Disable'|trans }}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="{{ 'dialogs.close'|trans }}"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_rest(disableUserForm) }}
+                        {{ 'Are you sure you want to disable {user}?'|trans({user: user.email}) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">{{ 'dialogs.buttons.cancel'|trans|ucfirst }}</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-lock mr-2"></i>
+                            {{ 'Disable'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(disableUserForm) }}
+    {% endif %}
+
+    {% if enableUserForm is defined and enableUserForm %}
+        {{ form_start(enableUserForm) }}
+        <div class="modal fade" id="enableUserModal" tabindex="-1" aria-labelledby="enableUserModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="enableUserModalLabel">{{ 'Enable'|trans }}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="{{ 'dialogs.close'|trans }}"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_rest(enableUserForm) }}
+                        {{ 'Are you sure you want to enable {user}?'|trans({user: user.email}) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">{{ 'dialogs.buttons.cancel'|trans|ucfirst }}</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-unlock2 mr-2"></i>
+                            {{ 'Enable'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(enableUserForm) }}
+    {% endif %}
+
+    {% if resendConfirmationForm is defined and resendConfirmationForm %}
+        {{ form_start(resendConfirmationForm) }}
+        <div class="modal fade" id="resendConfirmationModal" tabindex="-1" aria-labelledby="resendConfirmationModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="resendConfirmationModalLabel">{{ 'Resend confirmation mail'|trans }}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="{{ 'dialogs.close'|trans }}"></button>
+                    </div>
+                    <div class="modal-body">
+                        {{ form_rest(resendConfirmationForm) }}
+                        {{ 'Are you sure you want to resend the confirmation email to {user}?'|trans({user: user.email}) }}
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary"
+                                data-bs-dismiss="modal">{{ 'dialogs.buttons.cancel'|trans|ucfirst }}</button>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-unlock2 mr-2"></i>
+                            {{ 'Resend confirmation mail'|trans }}
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(resendConfirmationForm) }}
+    {% endif %}
 {% endblock %}
 
 {% block header_actions_right %}
@@ -57,15 +144,11 @@
 {% endblock %}
 
 {% block header_actions_center %}
-    {% if not user.confirmed %}
-        <a
-            class="btn btn-secondary"
-            href="{{ path('request_confirmation', {user: user.id}) }}"
-            data-turbo-prefetch="false"
-        >
+    {% if resendConfirmationForm is defined and resendConfirmationForm %}
+        <button type="button" class="btn btn-secondary ml-2" data-bs-toggle="modal" data-bs-target="#resendConfirmationModal">
             <i class="bi bi-envelope-fill mr-2"></i>
             {{ 'Resend confirmation mail'|trans }}
-        </a>
+        </button>
     {% endif %}
     {% if user.confirmed and user.enabled %}
         <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#forgotPasswordModal">
@@ -73,31 +156,23 @@
             {{ 'Send forgot password mail'|trans }}
         </button>
     {% endif %}
-    {% if not user.enabled %}
-        <a
-            class="btn btn-success ml-2"
-            href="{{ path('user_admin_enable_user', {user: user.id}) }}"
-            data-turbo-prefetch="false"
-        >
+    {% if enableUserForm is defined and enableUserForm %}
+        <button type="button" class="btn btn-success ml-2" data-bs-toggle="modal" data-bs-target="#enableUserModal">
             <i class="bi bi-unlock2 mr-2"></i>
             {{ 'Enable'|trans }}
-        </a>
+        </button>
     {% endif %}
 {% endblock %}
 
 {% block header_actions_left %}
-    {% if user.id != app.user.id %}
-        {% if user.enabled %}
-            <a
-                class="btn btn-danger ml-2"
-                href="{{ path('user_admin_disable_user', {user: user.id}) }}"
-                data-turbo-prefetch="false"
-            >
-                <i class="bi bi-lock mr-2"></i>
-                {{ 'Disable'|trans }}
-            </a>
-        {% endif %}
+    {% if disableUserForm is defined and disableUserForm %}
+        <button type="button" class="btn btn-danger ml-2" data-bs-toggle="modal" data-bs-target="#disableUserModal">
+            <i class="bi bi-lock mr-2"></i>
+            {{ 'Disable'|trans }}
+        </button>
+    {% endif %}
 
+    {% if user.id != app.user.id %}
         {% if user.totpAuthenticationEnabled %}
             <button class="btn btn-primary" type="submit" form="{{ disable2FaForm.vars.id }}" data-turbo="true">
                 <i class="bi bi-unlock mr-2"></i>

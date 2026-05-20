@@ -14,12 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/password-reset/{token}', name: 'user_reset_password')]
-class ResetPasswordController extends AbstractController
+final class ResetPasswordController extends AbstractController
 {
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly TranslatorInterface $translator,
-        private MessageBusInterface $messageBus
+        private readonly MessageBusInterface $messageBus,
     ) {
     }
 
@@ -39,7 +39,6 @@ class ResetPasswordController extends AbstractController
         }
 
         $form = $this->createForm(ResetPasswordType::class, new ResetPassword($user->getId()));
-
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -53,8 +52,11 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        return $this->render('user/reset.html.twig', [
-            'form' => $form,
-        ]);
+        return $this->render(
+            'user/reset.html.twig',
+            [
+                'form' => $form,
+            ]
+        );
     }
 }

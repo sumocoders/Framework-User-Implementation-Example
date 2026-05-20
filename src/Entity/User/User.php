@@ -362,4 +362,10 @@ class User implements
     {
         return $this->trustedVersion;
     }
+
+    public function changeEmail(string $email): void
+    {
+        $this->email = $email;
+    }
+
 }
