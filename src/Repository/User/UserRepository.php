@@ -63,7 +63,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('check', $expirationCheck)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException|NonUniqueResultException) {
+        } catch (NoResultException|NonUniqueResultException) { // phpcs:ignore PSR12.Operators.OperatorSpacing.NoSpaceAfter,PSR12.Operators.OperatorSpacing.NoSpaceBefore,Generic.Files.LineLength.TooLong
             return null;
         }
     }
@@ -82,7 +82,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
                 ->setParameter('check', $expirationCheck)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException|NonUniqueResultException) {
+        } catch (NoResultException|NonUniqueResultException) { // phpcs:ignore PSR12.Operators.OperatorSpacing.NoSpaceAfter,PSR12.Operators.OperatorSpacing.NoSpaceBefore,Generic.Files.LineLength.TooLong
             return null;
         }
     }
