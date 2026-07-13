@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/user/email', name: 'user_email')]
-class EmailController extends AbstractController
+final class EmailController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,

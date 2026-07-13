@@ -39,7 +39,7 @@ class UpdateUserHandlerTest extends KernelTestCase
         $this->updateUser();
         $user = $this->userRepository->findOneBy(['email' => 'updated@example.com']);
 
-        $this->assertEquals('updated@example.com', $user->getEmail());
+        static::assertSame('updated@example.com', $user->getEmail());
     }
 
     public function testRolesAreUpdated(): void
@@ -47,7 +47,7 @@ class UpdateUserHandlerTest extends KernelTestCase
         $this->updateUser();
         $user = $this->userRepository->findOneBy(['email' => 'updated@example.com']);
 
-        $this->assertContains('ROLE_USER', $user->getRoles());
-        $this->assertNotContains('ROLE_ADMIN', $user->getRoles());
+        static::assertContains('ROLE_USER', $user->getRoles());
+        static::assertNotContains('ROLE_ADMIN', $user->getRoles());
     }
 }

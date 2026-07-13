@@ -14,6 +14,7 @@ final class Enable2Fa
 
     public function __construct(
         public readonly User $user,
+        #[\SensitiveParameter]
         public readonly string $secret,
     ) {
     }

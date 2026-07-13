@@ -39,7 +39,7 @@ class Disable2FaHandlerTest extends KernelTestCase
         $this->disable2fa();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertFalse($user->isTotpAuthenticationEnabled());
+        static::assertFalse($user->isTotpAuthenticationEnabled());
     }
 
     public function testHasNoBackupCodes(): void
@@ -47,6 +47,6 @@ class Disable2FaHandlerTest extends KernelTestCase
         $this->disable2fa();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertEmpty($user->getBackupCodes());
+        static::assertEmpty($user->getBackupCodes());
     }
 }

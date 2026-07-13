@@ -23,8 +23,11 @@ final class ResetPasswordController extends AbstractController
     ) {
     }
 
-    public function __invoke(string $token, Request $request): Response
-    {
+    public function __invoke(
+        #[\SensitiveParameter]
+        string $token,
+        Request $request,
+    ): Response {
         $user = $this->userRepository->checkResetToken($token);
 
         if (!$user instanceof User) {

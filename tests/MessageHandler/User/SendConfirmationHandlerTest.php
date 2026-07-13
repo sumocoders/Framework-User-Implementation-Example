@@ -4,9 +4,7 @@ namespace App\Tests\MessageHandler\User;
 
 use App\Entity\User\User;
 use App\Message\User\SendConfirmation;
-use App\Message\User\SendPasswordReset;
 use App\MessageHandler\User\SendConfirmationHandler;
-use App\MessageHandler\User\SendPasswordResetHandler;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
@@ -53,17 +51,17 @@ class SendConfirmationHandlerTest extends KernelTestCase
         $this->sendConfirmation();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertIsString($user->getConfirmationToken());
-        $this->assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
+        static::assertIsString($user->getConfirmationToken());
+        static::assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
     }
 
     public function testEmailIsSent(): void
     {
         $this->sendConfirmation();
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailHeaderSame(
+        static::assertEmailHeaderSame(
             $email,
             'To',
             '"user@example.com" <user@example.com>',
@@ -75,9 +73,9 @@ class SendConfirmationHandlerTest extends KernelTestCase
         $this->sendConfirmation();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailTextBodyContains($email, $user->getConfirmationToken());
-        $this->assertEmailHtmlBodyContains($email, $user->getConfirmationToken());
+        static::assertEmailTextBodyContains($email, $user->getConfirmationToken());
+        static::assertEmailHtmlBodyContains($email, $user->getConfirmationToken());
     }
 }

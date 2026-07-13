@@ -21,7 +21,7 @@ class Role implements \Stringable
 
     private function validate(): void
     {
-        if (!in_array($this->role, self::ALL)) {
+        if (!in_array($this->role, self::ALL, true)) {
             throw new InvalidRoleException($this->role);
         }
     }

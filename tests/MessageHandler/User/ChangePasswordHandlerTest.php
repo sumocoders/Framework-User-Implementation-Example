@@ -34,6 +34,7 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $this->userRepository->add($user);
 
         $message = new ChangePassword($user->getId());
+        // @mago-expect lint:no-literal-password
         $message->password = 'new_password';
 
         $handler = new ChangePasswordHandler(
@@ -48,7 +49,7 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $this->changePassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertIsString($user->getPassword());
+        static::assertIsString($user->getPassword());
     }
 
     public function testPasswordResetTokenIsCleared(): void
@@ -56,7 +57,7 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $this->changePassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNull($user->getPasswordResetToken());
+        static::assertNull($user->getPasswordResetToken());
     }
 
     public function testPasswordRequestedAtIsCleared(): void
@@ -64,6 +65,6 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $this->changePassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNull($user->getPasswordRequestedAt());
+        static::assertNull($user->getPasswordRequestedAt());
     }
 }

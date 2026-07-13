@@ -22,8 +22,11 @@ final class ResendConfirmationController extends AbstractController
     ) {
     }
 
-    public function __invoke(string $token, Request $request): Response
-    {
+    public function __invoke(
+        #[\SensitiveParameter]
+        string $token,
+        Request $request,
+    ): Response {
         $user = $this->userRepository->findOneBy(['confirmationToken' => $token]);
 
         if (!$user instanceof User) {

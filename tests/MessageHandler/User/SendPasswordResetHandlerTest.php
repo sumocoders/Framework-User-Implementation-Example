@@ -52,17 +52,17 @@ class SendPasswordResetHandlerTest extends KernelTestCase
         $this->sendPasswordReset();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertIsString($user->getPasswordResetToken());
-        $this->assertEqualsWithDelta($user->getPasswordRequestedAt(), new \DateTimeImmutable(), 1);
+        static::assertIsString($user->getPasswordResetToken());
+        static::assertEqualsWithDelta($user->getPasswordRequestedAt(), new \DateTimeImmutable(), 1);
     }
 
     public function testEmailIsSent(): void
     {
         $this->sendPasswordReset();
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailHeaderSame(
+        static::assertEmailHeaderSame(
             $email,
             'To',
             '"user@example.com" <user@example.com>',
@@ -74,9 +74,9 @@ class SendPasswordResetHandlerTest extends KernelTestCase
         $this->sendPasswordReset();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailTextBodyContains($email, $user->getPasswordResetToken());
-        $this->assertEmailHtmlBodyContains($email, $user->getPasswordResetToken());
+        static::assertEmailTextBodyContains($email, $user->getPasswordResetToken());
+        static::assertEmailHtmlBodyContains($email, $user->getPasswordResetToken());
     }
 }

@@ -22,6 +22,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/users/{user}/edit', name: 'user_admin_edit')]
+// @mago-expect lint:cyclomatic-complexity
 final class EditUserController extends AbstractController
 {
     public function __construct(
@@ -32,8 +33,13 @@ final class EditUserController extends AbstractController
     }
 
     #[Breadcrumb('Edit', parent: ['name' => 'user_admin_overview'])]
-    public function __invoke(Request $request, #[CurrentUser] User $currentUser, User $user): Response
-    {
+    // @mago-expect lint:halstead
+    public function __invoke(
+        Request $request,
+        #[CurrentUser]
+        User $currentUser,
+        User $user,
+    ): Response {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
         $form->handleRequest($request);
 

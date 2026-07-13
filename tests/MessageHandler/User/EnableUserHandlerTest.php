@@ -37,6 +37,6 @@ class EnableUserHandlerTest extends KernelTestCase
         $this->enableUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertTrue($user->isEnabled());
+        static::assertTrue($user->isEnabled());
     }
 }

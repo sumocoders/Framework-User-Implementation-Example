@@ -49,9 +49,14 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
         );
     }
 
-    public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
-    {
-        if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {
+    public function onAuthenticationSuccess(
+        Request $request,
+        #[\SensitiveParameter]
+        TokenInterface $token,
+        string $firewallName,
+    ): ?Response {
+        $targetPath = $this->getTargetPath($request->getSession(), $firewallName);
+        if ($targetPath) {
             return new RedirectResponse($targetPath);
         }
 

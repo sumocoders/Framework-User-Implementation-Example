@@ -32,6 +32,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $message = new RegisterUser();
         $message->email = 'user@example.com';
         $message->roles = ['ROLE_USER'];
+        // @mago-expect lint:no-literal-password
         $message->password = 'password';
         $message->locale = 'nl';
 
@@ -48,9 +49,9 @@ class RegisterUserHandlerTest extends KernelTestCase
         $this->registerUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals('user@example.com', $user->getEmail());
-        $this->assertContains('ROLE_USER', $user->getRoles());
+        static::assertInstanceOf(User::class, $user);
+        static::assertSame('user@example.com', $user->getEmail());
+        static::assertContains('ROLE_USER', $user->getRoles());
     }
 
     public function testUserConfirmationTokenIsGenerated(): void
@@ -59,17 +60,17 @@ class RegisterUserHandlerTest extends KernelTestCase
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
         // this is actually done by SendConfirmationHandler
-        $this->assertIsString($user->getConfirmationToken());
-        $this->assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
+        static::assertIsString($user->getConfirmationToken());
+        static::assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
     }
 
     public function testEmailIsSent(): void
     {
         $this->registerUser();
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailHeaderSame(
+        static::assertEmailHeaderSame(
             $email,
             'To',
             '"user@example.com" <user@example.com>',
@@ -81,9 +82,9 @@ class RegisterUserHandlerTest extends KernelTestCase
         $this->registerUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailTextBodyContains($email, $user->getConfirmationToken());
-        $this->assertEmailHtmlBodyContains($email, $user->getConfirmationToken());
+        static::assertEmailTextBodyContains($email, $user->getConfirmationToken());
+        static::assertEmailHtmlBodyContains($email, $user->getConfirmationToken());
     }
 }

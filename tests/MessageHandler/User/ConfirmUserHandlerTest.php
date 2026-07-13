@@ -39,7 +39,7 @@ class ConfirmUserHandlerTest extends KernelTestCase
         $this->confirmUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertTrue($user->isEnabled());
+        static::assertTrue($user->isEnabled());
     }
 
     public function testConfirmedAtIsSet(): void
@@ -47,7 +47,7 @@ class ConfirmUserHandlerTest extends KernelTestCase
         $this->confirmUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertEqualsWithDelta($user->getConfirmedAt(), new \DateTimeImmutable(), 1);
+        static::assertEqualsWithDelta($user->getConfirmedAt(), new \DateTimeImmutable(), 1);
     }
 
     public function testConfirmationRequestedAtIsCleared(): void
@@ -55,7 +55,7 @@ class ConfirmUserHandlerTest extends KernelTestCase
         $this->confirmUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNull($user->getConfirmationRequestedAt());
+        static::assertNull($user->getConfirmationRequestedAt());
     }
 
     public function testConformationTokenIsCleared(): void
@@ -63,6 +63,6 @@ class ConfirmUserHandlerTest extends KernelTestCase
         $this->confirmUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNull($user->getConfirmationToken());
+        static::assertNull($user->getConfirmationToken());
     }
 }

@@ -53,7 +53,7 @@ class UserCheckerTest extends KernelTestCase
 
         $this->userChecker->checkPostAuth($user);
 
-        $this->assertNull($user->getPasswordResetToken());
-        $this->assertNull($user->getPasswordRequestedAt());
+        static::assertNull($user->getPasswordResetToken());
+        static::assertNull($user->getPasswordRequestedAt());
     }
 }

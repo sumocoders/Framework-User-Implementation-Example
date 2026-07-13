@@ -143,7 +143,7 @@ class User implements
      */
     public function getDisplayRoles(): array
     {
-        return array_map(fn (string $role) => strtolower(substr($role, 5)), $this->getRoles());
+        return array_map(static fn (string $role) => strtolower(substr($role, 5)), $this->getRoles());
     }
 
     /**
@@ -154,8 +154,10 @@ class User implements
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): void
-    {
+    public function setPassword(
+        #[\SensitiveParameter]
+        string $password,
+    ): void {
         $this->password = $password;
         $this->erasePasswordResetRequest();
     }
@@ -256,8 +258,10 @@ class User implements
         return $this->totpSecret !== null;
     }
 
-    public function setTotpSecret(string $totpSecret): void
-    {
+    public function setTotpSecret(
+        #[\SensitiveParameter]
+        string $totpSecret,
+    ): void {
         $this->totpSecret = $totpSecret;
     }
 
@@ -296,7 +300,7 @@ class User implements
 
     public function invalidateBackupCode(string $backupCode): void
     {
-        $key = array_search($backupCode, $this->backupCodes);
+        $key = array_search($backupCode, $this->backupCodes, true);
         if ($key !== false) {
             unset($this->backupCodes[$key]);
         }
@@ -304,7 +308,7 @@ class User implements
 
     public function addBackupCode(string $backupCode): void
     {
-        if (!in_array($backupCode, $this->backupCodes)) {
+        if (!in_array($backupCode, $this->backupCodes, true)) {
             $this->backupCodes[] = $backupCode;
         }
     }

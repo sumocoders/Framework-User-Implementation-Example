@@ -31,16 +31,16 @@ class UserRepositoryTest extends KernelTestCase
         $this->userRepository->add($newUser);
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertSame('user@example.com', $user->getEmail());
-        $this->assertContains('ROLE_ADMIN', $user->getRoles());
+        static::assertInstanceOf(User::class, $user);
+        static::assertSame('user@example.com', $user->getEmail());
+        static::assertContains('ROLE_ADMIN', $user->getRoles());
     }
 
     public function testUpgradePasswordWithUserInstance(): void
     {
         $newUser = new User('user@example.com', ['ROLE_ADMIN']);
         $this->userRepository->upgradePassword($newUser, 'super-secret-password');
-        $this->assertSame($newUser->getPassword(), 'super-secret-password');
+        static::assertSame($newUser->getPassword(), 'super-secret-password');
     }
 
     public function testUpgradePasswordWithInvalidUserInstance(): void
@@ -58,15 +58,15 @@ class UserRepositoryTest extends KernelTestCase
         $this->userRepository->save();
         $user = $this->userRepository->checkConfirmationToken($newUser->getConfirmationToken());
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertSame('user@example.com', $user->getEmail());
+        static::assertInstanceOf(User::class, $user);
+        static::assertSame('user@example.com', $user->getEmail());
     }
 
     public function testCheckConfirmationTokenWithInvalidToken(): void
     {
         $user = $this->userRepository->checkConfirmationToken('non-existing-token');
 
-        $this->assertNull($user);
+        static::assertNull($user);
     }
 
     public function testCheckResetTokenWithValidToken(): void
@@ -77,16 +77,16 @@ class UserRepositoryTest extends KernelTestCase
         $this->userRepository->save();
         $user = $this->userRepository->checkResetToken($newUser->getPasswordResetToken());
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertSame('user@example.com', $user->getEmail());
-        $this->assertEqualsWithDelta($user->getPasswordRequestedAt(), new \DateTimeImmutable(), 1);
+        static::assertInstanceOf(User::class, $user);
+        static::assertSame('user@example.com', $user->getEmail());
+        static::assertEqualsWithDelta($user->getPasswordRequestedAt(), new \DateTimeImmutable(), 1);
     }
 
     public function testCheckResetTokenWithInvalidToken(): void
     {
         $user = $this->userRepository->checkResetToken('non-existing-token');
 
-        $this->assertNull($user);
+        static::assertNull($user);
     }
 
     public function testFilterForExistingUser(): void
@@ -101,9 +101,9 @@ class UserRepositoryTest extends KernelTestCase
         $paginator = $this->userRepository->getAllFilteredUsers($userFilter);
         $paginator->paginate();
 
-        $this->assertSame(1, $paginator->count());
-        $this->assertInstanceOf(User::class, $paginator->getResults()[0]);
-        $this->assertSame('user@example.com', $paginator->getResults()[0]->getEmail());
+        static::assertSame(1, $paginator->count());
+        static::assertInstanceOf(User::class, $paginator->getResults()[0]);
+        static::assertSame('user@example.com', $paginator->getResults()[0]->getEmail());
     }
 
     public function testFilterWithoutTerm(): void
@@ -117,10 +117,10 @@ class UserRepositoryTest extends KernelTestCase
         $paginator = $this->userRepository->getAllFilteredUsers($userFilter);
         $paginator->paginate();
 
-        $this->assertSame(2, $paginator->count());
-        $this->assertInstanceOf(User::class, $paginator->getResults()[0]);
-        $this->assertSame('user@example.com', $paginator->getResults()[0]->getEmail());
-        $this->assertInstanceOf(User::class, $paginator->getResults()[1]);
-        $this->assertSame('other-user@example.com', $paginator->getResults()[1]->getEmail());
+        static::assertSame(2, $paginator->count());
+        static::assertInstanceOf(User::class, $paginator->getResults()[0]);
+        static::assertSame('user@example.com', $paginator->getResults()[0]->getEmail());
+        static::assertInstanceOf(User::class, $paginator->getResults()[1]);
+        static::assertSame('other-user@example.com', $paginator->getResults()[1]->getEmail());
     }
 }
