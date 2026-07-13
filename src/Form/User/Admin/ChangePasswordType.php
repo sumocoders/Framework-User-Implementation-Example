@@ -17,7 +17,7 @@ final class ChangePasswordType extends AbstractType
         $builder
             ->add(
                 'password',
-                RepeatedPasswordStrengthType::class
+                RepeatedPasswordStrengthType::class,
             );
     }
 }

@@ -42,7 +42,7 @@ final class EditUserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('User successfully edited.')
+                $this->translator->trans('User successfully edited.'),
             );
 
             return $this->redirectToRoute('user_admin_overview');
@@ -57,7 +57,7 @@ final class EditUserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('User successfully disabled.')
+                    $this->translator->trans('User successfully disabled.'),
                 );
 
                 return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -73,7 +73,7 @@ final class EditUserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('User successfully enabled.')
+                    $this->translator->trans('User successfully enabled.'),
                 );
 
                 return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -89,7 +89,7 @@ final class EditUserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('Confirmation mail successfully sent')
+                    $this->translator->trans('Confirmation mail successfully sent'),
                 );
 
                 return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -106,7 +106,7 @@ final class EditUserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Password reset successfully sent.')
+                $this->translator->trans('Password reset successfully sent.'),
             );
 
             return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -121,7 +121,7 @@ final class EditUserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('2FA disabled')
+                $this->translator->trans('2FA disabled'),
             );
 
             return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -137,7 +137,7 @@ final class EditUserController extends AbstractController
                 'disableUserForm' => $disableUserForm ?? null,
                 'enableUserForm' => $enableUserForm ?? null,
                 'resendConfirmationForm' => $resendConfirmationForm ?? null,
-            ]
+            ],
         );
     }
 }

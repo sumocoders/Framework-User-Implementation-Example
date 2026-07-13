@@ -11,7 +11,7 @@ use Symfony\Component\Messenger\Attribute\AsMessageHandler;
 final readonly class EnableUserHandler
 {
     public function __construct(
-        private UserRepository $userRepository
+        private UserRepository $userRepository,
     ) {
     }
 

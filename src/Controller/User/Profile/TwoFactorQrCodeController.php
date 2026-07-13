@@ -46,7 +46,7 @@ final class TwoFactorQrCodeController extends AbstractController
             200,
             [
                 'Content-Type' => 'image/svg+xml',
-            ]
+            ],
         );
     }
 }

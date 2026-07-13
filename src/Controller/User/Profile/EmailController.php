@@ -28,7 +28,8 @@ class EmailController extends AbstractController
     #[Breadcrumb('Email')]
     public function __invoke(
         Request $request,
-        #[CurrentUser] User $user
+        #[CurrentUser]
+        User $user,
     ): Response {
         $message = new ChangeEmail($user->getId(), $user->getEmail());
 
@@ -40,7 +41,7 @@ class EmailController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Email successfully edited.')
+                $this->translator->trans('Email successfully edited.'),
             );
 
             return $this->redirectToRoute('user_email');

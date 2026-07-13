@@ -33,7 +33,7 @@ class CreateUserHandlerTest extends KernelTestCase
 
         $handler = new CreateUserHandler(
             $this->userRepository,
-            $this->messageBus
+            $this->messageBus,
         );
         $handler->__invoke($message);
     }

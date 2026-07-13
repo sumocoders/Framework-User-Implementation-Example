@@ -26,7 +26,8 @@ final class PasswordController extends AbstractController
     #[Breadcrumb('user_password')]
     public function __invoke(
         Request $request,
-        #[CurrentUser] User $user
+        #[CurrentUser]
+        User $user,
     ): Response {
         $form = $this->createForm(ChangePasswordType::class, new ChangePassword($user->getId()));
         $form->handleRequest($request);
@@ -36,7 +37,7 @@ final class PasswordController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Password successfully edited.')
+                $this->translator->trans('Password successfully edited.'),
             );
 
             return $this->redirectToRoute('user_profile');

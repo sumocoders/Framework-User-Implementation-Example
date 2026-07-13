@@ -56,13 +56,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $expirationCheck->sub($validDuration);
 
         try {
-            return $this->createQueryBuilder('u')
+            return $this
+                ->createQueryBuilder('u')
                 ->where('u.confirmationToken = :token AND u.confirmationRequestedAt >= :check')
                 ->setParameter('token', $confirmationToken)
                 ->setParameter('check', $expirationCheck)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException | NonUniqueResultException) {
+        } catch (NoResultException|NonUniqueResultException) {
             return null;
         }
     }
@@ -74,13 +75,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $expirationCheck->sub($validDuration);
 
         try {
-            return $this->createQueryBuilder('u')
+            return $this
+                ->createQueryBuilder('u')
                 ->where('u.passwordResetToken = :token AND u.passwordRequestedAt >= :check')
                 ->setParameter('token', $resetToken)
                 ->setParameter('check', $expirationCheck)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException | NonUniqueResultException) {
+        } catch (NoResultException|NonUniqueResultException) {
             return null;
         }
     }

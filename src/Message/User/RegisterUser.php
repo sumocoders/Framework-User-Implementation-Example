@@ -10,9 +10,9 @@ class RegisterUser extends UserDataTransferObject
 {
     #[NotBlank]
     #[Assert\PasswordStrength(
-        minScore: Assert\PasswordStrength::STRENGTH_STRONG
+        minScore: Assert\PasswordStrength::STRENGTH_STRONG,
     )]
-    #[Assert\NotCompromisedPassword()]
+    #[Assert\NotCompromisedPassword]
     #[Assert\Length(min: 12)]
     public string $password;
 }

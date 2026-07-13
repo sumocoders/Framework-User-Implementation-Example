@@ -27,7 +27,7 @@ final class LoginController extends AbstractController
             LoginType::class,
             [
                 'email' => $this->authenticationUtils->getLastUsername(),
-            ]
+            ],
         );
 
         return $this->render(
@@ -36,7 +36,7 @@ final class LoginController extends AbstractController
                 'error' => $this->authenticationUtils->getLastAuthenticationError(),
                 'last_username' => $this->authenticationUtils->getLastUsername(),
                 'form' => $form,
-            ]
+            ],
         );
     }
 }

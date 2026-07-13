@@ -34,7 +34,7 @@ class ResetPasswordHandlerTest extends KernelTestCase
 
         $handler = new ResetPasswordHandler(
             $this->userRepository,
-            $this->passwordHasher
+            $this->passwordHasher,
         );
         $handler->__invoke($message);
     }

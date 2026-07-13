@@ -27,7 +27,7 @@ final class LoginType extends AbstractType
                         'tabindex' => 1,
                         'autocomplete' => 'username',
                     ],
-                ]
+                ],
             )
             ->add(
                 'password',
@@ -38,7 +38,7 @@ final class LoginType extends AbstractType
                         'tabindex' => 2,
                         'autocomplete' => 'current-password',
                     ],
-                ]
+                ],
             );
     }
 }

@@ -29,7 +29,7 @@ final class ResendConfirmationController extends AbstractController
         if (!$user instanceof User) {
             $this->addFlash(
                 'error',
-                $this->translator->trans('Invalid confirmation token.')
+                $this->translator->trans('Invalid confirmation token.'),
             );
 
             return $this->redirectToRoute('login');

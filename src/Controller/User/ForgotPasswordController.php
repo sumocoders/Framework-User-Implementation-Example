@@ -30,7 +30,7 @@ final class ForgotPasswordController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Password reset link successfully sent.')
+                $this->translator->trans('Password reset link successfully sent.'),
             );
 
             return $this->redirectToRoute('login');
@@ -40,7 +40,7 @@ final class ForgotPasswordController extends AbstractController
             'user/forgot.html.twig',
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 }

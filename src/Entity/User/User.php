@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
-#[UniqueEntity('email', message: "There is already an account with this email")]
+#[UniqueEntity('email', message: 'There is already an account with this email')]
 #[AuditTrail]
 class User implements
     UserInterface,
@@ -72,7 +72,7 @@ class User implements
         #[ORM\Column(type: 'string', length: 180, unique: true)]
         private string $email,
         #[ORM\Column(type: 'json')]
-        private array $roles
+        private array $roles,
     ) {
         $this->password = null;
         $this->enabled = false;
@@ -88,7 +88,7 @@ class User implements
      */
     public function update(
         string $email,
-        array $roles
+        array $roles,
     ): void {
         $this->email = $email;
         $this->roles = $roles;
@@ -143,7 +143,7 @@ class User implements
      */
     public function getDisplayRoles(): array
     {
-        return array_map(fn(string $role) => strtolower(substr($role, 5)), $this->getRoles());
+        return array_map(fn (string $role) => strtolower(substr($role, 5)), $this->getRoles());
     }
 
     /**
@@ -266,7 +266,7 @@ class User implements
         $this->totpSecret = null;
     }
 
-    public function getTotpAuthenticationUsername(): string|null
+    public function getTotpAuthenticationUsername(): ?string
     {
         return $this->email;
     }
@@ -277,7 +277,7 @@ class User implements
             $this->totpSecret,
             TotpConfiguration::ALGORITHM_SHA1,
             30,
-            6
+            6,
         );
     }
 
@@ -323,5 +323,4 @@ class User implements
     {
         $this->email = $email;
     }
-
 }

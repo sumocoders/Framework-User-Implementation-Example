@@ -35,7 +35,8 @@ class UniqueEmailValidatorTest extends KernelTestCase
 
     public function testNoViolationWhenEmailIsUniqueForCreateUser(): void
     {
-        $context = $this->getMockBuilder(ExecutionContext::class)
+        $context = $this
+            ->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
         $context->expects(self::never())->method('buildViolation');
@@ -47,7 +48,8 @@ class UniqueEmailValidatorTest extends KernelTestCase
 
     public function testNoViolationWhenEmailIsBlank(): void
     {
-        $context = $this->getMockBuilder(ExecutionContext::class)
+        $context = $this
+            ->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
         $context->expects(self::never())->method('buildViolation');
@@ -60,7 +62,8 @@ class UniqueEmailValidatorTest extends KernelTestCase
 
     public function testExceptionWhenEmailIsNumber(): void
     {
-        $context = $this->getMockBuilder(ExecutionContext::class)
+        $context = $this
+            ->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
         $validator = new UniqueEmailValidator($this->userRepository);
@@ -78,11 +81,11 @@ class UniqueEmailValidatorTest extends KernelTestCase
         $createUser = new CreateUser();
         $createUser->email = 'user@example.com';
 
-        $context = $this->getMockBuilder(ExecutionContext::class)
+        $context = $this
+            ->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $context->expects(self::once())->method('getObject')
-            ->willReturn($createUser);
+        $context->expects(self::once())->method('getObject')->willReturn($createUser);
         $context->expects(self::once())->method('buildViolation');
         $validator = new UniqueEmailValidator($this->userRepository);
         $validator->initialize($context);
@@ -96,11 +99,11 @@ class UniqueEmailValidatorTest extends KernelTestCase
         $this->userRepository->add($user);
         $updateUser = new UpdateUser($user);
 
-        $context = $this->getMockBuilder(ExecutionContext::class)
+        $context = $this
+            ->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $context->expects(self::once())->method('getObject')
-            ->willReturn($updateUser);
+        $context->expects(self::once())->method('getObject')->willReturn($updateUser);
         $context->expects(self::never())->method('buildViolation');
         $validator = new UniqueEmailValidator($this->userRepository);
         $validator->initialize($context);
@@ -116,11 +119,11 @@ class UniqueEmailValidatorTest extends KernelTestCase
         $this->userRepository->add($existingUser);
         $updateUser = new UpdateUser($user);
 
-        $context = $this->getMockBuilder(ExecutionContext::class)
+        $context = $this
+            ->getMockBuilder(ExecutionContext::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $context->expects(self::once())->method('getObject')
-            ->willReturn($updateUser);
+        $context->expects(self::once())->method('getObject')->willReturn($updateUser);
         $context->expects(self::once())->method('buildViolation');
         $validator = new UniqueEmailValidator($this->userRepository);
         $validator->initialize($context);

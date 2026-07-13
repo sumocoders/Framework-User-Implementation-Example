@@ -27,7 +27,7 @@ class Enable2FaType extends AbstractType
                     'pattern' => '[0-9]*',
                     'placeholder' => 'Enter the code from your authenticator app',
                 ],
-            ]
+            ],
         );
     }
 

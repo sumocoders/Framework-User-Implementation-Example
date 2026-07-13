@@ -56,7 +56,7 @@ final class TwoFactorController extends AbstractController
                 $session->set('2fa_show_backup_codes', true);
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('2FA enabled')
+                    $this->translator->trans('2FA enabled'),
                 );
 
                 return $this->redirectToRoute('user_2fa');
@@ -72,7 +72,7 @@ final class TwoFactorController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('2FA disabled')
+                    $this->translator->trans('2FA disabled'),
                 );
 
                 return $this->redirectToRoute('user_2fa');
@@ -92,7 +92,7 @@ final class TwoFactorController extends AbstractController
                 'showBackupCodes' => $showBackupCodes,
                 'enable2FaForm' => $enable2FaForm ?? null,
                 'disable2FaForm' => $disable2FaForm ?? null,
-            ]
+            ],
         );
     }
 }

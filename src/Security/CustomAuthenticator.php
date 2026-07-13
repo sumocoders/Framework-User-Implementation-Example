@@ -23,7 +23,7 @@ class CustomAuthenticator extends AbstractLoginFormAuthenticator
     final public const LOGIN_ROUTE = 'login';
 
     public function __construct(
-        private readonly UrlGeneratorInterface $urlGenerator
+        private readonly UrlGeneratorInterface $urlGenerator,
     ) {
     }
 

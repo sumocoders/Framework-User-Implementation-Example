@@ -42,7 +42,7 @@ class SendPasswordResetHandlerTest extends KernelTestCase
             $this->translator,
             $this->router,
             $this->userRepository,
-            'noreply@example.com'
+            'noreply@example.com',
         );
         $handler->__invoke($message);
     }
@@ -65,7 +65,7 @@ class SendPasswordResetHandlerTest extends KernelTestCase
         $this->assertEmailHeaderSame(
             $email,
             'To',
-            '"user@example.com" <user@example.com>'
+            '"user@example.com" <user@example.com>',
         );
     }
 

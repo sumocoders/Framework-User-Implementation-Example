@@ -11,7 +11,7 @@ use Symfony\Component\Validator\Constraints\PasswordStrengthValidator;
 #[Route(
     '/admin/users/ajax/password-strength',
     name: 'admin_user_ajax_password_strength',
-    alias: ['user_ajax_password_strength']
+    alias: ['user_ajax_password_strength'],
 )]
 final class PasswordStrengthController extends AbstractController
 {

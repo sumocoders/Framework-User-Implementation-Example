@@ -38,7 +38,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $handler = new RegisterUserHandler(
             $this->userRepository,
             $this->passwordHasher,
-            $this->messageBus
+            $this->messageBus,
         );
         $handler->__invoke($message);
     }
@@ -72,7 +72,7 @@ class RegisterUserHandlerTest extends KernelTestCase
         $this->assertEmailHeaderSame(
             $email,
             'To',
-            '"user@example.com" <user@example.com>'
+            '"user@example.com" <user@example.com>',
         );
     }
 

@@ -29,7 +29,7 @@ final class MenuListener extends DefaultMenuListener implements EventSubscriberI
                             ],
                         ],
                     ],
-                )
+                ),
             );
         }
     }

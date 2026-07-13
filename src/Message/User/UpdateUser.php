@@ -10,7 +10,7 @@ class UpdateUser extends UserDataTransferObject
     public readonly int $userId;
 
     public function __construct(
-        User $user
+        User $user,
     ) {
         $this->userId = $user->getId();
         $this->email = $user->getEmail();

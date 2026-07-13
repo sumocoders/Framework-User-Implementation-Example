@@ -17,7 +17,7 @@ final class UserChecker implements UserCheckerInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly RouterInterface $router,
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
     ) {
     }
 
@@ -36,10 +36,10 @@ final class UserChecker implements UserCheckerInterface
                             'user_resend_confirmation',
                             [
                                 'token' => $user->getConfirmationToken(),
-                            ]
+                            ],
                         ),
-                    ]
-                )
+                    ],
+                ),
             );
         }
 

@@ -14,7 +14,7 @@ class Role implements \Stringable
     ];
 
     public function __construct(
-        private readonly string $role
+        private readonly string $role,
     ) {
         $this->validate();
     }

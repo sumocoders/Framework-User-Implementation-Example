@@ -26,9 +26,12 @@ class CreateCommand
      */
     public function __invoke(
         SymfonyStyle $io,
-        #[Argument(description: 'The email of the user')] string $email,
-        #[Argument(description: 'The locale to use')] string $locale = 'nl',
-        #[Argument(description: 'The roles of the user')] array $roles = ['ROLE_USER'],
+        #[Argument(description: 'The email of the user')]
+        string $email,
+        #[Argument(description: 'The locale to use')]
+        string $locale = 'nl',
+        #[Argument(description: 'The roles of the user')]
+        array $roles = ['ROLE_USER'],
     ): int {
         $message = new CreateUser();
         $message->email = $email;

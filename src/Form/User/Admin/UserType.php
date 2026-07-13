@@ -22,7 +22,7 @@ final class UserType extends AbstractType
                 EmailType::class,
                 [
                     'label' => 'Email',
-                ]
+                ],
             )
             ->add(
                 'roles',
@@ -32,7 +32,7 @@ final class UserType extends AbstractType
                     'choices' => Role::getChoices(),
                     'multiple' => true,
                     'expanded' => true,
-                ]
+                ],
             );
     }
 }

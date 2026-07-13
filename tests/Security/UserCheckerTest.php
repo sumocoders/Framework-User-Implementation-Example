@@ -22,7 +22,7 @@ class UserCheckerTest extends KernelTestCase
         $this->userChecker = new UserChecker(
             $this->createMock(TranslatorInterface::class),
             $this->createMock(RouterInterface::class),
-            $this->createMock(UserRepository::class)
+            $this->createMock(UserRepository::class),
         );
     }
 

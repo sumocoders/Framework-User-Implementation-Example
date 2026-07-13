@@ -38,7 +38,7 @@ class ChangePasswordHandlerTest extends KernelTestCase
 
         $handler = new ChangePasswordHandler(
             $this->userRepository,
-            $this->passwordHasher
+            $this->passwordHasher,
         );
         $handler->__invoke($message);
     }

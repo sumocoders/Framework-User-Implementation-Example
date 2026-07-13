@@ -16,7 +16,7 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 class UniqueEmailValidator extends ConstraintValidator
 {
     public function __construct(
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
     ) {
     }
 
@@ -46,7 +46,8 @@ class UniqueEmailValidator extends ConstraintValidator
             ($formData instanceof CreateUser || $formData instanceof RegisterUser)
             && $userWithThatEmail instanceof User
         ) {
-            $this->context->buildViolation($constraint->message)
+            $this->context
+                ->buildViolation($constraint->message)
                 ->setParameter('%email%', $value)
                 ->addViolation();
         }
@@ -60,7 +61,8 @@ class UniqueEmailValidator extends ConstraintValidator
             && $userWithThatEmail instanceof User
             && $formData->userId !== $userWithThatEmail->getId()
         ) {
-            $this->context->buildViolation($constraint->message)
+            $this->context
+                ->buildViolation($constraint->message)
                 ->setParameter('%email%', $value)
                 ->addViolation();
         }

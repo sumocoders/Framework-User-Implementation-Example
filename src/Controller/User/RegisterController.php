@@ -33,7 +33,7 @@ final class RegisterController extends AbstractController
                 'user_register',
                 [
                     'success' => true,
-                ]
+                ],
             );
         }
 
@@ -42,7 +42,7 @@ final class RegisterController extends AbstractController
             [
                 'form' => $form,
                 'show_registered_message' => $request->query->getBoolean('success', false),
-            ]
+            ],
         );
     }
 }

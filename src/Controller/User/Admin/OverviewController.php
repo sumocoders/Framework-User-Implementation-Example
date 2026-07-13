@@ -25,7 +25,7 @@ final class OverviewController extends AbstractController
     {
         $form = $this->createForm(
             FilterType::class,
-            new FilterDataTransferObject()
+            new FilterDataTransferObject(),
         );
         $form->handleRequest($request);
 
@@ -37,7 +37,7 @@ final class OverviewController extends AbstractController
             [
                 'form' => $form,
                 'users' => $paginatedUsers,
-            ]
+            ],
         );
     }
 }

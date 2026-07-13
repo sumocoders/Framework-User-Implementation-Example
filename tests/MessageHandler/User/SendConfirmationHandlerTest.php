@@ -43,7 +43,7 @@ class SendConfirmationHandlerTest extends KernelTestCase
             $this->translator,
             $this->router,
             $this->userRepository,
-            'noreply@example.com'
+            'noreply@example.com',
         );
         $handler->__invoke($message);
     }
@@ -66,7 +66,7 @@ class SendConfirmationHandlerTest extends KernelTestCase
         $this->assertEmailHeaderSame(
             $email,
             'To',
-            '"user@example.com" <user@example.com>'
+            '"user@example.com" <user@example.com>',
         );
     }
 
