@@ -17,6 +17,7 @@ class ResetPasswordHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -45,6 +46,7 @@ class ResetPasswordHandlerTest extends KernelTestCase
         $this->resetPassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
+        static::assertInstanceOf(User::class, $user);
         static::assertTrue($this->passwordHasher->isPasswordValid($user, 'new_password'));
     }
 

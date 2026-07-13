@@ -8,6 +8,7 @@ use App\MessageHandler\User\RegisterUserHandler;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Mime\RawMessage;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegisterUserHandlerTest extends KernelTestCase
@@ -19,6 +20,7 @@ class RegisterUserHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -70,6 +72,7 @@ class RegisterUserHandlerTest extends KernelTestCase
 
         static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
+        static::assertInstanceOf(RawMessage::class, $email);
         static::assertEmailHeaderSame(
             $email,
             'To',
@@ -81,10 +84,18 @@ class RegisterUserHandlerTest extends KernelTestCase
     {
         $this->registerUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
+        // @mago-expect analysis:mixed-assignment
+        $confirmationToken = $user->getConfirmationToken();
+        if ($confirmationToken === null) {
+            throw new \RuntimeException('confirmation token not found');
+        }
 
         static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        static::assertEmailTextBodyContains($email, $user->getConfirmationToken());
-        static::assertEmailHtmlBodyContains($email, $user->getConfirmationToken());
+        static::assertInstanceOf(RawMessage::class, $email);
+        // @mago-expect analysis:mixed-argument
+        static::assertEmailTextBodyContains($email, $confirmationToken);
+        // @mago-expect analysis:mixed-argument
+        static::assertEmailHtmlBodyContains($email, $confirmationToken);
     }
 }

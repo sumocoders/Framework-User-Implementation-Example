@@ -15,6 +15,7 @@ class Enable2FaHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -46,6 +47,7 @@ class Enable2FaHandlerTest extends KernelTestCase
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
         static::assertNotEmpty($user->getBackupCodes());
+        // @mago-expect analysis:mixed-argument
         static::assertCount(6, $user->getBackupCodes());
     }
 }

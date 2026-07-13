@@ -22,6 +22,7 @@ class CreateCommand
     }
 
     /**
+     * @param non-empty-string $email
      * @param array<string> $roles
      */
     public function __invoke(
@@ -41,7 +42,7 @@ class CreateCommand
         $constraints = $this->validator->validate($message);
         if ($constraints->count() > 0) {
             foreach ($constraints as $constraint) {
-                $io->error($constraint->getPropertyPath() . ': ' . $constraint->getMessage());
+                $io->error($constraint->getPropertyPath() . ': ' . (string) $constraint->getMessage());
             }
 
             return Command::FAILURE;

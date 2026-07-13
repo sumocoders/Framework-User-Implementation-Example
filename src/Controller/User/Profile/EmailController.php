@@ -37,6 +37,7 @@ final class EmailController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // @mago-expect analysis:mixed-argument
             $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(

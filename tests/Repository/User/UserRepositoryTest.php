@@ -18,7 +18,7 @@ class UserRepositoryTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
-
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -56,7 +56,11 @@ class UserRepositoryTest extends KernelTestCase
         $this->userRepository->add($newUser);
         $newUser->requestConfirmation();
         $this->userRepository->save();
-        $user = $this->userRepository->checkConfirmationToken($newUser->getConfirmationToken());
+        $confirmationToken = $newUser->getConfirmationToken();
+        if ($confirmationToken === null) {
+            throw new \RuntimeException('No confirmation token generated for the user.');
+        }
+        $user = $this->userRepository->checkConfirmationToken($confirmationToken);
 
         static::assertInstanceOf(User::class, $user);
         static::assertSame('user@example.com', $user->getEmail());
@@ -75,7 +79,11 @@ class UserRepositoryTest extends KernelTestCase
         $this->userRepository->add($newUser);
         $newUser->requestPassword();
         $this->userRepository->save();
-        $user = $this->userRepository->checkResetToken($newUser->getPasswordResetToken());
+        $passwordResetToken = $newUser->getPasswordResetToken();
+        if ($passwordResetToken === null) {
+            throw new \RuntimeException('No password reset token generated for the user.');
+        }
+        $user = $this->userRepository->checkResetToken($passwordResetToken);
 
         static::assertInstanceOf(User::class, $user);
         static::assertSame('user@example.com', $user->getEmail());
@@ -100,10 +108,11 @@ class UserRepositoryTest extends KernelTestCase
         $userFilter->term = 'user@example.com';
         $paginator = $this->userRepository->getAllFilteredUsers($userFilter);
         $paginator->paginate();
+        $results = iterator_to_array($paginator->getResults());
 
         static::assertSame(1, $paginator->count());
-        static::assertInstanceOf(User::class, $paginator->getResults()[0]);
-        static::assertSame('user@example.com', $paginator->getResults()[0]->getEmail());
+        static::assertInstanceOf(User::class, $results[0]);
+        static::assertSame('user@example.com', $results[0]->getEmail());
     }
 
     public function testFilterWithoutTerm(): void
@@ -116,11 +125,12 @@ class UserRepositoryTest extends KernelTestCase
         $userFilter = new FilterDataTransferObject();
         $paginator = $this->userRepository->getAllFilteredUsers($userFilter);
         $paginator->paginate();
+        $results = iterator_to_array($paginator->getResults());
 
         static::assertSame(2, $paginator->count());
-        static::assertInstanceOf(User::class, $paginator->getResults()[0]);
-        static::assertSame('user@example.com', $paginator->getResults()[0]->getEmail());
-        static::assertInstanceOf(User::class, $paginator->getResults()[1]);
-        static::assertSame('other-user@example.com', $paginator->getResults()[1]->getEmail());
+        static::assertInstanceOf(User::class, $results[0]);
+        static::assertSame('user@example.com', $results[0]->getEmail());
+        static::assertInstanceOf(User::class, $results[1]);
+        static::assertSame('other-user@example.com', $results[1]->getEmail());
     }
 }

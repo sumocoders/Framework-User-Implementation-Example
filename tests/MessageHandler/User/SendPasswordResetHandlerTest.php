@@ -8,6 +8,7 @@ use App\MessageHandler\User\SendPasswordResetHandler;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\RawMessage;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -21,6 +22,7 @@ class SendPasswordResetHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -63,6 +65,7 @@ class SendPasswordResetHandlerTest extends KernelTestCase
         static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
         static::assertEmailHeaderSame(
+            // @mago-expect analysis:possibly-null-argument
             $email,
             'To',
             '"user@example.com" <user@example.com>',
@@ -73,10 +76,14 @@ class SendPasswordResetHandlerTest extends KernelTestCase
     {
         $this->sendPasswordReset();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
+        // @mago-expect analysis:mixed-assignment
+        $passwordResetToken = $user->getPasswordResetToken();
 
         static::assertEmailCount(1);
+        static::assertIsString($passwordResetToken);
         $email = $this->getMailerMessage(0);
-        static::assertEmailTextBodyContains($email, $user->getPasswordResetToken());
-        static::assertEmailHtmlBodyContains($email, $user->getPasswordResetToken());
+        static::assertInstanceOf(RawMessage::class, $email);
+        static::assertEmailTextBodyContains($email, $passwordResetToken);
+        static::assertEmailHtmlBodyContains($email, $passwordResetToken);
     }
 }

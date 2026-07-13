@@ -35,7 +35,7 @@ final class MenuListener extends DefaultMenuListener implements EventSubscriberI
     }
 
     /**
-     * @return array<string, mixed>
+     * @return array<string, string>
      */
     public static function getSubscribedEvents(): array
     {

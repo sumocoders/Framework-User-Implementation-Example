@@ -66,9 +66,12 @@ class User implements
     private int $trustedVersion = 0;
 
     /**
-     * @param array<int, string> $roles
+     * @param array<array-key, string> $roles
      */
     public function __construct(
+        /**
+         * @var non-empty-string
+         */
         #[ORM\Column(type: 'string', length: 180, unique: true)]
         private string $email,
         #[ORM\Column(type: 'json')]
@@ -84,7 +87,8 @@ class User implements
     }
 
     /**
-     * @param array<int, string> $roles
+     * @param non-empty-string   $email
+     * @param array<array-key, string> $roles
      */
     public function update(
         string $email,
@@ -99,6 +103,9 @@ class User implements
         return $this->id;
     }
 
+    /**
+     * @return non-empty-string
+     */
     public function getEmail(): string
     {
         return $this->email;
@@ -113,11 +120,12 @@ class User implements
     }
 
     /**
+     * @return non-empty-string
      * @see UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return $this->email; // @phpstan-ignore-line return.type
+        return $this->email;
     }
 
     public function getOriginUsername(): string
@@ -126,6 +134,7 @@ class User implements
     }
 
     /**
+     * @return array<array-key, string>
      * @see UserInterface
      */
     public function getRoles(): array
@@ -139,11 +148,11 @@ class User implements
     }
 
     /**
-     * @return array<int, string> $roles
+     * @return array<array-key, lowercase-string> $roles
      */
     public function getDisplayRoles(): array
     {
-        return array_map(static fn (string $role) => strtolower(substr($role, 5)), $this->getRoles());
+        return array_map(static fn (string $role): string => strtolower(substr($role, 5)), $this->getRoles());
     }
 
     /**
@@ -277,6 +286,10 @@ class User implements
 
     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
     {
+        if ($this->totpSecret === null) {
+            throw new \RuntimeException('TotpSecret is null');
+        }
+
         return new TotpConfiguration(
             $this->totpSecret,
             TotpConfiguration::ALGORITHM_SHA1,
@@ -298,9 +311,9 @@ class User implements
         return in_array($code, $this->backupCodes, true);
     }
 
-    public function invalidateBackupCode(string $backupCode): void
+    public function invalidateBackupCode(string $code): void
     {
-        $key = array_search($backupCode, $this->backupCodes, true);
+        $key = array_search($code, $this->backupCodes, true);
         if ($key !== false) {
             unset($this->backupCodes[$key]);
         }
@@ -323,6 +336,9 @@ class User implements
         return $this->trustedVersion;
     }
 
+    /**
+     * @param non-empty-string $email
+     */
     public function changeEmail(string $email): void
     {
         $this->email = $email;

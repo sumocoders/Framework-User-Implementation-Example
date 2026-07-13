@@ -29,7 +29,10 @@ final class OverviewController extends AbstractController
         );
         $form->handleRequest($request);
 
-        $paginatedUsers = $this->userRepository->getAllFilteredUsers($form->getData());
+        /** @var FilterDataTransferObject $filter */
+        $filter = $form->getData();
+
+        $paginatedUsers = $this->userRepository->getAllFilteredUsers($filter);
         $paginatedUsers->paginate($page);
 
         return $this->render(

@@ -8,6 +8,7 @@ use App\MessageHandler\User\SendConfirmationHandler;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\RawMessage;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -21,6 +22,7 @@ class SendConfirmationHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -61,6 +63,7 @@ class SendConfirmationHandlerTest extends KernelTestCase
 
         static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
+        static::assertInstanceOf(RawMessage::class, $email);
         static::assertEmailHeaderSame(
             $email,
             'To',
@@ -72,10 +75,18 @@ class SendConfirmationHandlerTest extends KernelTestCase
     {
         $this->sendConfirmation();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
+        // @mago-expect analysis:mixed-assignment
+        $confirmationToken = $user->getConfirmationToken();
+        if ($confirmationToken === null) {
+            throw new \RuntimeException('Confirmation token is null');
+        }
 
         static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        static::assertEmailTextBodyContains($email, $user->getConfirmationToken());
-        static::assertEmailHtmlBodyContains($email, $user->getConfirmationToken());
+        static::assertInstanceOf(RawMessage::class, $email);
+        // @mago-expect analysis:mixed-argument
+        static::assertEmailTextBodyContains($email, $confirmationToken);
+        // @mago-expect analysis:mixed-argument
+        static::assertEmailHtmlBodyContains($email, $confirmationToken);
     }
 }

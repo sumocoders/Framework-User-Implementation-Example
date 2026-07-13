@@ -20,7 +20,7 @@ final class UserTotpCodeValidator extends ConstraintValidator
         if (!$constraint instanceof UserTotpCode) {
             throw new UnexpectedTypeException($constraint, UserTotpCode::class);
         }
-        if (null === $value || '' === $value) {
+        if (null === $value || '' === trim((string) $value)) {
             return;
         }
 
@@ -32,7 +32,7 @@ final class UserTotpCodeValidator extends ConstraintValidator
         // store it temporarily in the user object so the totpAuthenticator can use it to check the code
         $user->setTotpSecret($message->secret);
 
-        if ($this->totpAuthenticator->checkCode($user, $value)) {
+        if ($this->totpAuthenticator->checkCode($user, (string) $value)) {
             return;
         }
 

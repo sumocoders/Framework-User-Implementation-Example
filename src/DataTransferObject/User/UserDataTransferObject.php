@@ -9,6 +9,9 @@ use Symfony\Component\Validator\Constraints\NotBlank;
 
 class UserDataTransferObject
 {
+    /**
+     * @var non-empty-string $email
+     */
     #[Email]
     #[NotBlank]
     #[UniqueEmail]
@@ -16,7 +19,7 @@ class UserDataTransferObject
     public string $email;
 
     /**
-     * @var array<int, string> $roles
+     * @var array<array-key, string> $roles
      */
     public array $roles = [];
 

@@ -2,6 +2,7 @@
 
 namespace App\Form\User\Admin;
 
+use App\DataTransferObject\User\UserDataTransferObject;
 use App\ValueObject\User\Role;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -9,8 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @template TData of FormBuilderInterface
- * @extends AbstractType<TData>
+ * @extends AbstractType<UserDataTransferObject>
  */
 final class UserType extends AbstractType
 {

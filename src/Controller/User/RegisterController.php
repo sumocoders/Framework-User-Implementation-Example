@@ -7,7 +7,6 @@ use App\Message\User\RegisterUser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Messenger\MessageBusInterface;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -19,7 +18,7 @@ final class RegisterController extends AbstractController
     ) {
     }
 
-    public function __invoke(Request $request, SessionInterface $session): Response
+    public function __invoke(Request $request): Response
     {
         $registerUser = new RegisterUser();
         $registerUser->locale = $request->getLocale();
@@ -27,6 +26,7 @@ final class RegisterController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // @mago-expect analysis:mixed-argument
             $this->messageBus->dispatch($form->getData());
 
             return $this->redirectToRoute(

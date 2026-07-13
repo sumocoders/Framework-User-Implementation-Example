@@ -3,12 +3,12 @@
 namespace App\Form\User\Admin;
 
 use App\Form\User\RepeatedPasswordStrengthType;
+use App\Message\User\ChangePassword;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @template TData of FormBuilderInterface
- * @extends AbstractType<TData>
+ * @extends AbstractType<ChangePassword>
  */
 final class ChangePasswordType extends AbstractType
 {
