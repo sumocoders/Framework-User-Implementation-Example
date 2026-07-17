@@ -38,7 +38,7 @@ final readonly class SendConfirmationHandler
         $user->requestConfirmation();
         $this->userRepository->save();
 
-        $email = (new TemplatedEmail())
+        $email = new TemplatedEmail()
             ->from($this->from)
             ->to(new Address($user->getEmail(), $user->getEmail()))
             ->subject($this->translator->trans('account.mail.confirm.title'))
@@ -50,9 +50,8 @@ final readonly class SendConfirmationHandler
                         '_locale' => $message->locale,
                         'token' => $user->getConfirmationToken(),
                     ],
-                    RouterInterface::ABSOLUTE_URL
+                    RouterInterface::ABSOLUTE_URL,
                 ),
-
             ]);
         $this->mailer->send($email);
     }

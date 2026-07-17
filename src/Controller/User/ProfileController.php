@@ -21,7 +21,7 @@ final class ProfileController extends AbstractController
             'user/profile.html.twig',
             [
                 'user' => $user,
-            ]
+            ],
         );
     }
 }

@@ -4,12 +4,11 @@ namespace App\Tests\MessageHandler\User;
 
 use App\Entity\User\User;
 use App\Message\User\SendConfirmation;
-use App\Message\User\SendPasswordReset;
 use App\MessageHandler\User\SendConfirmationHandler;
-use App\MessageHandler\User\SendPasswordResetHandler;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\RawMessage;
 use Symfony\Component\Routing\RouterInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -23,6 +22,7 @@ class SendConfirmationHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -43,7 +43,7 @@ class SendConfirmationHandlerTest extends KernelTestCase
             $this->translator,
             $this->router,
             $this->userRepository,
-            'noreply@example.com'
+            'noreply@example.com',
         );
         $handler->__invoke($message);
     }
@@ -53,20 +53,21 @@ class SendConfirmationHandlerTest extends KernelTestCase
         $this->sendConfirmation();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertIsString($user->getConfirmationToken());
-        $this->assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
+        static::assertIsString($user->getConfirmationToken());
+        static::assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
     }
 
     public function testEmailIsSent(): void
     {
         $this->sendConfirmation();
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailHeaderSame(
+        static::assertInstanceOf(RawMessage::class, $email);
+        static::assertEmailHeaderSame(
             $email,
             'To',
-            '"user@example.com" <user@example.com>'
+            '"user@example.com" <user@example.com>',
         );
     }
 
@@ -74,10 +75,18 @@ class SendConfirmationHandlerTest extends KernelTestCase
     {
         $this->sendConfirmation();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
+        // @mago-expect analysis:mixed-assignment
+        $confirmationToken = $user->getConfirmationToken();
+        if ($confirmationToken === null) {
+            throw new \RuntimeException('Confirmation token is null');
+        }
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailTextBodyContains($email, $user->getConfirmationToken());
-        $this->assertEmailHtmlBodyContains($email, $user->getConfirmationToken());
+        static::assertInstanceOf(RawMessage::class, $email);
+        // @mago-expect analysis:mixed-argument
+        static::assertEmailTextBodyContains($email, $confirmationToken);
+        // @mago-expect analysis:mixed-argument
+        static::assertEmailHtmlBodyContains($email, $confirmationToken);
     }
 }

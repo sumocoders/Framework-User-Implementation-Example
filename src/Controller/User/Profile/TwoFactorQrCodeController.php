@@ -29,12 +29,12 @@ final class TwoFactorQrCodeController extends AbstractController
         User $user,
         SessionInterface $session,
     ): Response {
-        if (!$session->has('2fa_secret')) {
+        if (!$session->has('2fa_secret') || trim((string) $session->get('2fa_secret')) === '') {
             throw new BadRequestException('No secret found in session');
         }
 
         $clonedUser = clone $user;
-        $clonedUser->setTotpSecret($session->get('2fa_secret'));
+        $clonedUser->setTotpSecret((string) $session->get('2fa_secret'));
         $builder = new Builder(
             writer: new SvgWriter(),
             data: $this->totpAuthenticator->getQRContent($clonedUser),
@@ -46,7 +46,7 @@ final class TwoFactorQrCodeController extends AbstractController
             200,
             [
                 'Content-Type' => 'image/svg+xml',
-            ]
+            ],
         );
     }
 }

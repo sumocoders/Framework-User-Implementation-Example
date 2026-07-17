@@ -17,6 +17,7 @@ class ResetPasswordHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -30,11 +31,12 @@ class ResetPasswordHandlerTest extends KernelTestCase
         $this->userRepository->add($user);
 
         $message = new ResetPassword($user->getId());
+        // @mago-expect lint:no-literal-password
         $message->password = 'new_password';
 
         $handler = new ResetPasswordHandler(
             $this->userRepository,
-            $this->passwordHasher
+            $this->passwordHasher,
         );
         $handler->__invoke($message);
     }
@@ -44,7 +46,8 @@ class ResetPasswordHandlerTest extends KernelTestCase
         $this->resetPassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertTrue($this->passwordHasher->isPasswordValid($user, 'new_password'));
+        static::assertInstanceOf(User::class, $user);
+        static::assertTrue($this->passwordHasher->isPasswordValid($user, 'new_password'));
     }
 
     public function testPasswordResetTokenIsCleared(): void
@@ -52,7 +55,7 @@ class ResetPasswordHandlerTest extends KernelTestCase
         $this->resetPassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNull($user->getPasswordResetToken());
+        static::assertNull($user->getPasswordResetToken());
     }
 
     public function testPasswordRequestedAtIsCleared(): void
@@ -60,6 +63,6 @@ class ResetPasswordHandlerTest extends KernelTestCase
         $this->resetPassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNull($user->getPasswordRequestedAt());
+        static::assertNull($user->getPasswordRequestedAt());
     }
 }

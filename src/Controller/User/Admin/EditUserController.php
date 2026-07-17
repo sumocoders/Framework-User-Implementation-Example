@@ -22,6 +22,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/admin/users/{user}/edit', name: 'user_admin_edit')]
+// @mago-expect lint:cyclomatic-complexity
 final class EditUserController extends AbstractController
 {
     public function __construct(
@@ -32,17 +33,23 @@ final class EditUserController extends AbstractController
     }
 
     #[Breadcrumb('Edit', parent: ['name' => 'user_admin_overview'])]
-    public function __invoke(Request $request, #[CurrentUser] User $currentUser, User $user): Response
-    {
+    // @mago-expect lint:halstead
+    public function __invoke(
+        Request $request,
+        #[CurrentUser]
+        User $currentUser,
+        User $user,
+    ): Response {
         $form = $this->createForm(UserType::class, new UpdateUser($user));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // @mago-expect analysis:mixed-argument
             $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('User successfully edited.')
+                $this->translator->trans('User successfully edited.'),
             );
 
             return $this->redirectToRoute('user_admin_overview');
@@ -57,7 +64,7 @@ final class EditUserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('User successfully disabled.')
+                    $this->translator->trans('User successfully disabled.'),
                 );
 
                 return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -73,7 +80,7 @@ final class EditUserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('User successfully enabled.')
+                    $this->translator->trans('User successfully enabled.'),
                 );
 
                 return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -89,7 +96,7 @@ final class EditUserController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('Confirmation mail successfully sent')
+                    $this->translator->trans('Confirmation mail successfully sent'),
                 );
 
                 return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -106,7 +113,7 @@ final class EditUserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Password reset successfully sent.')
+                $this->translator->trans('Password reset successfully sent.'),
             );
 
             return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -121,7 +128,7 @@ final class EditUserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('2FA disabled')
+                $this->translator->trans('2FA disabled'),
             );
 
             return $this->redirectToRoute('user_admin_edit', ['user' => $user->getId()]);
@@ -137,7 +144,7 @@ final class EditUserController extends AbstractController
                 'disableUserForm' => $disableUserForm ?? null,
                 'enableUserForm' => $enableUserForm ?? null,
                 'resendConfirmationForm' => $resendConfirmationForm ?? null,
-            ]
+            ],
         );
     }
 }

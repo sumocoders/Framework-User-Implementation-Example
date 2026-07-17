@@ -27,7 +27,7 @@ final class ForgotPasswordType extends AbstractType
                         'tabindex' => 1,
                         'autocomplete' => 'username',
                     ],
-                ]
+                ],
             );
     }
 

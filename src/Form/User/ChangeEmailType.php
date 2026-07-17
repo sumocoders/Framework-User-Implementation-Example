@@ -21,7 +21,7 @@ class ChangeEmailType extends AbstractType
                 EmailType::class,
                 [
                     'required' => true,
-                ]
+                ],
             );
     }
 

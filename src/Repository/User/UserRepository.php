@@ -39,8 +39,11 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     /**
      * Used to upgrade (rehash) the user's password automatically over time.
      */
-    public function upgradePassword(PasswordAuthenticatedUserInterface $user, string $newHashedPassword): void
-    {
+    public function upgradePassword(
+        PasswordAuthenticatedUserInterface $user,
+        #[\SensitiveParameter]
+        string $newHashedPassword,
+    ): void {
         if (!$user instanceof User) {
             throw new UnsupportedUserException(sprintf('Instances of "%s" are not supported.', $user::class));
         }
@@ -49,38 +52,44 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->add($user);
     }
 
-    public function checkConfirmationToken(string $confirmationToken): ?User
-    {
+    public function checkConfirmationToken(
+        #[\SensitiveParameter]
+        string $confirmationToken,
+    ): ?User {
         $expirationCheck = new DateTime();
         $validDuration = new DateInterval('P2D'); // 48 hours
         $expirationCheck->sub($validDuration);
 
         try {
-            return $this->createQueryBuilder('u')
+            return $this
+                ->createQueryBuilder('u')
                 ->where('u.confirmationToken = :token AND u.confirmationRequestedAt >= :check')
                 ->setParameter('token', $confirmationToken)
                 ->setParameter('check', $expirationCheck)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException | NonUniqueResultException) {
+        } catch (NoResultException|NonUniqueResultException) { // phpcs:ignore PSR12.Operators.OperatorSpacing.NoSpaceAfter,PSR12.Operators.OperatorSpacing.NoSpaceBefore,Generic.Files.LineLength.TooLong
             return null;
         }
     }
 
-    public function checkResetToken(string $resetToken): ?User
-    {
+    public function checkResetToken(
+        #[\SensitiveParameter]
+        string $resetToken,
+    ): ?User {
         $expirationCheck = new DateTime();
         $validDuration = new DateInterval('PT4H'); // 4 hours
         $expirationCheck->sub($validDuration);
 
         try {
-            return $this->createQueryBuilder('u')
+            return $this
+                ->createQueryBuilder('u')
                 ->where('u.passwordResetToken = :token AND u.passwordRequestedAt >= :check')
                 ->setParameter('token', $resetToken)
                 ->setParameter('check', $expirationCheck)
                 ->getQuery()
                 ->getSingleResult();
-        } catch (NoResultException | NonUniqueResultException) {
+        } catch (NoResultException|NonUniqueResultException) { // phpcs:ignore PSR12.Operators.OperatorSpacing.NoSpaceAfter,PSR12.Operators.OperatorSpacing.NoSpaceBefore,Generic.Files.LineLength.TooLong
             return null;
         }
     }
@@ -94,7 +103,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     {
         $queryBuilder = $this->createQueryBuilder('u');
 
-        if (isset($filter->term)) {
+        if (!is_null($filter->term) && trim($filter->term) !== '') {
             $queryBuilder
                 ->where('u.email LIKE :term')
                 ->setParameter('term', '%' . $filter->term . '%');

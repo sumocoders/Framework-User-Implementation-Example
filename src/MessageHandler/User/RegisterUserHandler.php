@@ -24,7 +24,7 @@ final readonly class RegisterUserHandler
     {
         $user = new User(
             $message->email,
-            $message->roles
+            $message->roles,
         );
 
         $encodedPassword = $this->passwordEncoder->hashPassword($user, $message->password);

@@ -17,7 +17,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
 #[Route('/user/email', name: 'user_email')]
-class EmailController extends AbstractController
+final class EmailController extends AbstractController
 {
     public function __construct(
         private readonly TranslatorInterface $translator,
@@ -28,7 +28,8 @@ class EmailController extends AbstractController
     #[Breadcrumb('Email')]
     public function __invoke(
         Request $request,
-        #[CurrentUser] User $user
+        #[CurrentUser]
+        User $user,
     ): Response {
         $message = new ChangeEmail($user->getId(), $user->getEmail());
 
@@ -36,11 +37,12 @@ class EmailController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // @mago-expect analysis:mixed-argument
             $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Email successfully edited.')
+                $this->translator->trans('Email successfully edited.'),
             );
 
             return $this->redirectToRoute('user_email');

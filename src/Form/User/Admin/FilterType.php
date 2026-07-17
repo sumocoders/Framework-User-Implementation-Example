@@ -23,7 +23,7 @@ class FilterType extends AbstractType
                 [
                     'label' => 'filter.term',
                     'required' => false,
-                ]
+                ],
             );
     }
 

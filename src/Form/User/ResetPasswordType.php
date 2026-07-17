@@ -17,7 +17,7 @@ class ResetPasswordType extends AbstractType
         $builder
             ->add(
                 'password',
-                RepeatedPasswordStrengthType::class
+                RepeatedPasswordStrengthType::class,
             );
     }
 

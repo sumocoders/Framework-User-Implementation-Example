@@ -23,7 +23,7 @@ final readonly class UpdateUserHandler
         }
         $user->update(
             $message->email,
-            $message->roles
+            $message->roles,
         );
         $this->userRepository->save();
     }

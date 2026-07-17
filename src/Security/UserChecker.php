@@ -17,7 +17,7 @@ final class UserChecker implements UserCheckerInterface
     public function __construct(
         private readonly TranslatorInterface $translator,
         private readonly RouterInterface $router,
-        private readonly UserRepository $userRepository
+        private readonly UserRepository $userRepository,
     ) {
     }
 
@@ -36,10 +36,10 @@ final class UserChecker implements UserCheckerInterface
                             'user_resend_confirmation',
                             [
                                 'token' => $user->getConfirmationToken(),
-                            ]
+                            ],
                         ),
-                    ]
-                )
+                    ],
+                ),
             );
         }
 
@@ -48,8 +48,11 @@ final class UserChecker implements UserCheckerInterface
         }
     }
 
-    public function checkPostAuth(UserInterface $user, ?TokenInterface $token = null): void
-    {
+    public function checkPostAuth(
+        UserInterface $user,
+        #[\SensitiveParameter]
+        ?TokenInterface $token = null,
+    ): void {
         if (!$user instanceof User) {
             return;
         }

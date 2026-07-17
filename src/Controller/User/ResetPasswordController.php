@@ -23,16 +23,19 @@ final class ResetPasswordController extends AbstractController
     ) {
     }
 
-    public function __invoke(string $token, Request $request): Response
-    {
+    public function __invoke(
+        #[\SensitiveParameter]
+        string $token,
+        Request $request,
+    ): Response {
         $user = $this->userRepository->checkResetToken($token);
 
         if (!$user instanceof User) {
             $this->addFlash(
                 'error',
                 $this->translator->trans(
-                    'It looks like you clicked on an invalid password reset link. Please try again.'
-                )
+                    'It looks like you clicked on an invalid password reset link. Please try again.',
+                ),
             );
 
             return $this->redirectToRoute('user_forgot_password');
@@ -42,11 +45,12 @@ final class ResetPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // @mago-expect analysis:mixed-argument
             $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('New password set successfully.')
+                $this->translator->trans('New password set successfully.'),
             );
 
             return $this->redirectToRoute('login');
@@ -56,7 +60,7 @@ final class ResetPasswordController extends AbstractController
             'user/reset.html.twig',
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 }

@@ -15,9 +15,9 @@ final class LoginController extends AbstractController
 {
     public function __construct(
         private readonly AuthenticationUtils $authenticationUtils,
-        #[Autowire(env: 'AZURE_CLIENT_ID')] 
+        #[Autowire(env: 'AZURE_CLIENT_ID')]
         private readonly string $azureClientId,
-        #[Autowire(env: 'SUMOCODERS_CLIENT_ID')] 
+        #[Autowire(env: 'SUMOCODERS_CLIENT_ID')]
         private readonly string $sumocodersClientId,
     ) {
     }
@@ -32,18 +32,18 @@ final class LoginController extends AbstractController
             LoginType::class,
             [
                 'email' => $this->authenticationUtils->getLastUsername(),
-            ]
+            ],
         );
 
         return $this->render(
-            'user/login.html.twig', 
+            'user/login.html.twig',
             [
                 'error' => $this->authenticationUtils->getLastAuthenticationError(),
                 'last_username' => $this->authenticationUtils->getLastUsername(),
                 'form' => $form,
                 'azure_login_enabled' => $this->azureClientId !== '',
                 'sumocoders_login_enabled' => $this->sumocodersClientId !== '',
-          ]
+            ],
         );
     }
 }

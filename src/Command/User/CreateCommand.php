@@ -22,13 +22,17 @@ class CreateCommand
     }
 
     /**
+     * @param non-empty-string $email
      * @param array<string> $roles
      */
     public function __invoke(
         SymfonyStyle $io,
-        #[Argument(description: 'The email of the user')] string $email,
-        #[Argument(description: 'The locale to use')] string $locale = 'nl',
-        #[Argument(description: 'The roles of the user')] array $roles = ['ROLE_USER'],
+        #[Argument(description: 'The email of the user')]
+        string $email,
+        #[Argument(description: 'The locale to use')]
+        string $locale = 'nl',
+        #[Argument(description: 'The roles of the user')]
+        array $roles = ['ROLE_USER'],
     ): int {
         $message = new CreateUser();
         $message->email = $email;
@@ -38,7 +42,7 @@ class CreateCommand
         $constraints = $this->validator->validate($message);
         if ($constraints->count() > 0) {
             foreach ($constraints as $constraint) {
-                $io->error($constraint->getPropertyPath() . ': ' . $constraint->getMessage());
+                $io->error($constraint->getPropertyPath() . ': ' . (string) $constraint->getMessage());
             }
 
             return Command::FAILURE;
