@@ -104,7 +104,8 @@ class User implements
     }
 
     /**
-     * @param array<int, string> $roles
+     * @param non-empty-string   $email
+     * @param array<array-key, string> $roles
      */
     public function update(
         string $email,

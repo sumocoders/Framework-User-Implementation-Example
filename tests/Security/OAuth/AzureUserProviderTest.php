@@ -27,9 +27,9 @@ class AzureUserProviderTest extends KernelTestCase
         $this->eventDispatcher = $this->createMock(EventDispatcherInterface::class);
     }
 
-    private function makeProvider(string $allowedDomain = 'sumocoders.be'): AzureUserProvider
+    private function makeProvider(): AzureUserProvider
     {
-        return new AzureUserProvider($this->userRepository, $this->eventDispatcher, $allowedDomain);
+        return new AzureUserProvider($this->userRepository, $this->eventDispatcher);
     }
 
     /**
@@ -58,7 +58,7 @@ class AzureUserProviderTest extends KernelTestCase
 
         $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertSame($user, $result);
+        static::assertSame($user, $result);
     }
 
     public function testExistingUserFoundByOidHasEmailUpdatedWhenChanged(): void
@@ -76,7 +76,8 @@ class AzureUserProviderTest extends KernelTestCase
 
         $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertSame('new@sumocoders.be', $result->getEmail());
+        // @mago-expect analysis:non-existent-method
+        static::assertSame('new@sumocoders.be', $result->getEmail());
     }
 
     public function testExistingLocalUserFoundByEmailGetsOidLinked(): void
@@ -96,8 +97,8 @@ class AzureUserProviderTest extends KernelTestCase
 
         $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertSame($user, $result);
-        $this->assertSame('oid-abc', $result->getAzureObjectId());
+        static::assertSame($user, $result);
+        static::assertSame('oid-abc', $result->getAzureObjectId());
     }
 
     public function testNewUserIsAutoProvisionedWhenDomainMatches(): void
@@ -109,12 +110,16 @@ class AzureUserProviderTest extends KernelTestCase
 
         $response = $this->makeResponse('oid-new', 'newuser@sumocoders.be');
 
-        $result = $this->makeProvider('sumocoders.be')->loadUserByOAuthUserResponse($response);
+        $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertSame('newuser@sumocoders.be', $result->getEmail());
-        $this->assertSame('oid-new', $result->getAzureObjectId());
-        $this->assertTrue($result->isEnabled());
-        $this->assertTrue($result->isConfirmed());
+        // @mago-expect analysis:non-existent-method
+        static::assertSame('newuser@sumocoders.be', $result->getEmail());
+        // @mago-expect analysis:non-existent-method
+        static::assertSame('oid-new', $result->getAzureObjectId());
+        // @mago-expect analysis:non-existent-method
+        static::assertTrue($result->isEnabled());
+        // @mago-expect analysis:non-existent-method
+        static::assertTrue($result->isConfirmed());
     }
 
     public function testNewUserIsAutoProvisionedWhenNoDomainRestriction(): void
@@ -126,9 +131,10 @@ class AzureUserProviderTest extends KernelTestCase
 
         $response = $this->makeResponse('oid-new', 'anyone@otherdomain.com');
 
-        $result = $this->makeProvider('')->loadUserByOAuthUserResponse($response);
+        $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertSame('anyone@otherdomain.com', $result->getEmail());
+        // @mago-expect analysis:non-existent-method
+        static::assertSame('anyone@otherdomain.com', $result->getEmail());
     }
 
     public function testNewUserWithWrongDomainIsRejected(): void
@@ -141,7 +147,7 @@ class AzureUserProviderTest extends KernelTestCase
 
         $this->expectException(AccessDeniedException::class);
 
-        $this->makeProvider('sumocoders.be')->loadUserByOAuthUserResponse($response);
+        $this->makeProvider()->loadUserByOAuthUserResponse($response);
     }
 
     public function testDomainCheckIsCaseInsensitive(): void
@@ -153,9 +159,10 @@ class AzureUserProviderTest extends KernelTestCase
 
         $response = $this->makeResponse('oid-new', 'user@SUMOCODERS.BE');
 
-        $result = $this->makeProvider('sumocoders.be')->loadUserByOAuthUserResponse($response);
+        $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertSame('user@SUMOCODERS.BE', $result->getEmail());
+        // @mago-expect analysis:non-existent-method
+        static::assertSame('user@SUMOCODERS.BE', $result->getEmail());
     }
 
     public function testAzureRolesAreSyncedOnEveryLoginByOid(): void
@@ -172,8 +179,8 @@ class AzureUserProviderTest extends KernelTestCase
 
         $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertContains('ROLE_ADMIN', $result->getRoles());
-        $this->assertContains('ROLE_USER', $result->getRoles());
+        static::assertContains('ROLE_ADMIN', $result->getRoles());
+        static::assertContains('ROLE_USER', $result->getRoles());
     }
 
     public function testAzureRolesAreSyncedWhenLocalUserLinksAccount(): void
@@ -192,7 +199,7 @@ class AzureUserProviderTest extends KernelTestCase
 
         $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertContains('ROLE_ADMIN', $result->getRoles());
+        static::assertContains('ROLE_ADMIN', $result->getRoles());
     }
 
     public function testAzureRolesAreSyncedForNewUser(): void
@@ -204,9 +211,9 @@ class AzureUserProviderTest extends KernelTestCase
 
         $response = $this->makeResponse('oid-new', 'newuser@sumocoders.be', ['ROLE_ADMIN']);
 
-        $result = $this->makeProvider('sumocoders.be')->loadUserByOAuthUserResponse($response);
+        $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertContains('ROLE_ADMIN', $result->getRoles());
+        static::assertContains('ROLE_ADMIN', $result->getRoles());
     }
 
     public function testLoginEventIsDispatchedOnEverySuccessfulLogin(): void
@@ -222,7 +229,7 @@ class AzureUserProviderTest extends KernelTestCase
         $this->eventDispatcher
             ->expects($this->once())
             ->method('dispatch')
-            ->with($this->isInstanceOf(AzureLoginEvent::class));
+            ->with(static::isInstanceOf(AzureLoginEvent::class));
 
         $response = $this->makeResponse('oid-abc', 'user@sumocoders.be');
         $this->makeProvider()->loadUserByOAuthUserResponse($response);
@@ -243,7 +250,7 @@ class AzureUserProviderTest extends KernelTestCase
 
         $result = $this->makeProvider()->loadUserByOAuthUserResponse($response);
 
-        $this->assertNotContains('ROLE_ADMIN', $result->getRoles());
-        $this->assertContains('ROLE_USER', $result->getRoles());
+        static::assertNotContains('ROLE_ADMIN', $result->getRoles());
+        static::assertContains('ROLE_USER', $result->getRoles());
     }
 }

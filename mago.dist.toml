@@ -54,6 +54,7 @@ strict-types = { enabled = false }
 too-many-methods = {
     exclude = [
         "src/Entity/**",
+        "tests/**"
     ]
 }
 too-many-properties = {

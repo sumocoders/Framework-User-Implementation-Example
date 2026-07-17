@@ -89,8 +89,8 @@ class UserTest extends KernelTestCase
     {
         $user = new User('user@example.com', []);
 
-        $this->assertFalse($user->isAzureUser());
-        $this->assertNull($user->getAzureObjectId());
+        static::assertFalse($user->isAzureUser());
+        static::assertNull($user->getAzureObjectId());
     }
 
     public function testLinkAzureAccount(): void
@@ -98,8 +98,8 @@ class UserTest extends KernelTestCase
         $user = new User('user@example.com', []);
         $user->linkAzureAccount('azure-oid-123');
 
-        $this->assertTrue($user->isAzureUser());
-        $this->assertSame('azure-oid-123', $user->getAzureObjectId());
+        static::assertTrue($user->isAzureUser());
+        static::assertSame('azure-oid-123', $user->getAzureObjectId());
     }
 
     public function testUnlinkAzureAccount(): void
@@ -108,27 +108,27 @@ class UserTest extends KernelTestCase
         $user->linkAzureAccount('azure-oid-123');
         $user->unlinkAzureAccount();
 
-        $this->assertFalse($user->isAzureUser());
-        $this->assertNull($user->getAzureObjectId());
+        static::assertFalse($user->isAzureUser());
+        static::assertNull($user->getAzureObjectId());
     }
 
     public function testCreateFromAzureProfileIsEnabledAndConfirmed(): void
     {
         $user = User::createFromAzureProfile('azure@sumocoders.be', 'azure-oid-123');
 
-        $this->assertSame('azure@sumocoders.be', $user->getEmail());
-        $this->assertSame('azure-oid-123', $user->getAzureObjectId());
-        $this->assertTrue($user->isAzureUser());
-        $this->assertTrue($user->isEnabled());
-        $this->assertTrue($user->isConfirmed());
-        $this->assertContains('ROLE_USER', $user->getRoles());
+        static::assertSame('azure@sumocoders.be', $user->getEmail());
+        static::assertSame('azure-oid-123', $user->getAzureObjectId());
+        static::assertTrue($user->isAzureUser());
+        static::assertTrue($user->isEnabled());
+        static::assertTrue($user->isConfirmed());
+        static::assertContains('ROLE_USER', $user->getRoles());
     }
 
     public function testCreateFromAzureProfileWithCustomRoles(): void
     {
         $user = User::createFromAzureProfile('azure@sumocoders.be', 'azure-oid-123', ['ROLE_ADMIN']);
 
-        $this->assertContains('ROLE_ADMIN', $user->getRoles());
-        $this->assertContains('ROLE_USER', $user->getRoles());
+        static::assertContains('ROLE_ADMIN', $user->getRoles());
+        static::assertContains('ROLE_USER', $user->getRoles());
     }
 }
