@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
-#[UniqueEntity('email', message: "There is already an account with this email")]
+#[UniqueEntity('email', message: 'There is already an account with this email')]
 #[AuditTrail]
 class User implements
     UserInterface,
@@ -66,13 +66,16 @@ class User implements
     private int $trustedVersion = 0;
 
     /**
-     * @param array<int, string> $roles
+     * @param array<array-key, string> $roles
      */
     public function __construct(
+        /**
+         * @var non-empty-string
+         */
         #[ORM\Column(type: 'string', length: 180, unique: true)]
         private string $email,
         #[ORM\Column(type: 'json')]
-        private array $roles
+        private array $roles,
     ) {
         $this->password = null;
         $this->enabled = false;
@@ -84,11 +87,12 @@ class User implements
     }
 
     /**
-     * @param array<int, string> $roles
+     * @param non-empty-string   $email
+     * @param array<array-key, string> $roles
      */
     public function update(
         string $email,
-        array $roles
+        array $roles,
     ): void {
         $this->email = $email;
         $this->roles = $roles;
@@ -99,6 +103,9 @@ class User implements
         return $this->id;
     }
 
+    /**
+     * @return non-empty-string
+     */
     public function getEmail(): string
     {
         return $this->email;
@@ -113,11 +120,12 @@ class User implements
     }
 
     /**
+     * @return non-empty-string
      * @see UserInterface
      */
     public function getUserIdentifier(): string
     {
-        return $this->email; // @phpstan-ignore-line return.type
+        return $this->email;
     }
 
     public function getOriginUsername(): string
@@ -126,6 +134,7 @@ class User implements
     }
 
     /**
+     * @return array<array-key, string>
      * @see UserInterface
      */
     public function getRoles(): array
@@ -139,11 +148,11 @@ class User implements
     }
 
     /**
-     * @return array<int, string> $roles
+     * @return array<array-key, lowercase-string> $roles
      */
     public function getDisplayRoles(): array
     {
-        return array_map(fn(string $role) => strtolower(substr($role, 5)), $this->getRoles());
+        return array_map(static fn (string $role): string => strtolower(substr($role, 5)), $this->getRoles());
     }
 
     /**
@@ -154,8 +163,10 @@ class User implements
         return (string) $this->password;
     }
 
-    public function setPassword(string $password): void
-    {
+    public function setPassword(
+        #[\SensitiveParameter]
+        string $password,
+    ): void {
         $this->password = $password;
         $this->erasePasswordResetRequest();
     }
@@ -256,8 +267,10 @@ class User implements
         return $this->totpSecret !== null;
     }
 
-    public function setTotpSecret(string $totpSecret): void
-    {
+    public function setTotpSecret(
+        #[\SensitiveParameter]
+        string $totpSecret,
+    ): void {
         $this->totpSecret = $totpSecret;
     }
 
@@ -266,18 +279,22 @@ class User implements
         $this->totpSecret = null;
     }
 
-    public function getTotpAuthenticationUsername(): string|null
+    public function getTotpAuthenticationUsername(): ?string
     {
         return $this->email;
     }
 
     public function getTotpAuthenticationConfiguration(): ?TotpConfigurationInterface
     {
+        if ($this->totpSecret === null) {
+            throw new \RuntimeException('TotpSecret is null');
+        }
+
         return new TotpConfiguration(
             $this->totpSecret,
             TotpConfiguration::ALGORITHM_SHA1,
             30,
-            6
+            6,
         );
     }
 
@@ -294,9 +311,9 @@ class User implements
         return in_array($code, $this->backupCodes, true);
     }
 
-    public function invalidateBackupCode(string $backupCode): void
+    public function invalidateBackupCode(string $code): void
     {
-        $key = array_search($backupCode, $this->backupCodes);
+        $key = array_search($code, $this->backupCodes, true);
         if ($key !== false) {
             unset($this->backupCodes[$key]);
         }
@@ -304,7 +321,7 @@ class User implements
 
     public function addBackupCode(string $backupCode): void
     {
-        if (!in_array($backupCode, $this->backupCodes)) {
+        if (!in_array($backupCode, $this->backupCodes, true)) {
             $this->backupCodes[] = $backupCode;
         }
     }
@@ -319,9 +336,11 @@ class User implements
         return $this->trustedVersion;
     }
 
+    /**
+     * @param non-empty-string $email
+     */
     public function changeEmail(string $email): void
     {
         $this->email = $email;
     }
-
 }

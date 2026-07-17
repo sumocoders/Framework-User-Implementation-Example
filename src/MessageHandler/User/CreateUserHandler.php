@@ -22,7 +22,7 @@ final readonly class CreateUserHandler
     {
         $user = new User(
             $message->email,
-            $message->roles
+            $message->roles,
         );
         $user->requestPassword();
         $this->userRepository->add($user);

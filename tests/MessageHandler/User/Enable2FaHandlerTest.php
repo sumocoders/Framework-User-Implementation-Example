@@ -15,6 +15,7 @@ class Enable2FaHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -37,7 +38,7 @@ class Enable2FaHandlerTest extends KernelTestCase
         $this->enable2fa();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertTrue($user->isTotpAuthenticationEnabled());
+        static::assertTrue($user->isTotpAuthenticationEnabled());
     }
 
     public function testHasBackupCodes(): void
@@ -45,7 +46,8 @@ class Enable2FaHandlerTest extends KernelTestCase
         $this->enable2fa();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNotEmpty($user->getBackupCodes());
-        $this->assertCount(6, $user->getBackupCodes());
+        static::assertNotEmpty($user->getBackupCodes());
+        // @mago-expect analysis:mixed-argument
+        static::assertCount(6, $user->getBackupCodes());
     }
 }

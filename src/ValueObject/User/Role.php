@@ -14,14 +14,14 @@ class Role implements \Stringable
     ];
 
     public function __construct(
-        private readonly string $role
+        private readonly string $role,
     ) {
         $this->validate();
     }
 
     private function validate(): void
     {
-        if (!in_array($this->role, self::ALL)) {
+        if (!in_array($this->role, self::ALL, true)) {
             throw new InvalidRoleException($this->role);
         }
     }

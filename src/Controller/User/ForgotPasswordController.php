@@ -26,11 +26,12 @@ final class ForgotPasswordController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            // @mago-expect analysis:mixed-argument
             $this->messageBus->dispatch($form->getData());
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Password reset link successfully sent.')
+                $this->translator->trans('Password reset link successfully sent.'),
             );
 
             return $this->redirectToRoute('login');
@@ -40,7 +41,7 @@ final class ForgotPasswordController extends AbstractController
             'user/forgot.html.twig',
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 }

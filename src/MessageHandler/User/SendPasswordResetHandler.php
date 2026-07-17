@@ -39,7 +39,7 @@ final readonly class SendPasswordResetHandler
             $user->requestPassword();
             $this->userRepository->save();
 
-            $email = (new TemplatedEmail())
+            $email = new TemplatedEmail()
                 ->from($this->from)
                 ->to(new Address($user->getEmail(), $user->getEmail()))
                 ->subject($this->translator->trans('account.mail.reset.title'))
@@ -50,9 +50,8 @@ final readonly class SendPasswordResetHandler
                         [
                             'token' => $user->getPasswordResetToken(),
                         ],
-                        RouterInterface::ABSOLUTE_URL
+                        RouterInterface::ABSOLUTE_URL,
                     ),
-
                 ]);
             $this->mailer->send($email);
         }

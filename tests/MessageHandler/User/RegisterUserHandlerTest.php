@@ -8,6 +8,7 @@ use App\MessageHandler\User\RegisterUserHandler;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Messenger\MessageBusInterface;
+use Symfony\Component\Mime\RawMessage;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class RegisterUserHandlerTest extends KernelTestCase
@@ -19,6 +20,7 @@ class RegisterUserHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -32,13 +34,14 @@ class RegisterUserHandlerTest extends KernelTestCase
         $message = new RegisterUser();
         $message->email = 'user@example.com';
         $message->roles = ['ROLE_USER'];
+        // @mago-expect lint:no-literal-password
         $message->password = 'password';
         $message->locale = 'nl';
 
         $handler = new RegisterUserHandler(
             $this->userRepository,
             $this->passwordHasher,
-            $this->messageBus
+            $this->messageBus,
         );
         $handler->__invoke($message);
     }
@@ -48,9 +51,9 @@ class RegisterUserHandlerTest extends KernelTestCase
         $this->registerUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals('user@example.com', $user->getEmail());
-        $this->assertContains('ROLE_USER', $user->getRoles());
+        static::assertInstanceOf(User::class, $user);
+        static::assertSame('user@example.com', $user->getEmail());
+        static::assertContains('ROLE_USER', $user->getRoles());
     }
 
     public function testUserConfirmationTokenIsGenerated(): void
@@ -59,20 +62,21 @@ class RegisterUserHandlerTest extends KernelTestCase
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
         // this is actually done by SendConfirmationHandler
-        $this->assertIsString($user->getConfirmationToken());
-        $this->assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
+        static::assertIsString($user->getConfirmationToken());
+        static::assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
     }
 
     public function testEmailIsSent(): void
     {
         $this->registerUser();
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailHeaderSame(
+        static::assertInstanceOf(RawMessage::class, $email);
+        static::assertEmailHeaderSame(
             $email,
             'To',
-            '"user@example.com" <user@example.com>'
+            '"user@example.com" <user@example.com>',
         );
     }
 
@@ -80,10 +84,18 @@ class RegisterUserHandlerTest extends KernelTestCase
     {
         $this->registerUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
+        // @mago-expect analysis:mixed-assignment
+        $confirmationToken = $user->getConfirmationToken();
+        if ($confirmationToken === null) {
+            throw new \RuntimeException('confirmation token not found');
+        }
 
-        $this->assertEmailCount(1);
+        static::assertEmailCount(1);
         $email = $this->getMailerMessage(0);
-        $this->assertEmailTextBodyContains($email, $user->getConfirmationToken());
-        $this->assertEmailHtmlBodyContains($email, $user->getConfirmationToken());
+        static::assertInstanceOf(RawMessage::class, $email);
+        // @mago-expect analysis:mixed-argument
+        static::assertEmailTextBodyContains($email, $confirmationToken);
+        // @mago-expect analysis:mixed-argument
+        static::assertEmailHtmlBodyContains($email, $confirmationToken);
     }
 }

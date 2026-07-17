@@ -22,7 +22,7 @@ final class RepeatedPasswordStrengthType extends AbstractType
                 'attr' => [
                     'autocomplete' => 'new-password',
                 ],
-            ]
+            ],
         );
         $resolver->setDefault(
             'second_options',
@@ -31,7 +31,7 @@ final class RepeatedPasswordStrengthType extends AbstractType
                 'attr' => [
                     'autocomplete' => 'new-password',
                 ],
-            ]
+            ],
         );
     }
 

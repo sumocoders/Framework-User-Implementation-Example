@@ -23,11 +23,11 @@ final class RegisterType extends AbstractType
                 EmailType::class,
                 [
                     'label' => 'Email',
-                ]
+                ],
             )
             ->add(
                 'password',
-                RepeatedPasswordStrengthType::class
+                RepeatedPasswordStrengthType::class,
             );
     }
 

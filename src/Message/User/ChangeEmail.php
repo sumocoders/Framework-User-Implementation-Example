@@ -11,9 +11,14 @@ final class ChangeEmail
 {
     public function __construct(
         public readonly int $userId,
+        /**
+         * @var non-empty-string $email
+         */
+        // @phpstan-ignore parameter.defaultValue
         #[Assert\NotBlank]
         #[Assert\Email]
         #[UniqueEmail]
+        // @mago-expect analysis:invalid-parameter-default-value
         public string $email = '',
     ) {
     }

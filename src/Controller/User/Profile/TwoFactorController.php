@@ -39,11 +39,11 @@ final class TwoFactorController extends AbstractController
         $showBackupCodes = false;
 
         if (!$is2FaEnabled) {
-            if (!$session->has('2fa_secret')) {
+            if (!$session->has('2fa_secret') || trim((string) $session->get('2fa_secret')) === '') {
                 $secret = $this->totpAuthenticator->generateSecret();
                 $session->set('2fa_secret', $secret);
             }
-            $secret = $session->get('2fa_secret');
+            $secret = (string) $session->get('2fa_secret');
 
             $message = new Enable2Fa($user, $secret);
             $enable2FaForm = $this->createForm(Enable2FaType::class, $message);
@@ -56,7 +56,7 @@ final class TwoFactorController extends AbstractController
                 $session->set('2fa_show_backup_codes', true);
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('2FA enabled')
+                    $this->translator->trans('2FA enabled'),
                 );
 
                 return $this->redirectToRoute('user_2fa');
@@ -72,7 +72,7 @@ final class TwoFactorController extends AbstractController
 
                 $this->addFlash(
                     'success',
-                    $this->translator->trans('2FA disabled')
+                    $this->translator->trans('2FA disabled'),
                 );
 
                 return $this->redirectToRoute('user_2fa');
@@ -80,7 +80,8 @@ final class TwoFactorController extends AbstractController
         }
 
         if ($session->has('2fa_show_backup_codes')) {
-            $showBackupCodes = $session->get('2fa_show_backup_codes');
+            // @mago-expect analysis:mixed-operand
+            $showBackupCodes = (bool) $session->get('2fa_show_backup_codes');
             $session->remove('2fa_show_backup_codes');
         }
 
@@ -92,7 +93,7 @@ final class TwoFactorController extends AbstractController
                 'showBackupCodes' => $showBackupCodes,
                 'enable2FaForm' => $enable2FaForm ?? null,
                 'disable2FaForm' => $disable2FaForm ?? null,
-            ]
+            ],
         );
     }
 }

@@ -17,6 +17,7 @@ class CreateUserHandlerTest extends KernelTestCase
     protected function setUp(): void
     {
         self::bootKernel();
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -33,7 +34,7 @@ class CreateUserHandlerTest extends KernelTestCase
 
         $handler = new CreateUserHandler(
             $this->userRepository,
-            $this->messageBus
+            $this->messageBus,
         );
         $handler->__invoke($message);
     }
@@ -43,9 +44,9 @@ class CreateUserHandlerTest extends KernelTestCase
         $this->createUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertEquals('user@example.com', $user->getEmail());
-        $this->assertContains('ROLE_USER', $user->getRoles());
+        static::assertInstanceOf(User::class, $user);
+        static::assertSame('user@example.com', $user->getEmail());
+        static::assertContains('ROLE_USER', $user->getRoles());
     }
 
     public function testUserPasswordResetTokenIsGenerated(): void
@@ -53,8 +54,8 @@ class CreateUserHandlerTest extends KernelTestCase
         $this->createUser();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertIsString($user->getPasswordResetToken());
-        $this->assertEqualsWithDelta($user->getPasswordRequestedAt(), new \DateTimeImmutable(), 1);
+        static::assertIsString($user->getPasswordResetToken());
+        static::assertEqualsWithDelta($user->getPasswordRequestedAt(), new \DateTimeImmutable(), 1);
     }
 
     public function testUserConfirmationTokenIsGenerated(): void
@@ -63,7 +64,7 @@ class CreateUserHandlerTest extends KernelTestCase
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
         // this is actually done by SendConfirmationHandler
-        $this->assertIsString($user->getConfirmationToken());
-        $this->assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
+        static::assertIsString($user->getConfirmationToken());
+        static::assertEqualsWithDelta($user->getConfirmationRequestedAt(), new \DateTimeImmutable(), 1);
     }
 }

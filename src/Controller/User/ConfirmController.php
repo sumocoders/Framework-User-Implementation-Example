@@ -23,16 +23,19 @@ final class ConfirmController extends AbstractController
     ) {
     }
 
-    public function __invoke(string $token, Request $request): Response
-    {
+    public function __invoke(
+        #[\SensitiveParameter]
+        string $token,
+        Request $request,
+    ): Response {
         $user = $this->userRepository->checkConfirmationToken($token);
 
         if (!$user instanceof User) {
             $this->addFlash(
                 'error',
                 $this->translator->trans(
-                    'It looks like you clicked on an invalid account activation link. Please try again.'
-                )
+                    'It looks like you clicked on an invalid account activation link. Please try again.',
+                ),
             );
 
             return $this->redirectToRoute('login');
@@ -46,7 +49,7 @@ final class ConfirmController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('Account activated successfully.')
+                $this->translator->trans('Account activated successfully.'),
             );
 
             /*
@@ -56,7 +59,7 @@ final class ConfirmController extends AbstractController
             if ($user->getPasswordResetToken() !== null) {
                 return $this->redirectToRoute(
                     'user_reset_password',
-                    ['token' => $user->getPasswordResetToken()]
+                    ['token' => $user->getPasswordResetToken()],
                 );
             }
 
@@ -67,7 +70,7 @@ final class ConfirmController extends AbstractController
             'user/confirm.html.twig',
             [
                 'form' => $confirmForm,
-            ]
+            ],
         );
     }
 }

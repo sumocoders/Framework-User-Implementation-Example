@@ -19,6 +19,7 @@ class ChangePasswordHandlerTest extends KernelTestCase
     {
         self::bootKernel();
 
+        // @mago-expect analysis:mixed-property-type-coercion,mixed-method-access
         $this->userRepository = static::getContainer()
             ->get('doctrine')
             ->getManager()
@@ -34,11 +35,12 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $this->userRepository->add($user);
 
         $message = new ChangePassword($user->getId());
+        // @mago-expect lint:no-literal-password
         $message->password = 'new_password';
 
         $handler = new ChangePasswordHandler(
             $this->userRepository,
-            $this->passwordHasher
+            $this->passwordHasher,
         );
         $handler->__invoke($message);
     }
@@ -48,7 +50,7 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $this->changePassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertIsString($user->getPassword());
+        static::assertIsString($user->getPassword());
     }
 
     public function testPasswordResetTokenIsCleared(): void
@@ -56,7 +58,7 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $this->changePassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNull($user->getPasswordResetToken());
+        static::assertNull($user->getPasswordResetToken());
     }
 
     public function testPasswordRequestedAtIsCleared(): void
@@ -64,6 +66,6 @@ class ChangePasswordHandlerTest extends KernelTestCase
         $this->changePassword();
         $user = $this->userRepository->findOneBy(['email' => 'user@example.com']);
 
-        $this->assertNull($user->getPasswordRequestedAt());
+        static::assertNull($user->getPasswordRequestedAt());
     }
 }

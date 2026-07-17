@@ -10,8 +10,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 /**
- * @template TData of FormBuilderInterface
- * @extends AbstractType<TData>
+ * @extends AbstractType<array<string, mixed>>
  */
 final class LoginType extends AbstractType
 {
@@ -27,7 +26,7 @@ final class LoginType extends AbstractType
                         'tabindex' => 1,
                         'autocomplete' => 'username',
                     ],
-                ]
+                ],
             )
             ->add(
                 'password',
@@ -38,7 +37,7 @@ final class LoginType extends AbstractType
                         'tabindex' => 2,
                         'autocomplete' => 'current-password',
                     ],
-                ]
+                ],
             );
     }
 }

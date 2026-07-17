@@ -35,7 +35,7 @@ final class AddUserController extends AbstractController
 
             $this->addFlash(
                 'success',
-                $this->translator->trans('User successfully added.')
+                $this->translator->trans('User successfully added.'),
             );
 
             return $this->redirectToRoute('user_admin_overview');
@@ -45,7 +45,7 @@ final class AddUserController extends AbstractController
             'user/admin/add.html.twig',
             [
                 'form' => $form,
-            ]
+            ],
         );
     }
 }
