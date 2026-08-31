@@ -148,7 +148,15 @@ All commands and paths in these steps assume the current working directory is th
     - In `AzureUserProvider::loadUserByOAuthUserResponse()`, before the "No match — auto-provision" block, add a case-insensitive `str_ends_with()` check of the email domain against `AZURE_ALLOWED_DOMAIN`; throw an `AccessDeniedException` on mismatch
     - Update `tests/Security/OAuth/AzureUserProviderTest.php` to cover the allowed and rejected domain cases
 
-23. Run `symfony php vendor/bin/phpstan analyse`, `vendor/bin/mago lint`, `vendor/bin/mago analyse`, and the project's test suite. Fix issues surfaced by the integration, including known ones:
+23. Ask the user whether local email/password login should remain available as a fallback, or whether Azure SSO is meant to be the only login method. `templates/user/login.html.twig` hides the local form entirely whenever `azure_login_enabled` is true, and Azure-provisioned users never get a local password (`User::createFromAzureProfile()` never calls `setPassword()`), so once SSO is exclusive the following become dead code. If the user confirms SSO-only, remove:
+    - `src/Controller/User/ForgotPasswordController.php`, `ResetPasswordController.php`, `ResendConfirmationController.php`, `ConfirmController.php`, and their templates (`templates/user/forgot.html.twig`, `reset.html.twig`, `confirm.html.twig`, `templates/user/mails/`)
+    - `src/Controller/User/Profile/PasswordController.php`, `EmailController.php`, `TwoFactorController.php`, `TwoFactorQrCodeController.php`, and their templates
+    - `src/Controller/User/Admin/AddUserController.php` (users self-provision via Azure; roles come from `syncAzureRoles()`)
+    - the `two_factor` block, `scheb_2fa` bundle/config/routes, and every affected `access_control` entry (`2fa_login`, `2fa_login_check`, `user_2fa`, `user_2fa_qrcode`, `user_password`, `user_resend_confirmation`, `user_confirm`, `user_reset_password`) from `security.yaml`
+    - the matching test files under `tests/Controller/User/` and `tests/Entity/User/` (password/2FA/confirmation coverage)
+    If local login must stay as a fallback (e.g. break-glass access), skip this step entirely.
+
+24. Run `symfony php vendor/bin/phpstan analyse`, `vendor/bin/mago lint`, `vendor/bin/mago analyse`, and the project's test suite. Fix issues surfaced by the integration, including known ones:
     - Paginator usages missing their generic type annotation (`@var Paginator<User>` or equivalent).
     - An orphaned `RegisterType` left behind if registration was excluded in step 10.
 </steps>
