@@ -65,6 +65,9 @@ class User implements
     #[ORM\Column(type: 'integer')]
     private int $trustedVersion = 0;
 
+    #[ORM\Column(type: 'string', length: 36, nullable: true, unique: true)]
+    private ?string $azureObjectId = null;
+
     /**
      * @param array<array-key, string> $roles
      */
@@ -84,6 +87,20 @@ class User implements
         $this->confirmedAt = null;
         $this->passwordResetToken = null;
         $this->passwordRequestedAt = null;
+    }
+
+    /**
+     * @param non-empty-string   $email
+     * @param array<array-key, string> $roles
+     */
+    public static function createFromAzureProfile(string $email, string $azureObjectId, array $roles = []): self
+    {
+        $user = new self($email, $roles);
+        $user->enabled = true;
+        $user->confirmedAt = new DateTime();
+        $user->azureObjectId = $azureObjectId;
+
+        return $user;
     }
 
     /**
@@ -255,6 +272,34 @@ class User implements
     public function isEnabled(): bool
     {
         return $this->enabled;
+    }
+
+    public function getAzureObjectId(): ?string
+    {
+        return $this->azureObjectId;
+    }
+
+    public function isAzureUser(): bool
+    {
+        return $this->azureObjectId !== null;
+    }
+
+    public function linkAzureAccount(string $azureObjectId): void
+    {
+        $this->azureObjectId = $azureObjectId;
+    }
+
+    public function unlinkAzureAccount(): void
+    {
+        $this->azureObjectId = null;
+    }
+
+    /**
+     * @param string[] $roles
+     */
+    public function syncAzureRoles(array $roles): void
+    {
+        $this->roles = $roles;
     }
 
     private function generateToken(): string

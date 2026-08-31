@@ -106,3 +106,7 @@ user.actions.switchback: 'terug naar eigen account'
 'Yes': 'Ja'
 'No': 'Nee'
 'Cancel': 'Annuleer'
+
+'Sign in with Microsoft': 'Aanmelden met Microsoft'
+'Email domain is not allowed to log in via Azure.': 'Je e-maildomein heeft geen toegang via Azure.'
+'Sign in with SumoCoders': 'Aanmelden met SumoCoders'

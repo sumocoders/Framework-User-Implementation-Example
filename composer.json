@@ -9,6 +9,7 @@
         "beberlei/doctrineextensions": "^1.5",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "endroid/qr-code": "^6.1",
+        "hwi/oauth-bundle": "^2.5",
         "nelmio/security-bundle": "^3.7",
         "scheb/2fa-backup-code": "^8.3",
         "scheb/2fa-bundle": "^8.3",

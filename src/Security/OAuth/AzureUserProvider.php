@@ -1,0 +1,116 @@
+<?php
+
+declare(strict_types=1);
+
+namespace App\Security\OAuth;
+
+use App\Entity\User\User;
+use App\Event\User\AzureLoginEvent;
+use App\Repository\User\UserRepository;
+use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
+use HWI\Bundle\OAuthBundle\Security\Core\User\OAuthAwareUserProviderInterface;
+use Symfony\Component\Security\Core\Exception\AuthenticationException;
+use Symfony\Component\Security\Core\Exception\UnsupportedUserException;
+use Symfony\Component\Security\Core\Exception\UserNotFoundException;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\UserProviderInterface;
+use Symfony\Contracts\EventDispatcher\EventDispatcherInterface;
+
+/**
+ * @implements UserProviderInterface<User>
+ */
+final class AzureUserProvider implements UserProviderInterface, OAuthAwareUserProviderInterface
+{
+    public function __construct(
+        private readonly UserRepository $userRepository,
+        private readonly EventDispatcherInterface $eventDispatcher,
+    ) {
+    }
+
+    public function loadUserByOAuthUserResponse(UserResponseInterface $response): UserInterface
+    {
+        $data = $response->getData();
+        // @mago-expect analysis:mixed-assignment
+        $oid = $data['oid'] ?? null;
+        $email = $response->getEmail();
+        $roles = is_array($data['roles'] ?? null) ? $data['roles'] : [];
+
+        if ($oid === null || $email === null || trim($email) === '') {
+            throw new AuthenticationException('Azure response is missing required oid or email claim.');
+        }
+
+        // 1. Match on azure_object_id — most common path after first login
+        $user = $this->userRepository->findOneBy(['azureObjectId' => (string) $oid]);
+        if ($user instanceof User) {
+            // @mago-expect analysis:less-specific-nested-argument-type
+            $user->syncAzureRoles($roles);
+
+            // Keep email in sync in case it changed in Azure
+            if ($user->getEmail() !== $email) {
+                // @mago-expect analysis:possibly-invalid-argument
+                $user->update($email, $user->getRoles());
+            }
+
+            $this->userRepository->save();
+            $this->eventDispatcher->dispatch(new AzureLoginEvent($user));
+
+            return $user;
+        }
+
+        // 2. Match on email — existing local user logging in via Azure for the first time
+        $user = $this->userRepository->findOneBy(['email' => $email]);
+        if ($user instanceof User) {
+            $user->linkAzureAccount((string) $oid);
+            // @mago-expect analysis:less-specific-nested-argument-type
+            $user->syncAzureRoles($roles);
+            $this->userRepository->save();
+            $this->eventDispatcher->dispatch(new AzureLoginEvent($user));
+
+            return $user;
+        }
+
+        // 3. No match — auto-provision
+        $user = User::createFromAzureProfile(
+            // @mago-expect analysis:possibly-invalid-argument
+            $email,
+            (string) $oid,
+            // @mago-expect analysis:less-specific-nested-argument-type
+            $roles,
+        );
+        $this->userRepository->add($user);
+        $this->eventDispatcher->dispatch(new AzureLoginEvent($user));
+
+        return $user;
+    }
+
+    public function refreshUser(UserInterface $user): UserInterface
+    {
+        if (!$user instanceof User) {
+            throw new UnsupportedUserException(
+                sprintf('Expected instance of %s, got "%s".', User::class, $user::class),
+            );
+        }
+
+        $refreshedUser = $this->userRepository->find($user->getId());
+        if ($refreshedUser === null) {
+            throw new UserNotFoundException(sprintf('User with id "%d" not found.', $user->getId()));
+        }
+
+        return $refreshedUser;
+    }
+
+    public function supportsClass(string $class): bool
+    {
+        return $class === User::class;
+    }
+
+    public function loadUserByIdentifier(string $identifier): UserInterface
+    {
+        $user = $this->userRepository->findOneBy(['email' => $identifier]);
+        if ($user === null) {
+            throw new UserNotFoundException(sprintf('User "%s" not found.', $identifier));
+        }
+
+        return $user;
+    }
+}

@@ -7,6 +7,21 @@
         </div>
     {% endif %}
 
+    {% if azure_login_enabled or sumocoders_login_enabled %}
+        <div class="d-grid gap-3">
+        {% if azure_login_enabled %}
+            <a href="{{ path('hwi_oauth_service_redirect', {service: 'azure'}) }}" class="btn btn-primary btn-lg">
+                <i class="bi bi-microsoft me-2"></i>
+                {{ 'Sign in with Microsoft'|trans }}
+            </a>
+        {% endif %}
+        {% if sumocoders_login_enabled %}
+            <a href="{{ path('hwi_oauth_service_redirect', {service: 'sumocoders'}) }}" class="text-muted btn btn-link">
+                {{ 'Sign in with SumoCoders'|trans }}
+            </a>
+        {% endif %}
+        </div>
+    {% else %}
     {{ form_start(form) }}
     {{ form_row(form.email) }}
     <div class="form-group">
@@ -26,4 +41,5 @@
     {{ form_end(form) }}
 
     <p class="align-self-center">{{ 'New to x?'|trans }} <a href="{{ url('user_register') }}">{{ 'Sign up'|trans }}</a></p>
+    {% endif %}
 {% endblock %}

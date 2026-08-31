@@ -5,6 +5,7 @@ namespace App\Controller\User;
 use App\Entity\User\User;
 use App\Form\User\LoginType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -14,6 +15,10 @@ final class LoginController extends AbstractController
 {
     public function __construct(
         private readonly AuthenticationUtils $authenticationUtils,
+        #[Autowire(env: 'AZURE_CLIENT_ID')]
+        private readonly string $azureClientId,
+        #[Autowire(env: 'SUMOCODERS_CLIENT_ID')]
+        private readonly string $sumocodersClientId,
     ) {
     }
 
@@ -36,6 +41,8 @@ final class LoginController extends AbstractController
                 'error' => $this->authenticationUtils->getLastAuthenticationError(),
                 'last_username' => $this->authenticationUtils->getLastUsername(),
                 'form' => $form,
+                'azure_login_enabled' => $this->azureClientId !== '',
+                'sumocoders_login_enabled' => $this->sumocodersClientId !== '',
             ],
         );
     }

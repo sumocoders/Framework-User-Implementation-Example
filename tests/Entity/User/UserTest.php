@@ -84,4 +84,51 @@ class UserTest extends KernelTestCase
 
         static::assertFalse($user->isEnabled());
     }
+
+    public function testNewUserIsNotAnAzureUser(): void
+    {
+        $user = new User('user@example.com', []);
+
+        static::assertFalse($user->isAzureUser());
+        static::assertNull($user->getAzureObjectId());
+    }
+
+    public function testLinkAzureAccount(): void
+    {
+        $user = new User('user@example.com', []);
+        $user->linkAzureAccount('azure-oid-123');
+
+        static::assertTrue($user->isAzureUser());
+        static::assertSame('azure-oid-123', $user->getAzureObjectId());
+    }
+
+    public function testUnlinkAzureAccount(): void
+    {
+        $user = new User('user@example.com', []);
+        $user->linkAzureAccount('azure-oid-123');
+        $user->unlinkAzureAccount();
+
+        static::assertFalse($user->isAzureUser());
+        static::assertNull($user->getAzureObjectId());
+    }
+
+    public function testCreateFromAzureProfileIsEnabledAndConfirmed(): void
+    {
+        $user = User::createFromAzureProfile('azure@sumocoders.be', 'azure-oid-123');
+
+        static::assertSame('azure@sumocoders.be', $user->getEmail());
+        static::assertSame('azure-oid-123', $user->getAzureObjectId());
+        static::assertTrue($user->isAzureUser());
+        static::assertTrue($user->isEnabled());
+        static::assertTrue($user->isConfirmed());
+        static::assertContains('ROLE_USER', $user->getRoles());
+    }
+
+    public function testCreateFromAzureProfileWithCustomRoles(): void
+    {
+        $user = User::createFromAzureProfile('azure@sumocoders.be', 'azure-oid-123', ['ROLE_ADMIN']);
+
+        static::assertContains('ROLE_ADMIN', $user->getRoles());
+        static::assertContains('ROLE_USER', $user->getRoles());
+    }
 }
