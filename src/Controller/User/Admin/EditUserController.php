@@ -4,7 +4,6 @@ namespace App\Controller\User\Admin;
 
 use App\Entity\User\User;
 use App\Form\User\Admin\UserType;
-use App\Form\User\Disable2FaType;
 use App\Message\User\Disable2Fa;
 use App\Message\User\DisableUser;
 use App\Message\User\EnableUser;
@@ -103,9 +102,8 @@ final class EditUserController extends AbstractController
             }
         }
 
-        $sendPasswordResetMessage = new SendPasswordReset();
-        $sendPasswordResetMessage->email = $user->getEmail();
-        $passwordForgotForm = $this->formFactory->createNamed('password_forgot');
+        $sendPasswordResetMessage = new SendPasswordReset($user->getEmail());
+        $passwordForgotForm = $this->createForm(SendPasswordReset::class, $sendPasswordResetMessage);
         $passwordForgotForm->handleRequest($request);
 
         if ($passwordForgotForm->isSubmitted() && $passwordForgotForm->isValid()) {
@@ -120,7 +118,7 @@ final class EditUserController extends AbstractController
         }
 
         $disable2FaMessage = new Disable2Fa($user);
-        $disable2FaForm = $this->createForm(Disable2FaType::class, $disable2FaMessage);
+        $disable2FaForm = $this->createForm(Disable2Fa::class, $disable2FaMessage);
         $disable2FaForm->handleRequest($request);
 
         if ($disable2FaForm->isSubmitted() && $disable2FaForm->isValid()) {

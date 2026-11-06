@@ -3,7 +3,6 @@
 namespace App\Controller\User\Profile;
 
 use App\Entity\User\User;
-use App\Form\User\Admin\ChangePasswordType;
 use App\Message\User\ChangePassword;
 use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -29,7 +28,7 @@ final class PasswordController extends AbstractController
         #[CurrentUser]
         User $user,
     ): Response {
-        $form = $this->createForm(ChangePasswordType::class, new ChangePassword($user->getId()));
+        $form = $this->createForm(ChangePassword::class, new ChangePassword($user->getId()));
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

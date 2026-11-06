@@ -3,7 +3,6 @@
 namespace App\Controller\User;
 
 use App\Entity\User\User;
-use App\Form\User\Admin\ConfirmType;
 use App\Message\User\ConfirmUser;
 use App\Repository\User\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -41,7 +40,7 @@ final class ConfirmController extends AbstractController
             return $this->redirectToRoute('login');
         }
 
-        $confirmForm = $this->createForm(ConfirmType::class, new ConfirmUser($user->getId()));
+        $confirmForm = $this->createForm(ConfirmUser::class, new ConfirmUser($user->getId()));
         $confirmForm->handleRequest($request);
 
         if ($confirmForm->isSubmitted() && $confirmForm->isValid()) {

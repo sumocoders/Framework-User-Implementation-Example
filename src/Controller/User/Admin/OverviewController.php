@@ -3,7 +3,6 @@
 namespace App\Controller\User\Admin;
 
 use App\DataTransferObject\User\FilterDataTransferObject;
-use App\Form\User\Admin\FilterType;
 use App\Repository\User\UserRepository;
 use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,10 +22,7 @@ final class OverviewController extends AbstractController
     #[Breadcrumb('Users')]
     public function __invoke(Request $request, #[MapQueryParameter] int $page = 1): Response
     {
-        $form = $this->createForm(
-            FilterType::class,
-            new FilterDataTransferObject(),
-        );
+        $form = $this->createForm(FilterDataTransferObject::class);
         $form->handleRequest($request);
 
         /** @var FilterDataTransferObject $filter */

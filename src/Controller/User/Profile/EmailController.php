@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller\User\Profile;
 
 use App\Entity\User\User;
-use App\Form\User\ChangeEmailType;
 use App\Message\User\ChangeEmail;
 use SumoCoders\FrameworkCoreBundle\Attribute\Breadcrumb;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,7 +32,7 @@ final class EmailController extends AbstractController
     ): Response {
         $message = new ChangeEmail($user->getId(), $user->getEmail());
 
-        $form = $this->createForm(ChangeEmailType::class, $message);
+        $form = $this->createForm(ChangeEmail::class, $message);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
