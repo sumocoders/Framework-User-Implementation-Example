@@ -3,8 +3,6 @@
 namespace App\Controller\User\Profile;
 
 use App\Entity\User\User;
-use App\Form\User\Disable2FaType;
-use App\Form\User\Enable2FaType;
 use App\Message\User\Disable2Fa;
 use App\Message\User\Enable2Fa;
 use Scheb\TwoFactorBundle\Security\TwoFactor\Provider\Totp\TotpAuthenticatorInterface;
@@ -46,7 +44,7 @@ final class TwoFactorController extends AbstractController
             $secret = (string) $session->get('2fa_secret');
 
             $message = new Enable2Fa($user, $secret);
-            $enable2FaForm = $this->createForm(Enable2FaType::class, $message);
+            $enable2FaForm = $this->createForm(Enable2Fa::class, $message);
             $enable2FaForm->handleRequest($request);
 
             if ($enable2FaForm->isSubmitted() && $enable2FaForm->isValid()) {
@@ -64,7 +62,7 @@ final class TwoFactorController extends AbstractController
         }
         if ($is2FaEnabled) {
             $disable2FaMessage = new Disable2Fa($user);
-            $disable2FaForm = $this->createForm(Disable2FaType::class, $disable2FaMessage);
+            $disable2FaForm = $this->createForm(Disable2Fa::class, $disable2FaMessage);
             $disable2FaForm->handleRequest($request);
 
             if ($disable2FaForm->isSubmitted() && $disable2FaForm->isValid()) {

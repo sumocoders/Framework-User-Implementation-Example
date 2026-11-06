@@ -2,7 +2,6 @@
 
 namespace App\Controller\User;
 
-use App\Form\User\ForgotPasswordType;
 use App\Message\User\SendPasswordReset;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +21,7 @@ final class ForgotPasswordController extends AbstractController
 
     public function __invoke(Request $request): Response
     {
-        $form = $this->createForm(ForgotPasswordType::class, new SendPasswordReset());
+        $form = $this->createForm(SendPasswordReset::class, new SendPasswordReset());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
